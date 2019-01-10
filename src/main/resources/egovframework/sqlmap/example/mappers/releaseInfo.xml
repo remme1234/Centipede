@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.releaseInfo.service.impl.ReleaseInfoMapper">
+
+	<resultMap id="releaseInfoList" type="egovframework.example.releaseInfo.service.ReleaseInfoVO">
+	 	<result property="boardUid"		column="BOARD_UID"/>
+	 	<result property="number"		column="NUMBER"/>
+	 	<result property="title"		column="TITLE"/>
+	 	<result property="contents"		column="CONTENTS"/>
+	 	<result property="userId"		column="USER_ID"/>
+	 	<result property="visitCnt"		column="VISIT_CNT"/>
+	 	<result property="rsgstDt"		column="RSGST_DT"/>
+	 	<result property="useYn"		column="USE_YN"/>
+	</resultMap>
+	
+	<!-- 발매정보게시판 목록 불러오기 -->
+	<select id="selectReleaseInfoList" resultMap="releaseInfoList">
+		SELECT   BOARD_UID
+			   , NUMBER
+			   , TITLE
+			   , CONTENTS
+			   , USER_ID
+			   , VISIT_CNT
+			   , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+			   , USE_YN
+		FROM     T_RELEASEINFO
+		WHERE USE_YN='Y'
+		ORDER BY RSGST_DT DESC
+	</select>
+	
+	<!-- 발매정보게시판 목록개수 불러오기 -->
+	<select id="selectReleaseInfoListCnt" resultType="java.lang.Integer">
+		<!-- 1은 count하기 위한 임의의 숫자 -->
+		SELECT 	COUNT(1)
+		FROM 	T_RELEASEINFO
+		WHERE	USE_YN = 'Y'
+	</select>
+	
+	<!-- 발매정보게시판 세부항목 불러오기 -->
+	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO" resultMap="releaseInfoList">
+		SELECT BOARD_UID
+			 , USER_ID
+			 , NUMBER
+			 , TITLE
+			 , CONTENTS
+			 , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+		FROM   T_RELEASEINFO
+		WHERE  NUMBER = #{number}
+	</select>
+	
+	<!-- 발매정보게시판 작성 및 수정시 DB에 추가 하는 쿼리 -->
+	<update id="updateReleaseInfo" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO">
+		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, USER_ID, VISIT_CNT, RSGST_DT, USE_YN)
+		VALUES 		(#{boardUid}
+		<if test='number == null or "".equals(number)'>
+			, (SELECT MAX(NUMBER)+1 FROM T_RELEASEINFO AS TC)
+		</if>
+		<if test='number != null and !"".equals(number)'>
+			,#{number}
+		</if>
+		, #{title}, #{contents}, "SAMPLE", "0", now(), "Y")
+		ON DUPLICATE KEY 
+		UPDATE TITLE 	= #{title},
+			   CONTENTS = #{contents}
+	</update>	
+	
+	<!-- 발매정보게시판 삭제시 논리적 삭제 쿼리 -->  
+	<update id="deleteReleaseInfoDelete">
+		UPDATE T_RELEASEINFO
+		SET USE_YN = 'N'
+		WHERE NUMBER = #{number}
+	</update>
+	
+	<!-- 조회수 증가 쿼리 -->
+	<update id="addVisitCnt"> 
+		UPDATE T_RELEASEINFO
+		SET VISIT_CNT = VISIT_CNT +1
+		WHERE NUMBER = #{number}
+	</update>
+</mapper>
