@@ -5,7 +5,21 @@
 
 <script>
 	var save = function() {
-		var $form = $("form[name=saveForm]")  
+		var $form = $("form[name=saveForm]"),  
+			$title = $("input[name=title]"),
+			$contents = $("textarea[name=contents]");
+		
+		if($title.val() === null || $title.val() === "") {
+			alert ("제목을 입력해주세요");
+			$title.focus();
+			return
+		}
+		if($contents.val() === null || $contents.val() === "") {
+			alert ("내용을 입력해주세요")
+			$contents.focus();
+			return
+		}
+		
 		
 		$form.attr("action","releaseInfoUpdate.do")
 		$form.submit()
@@ -15,7 +29,7 @@
 	
 </script>
 
-<form name="saveForm" method="POST" action="">
+<form name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0001" />
 	<input type="hidden" name="number" value="${releaseInfoDetail.number}" />
 	<table class="table">
@@ -32,6 +46,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<input type="file" name="file">
 	
 	<!-- menu.save 메서드는 default-header에 정의되어 있습니다. -->
 	<button type="button" onclick="save()">저장</button>

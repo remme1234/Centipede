@@ -3,6 +3,7 @@ package egovframework.example.releaseInfo.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,9 +37,9 @@ public class ReleaseInfoController {
 		// 조회수 증가
 		releaseInfoService.addVisitCnt(vo);
 		model.addAttribute("releaseInfoDetail", vo);
+		model.addAttribute("fileDetail", vo);
 		
 		return "releaseInfo/releaseInfoDetailView.tiles";
-		
 	}
 	
 	// 발매정보게시판 작성 및 수정 페이지
@@ -52,8 +53,8 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 작성 및 수정 기능
 	@RequestMapping(value="releaseInfoUpdate.do")
-	public String releaseInfoUpdate (ReleaseInfoVO vo) {
-		releaseInfoService.updateReleaseInfo(vo);
+	public String releaseInfoUpdate (ReleaseInfoVO vo, HttpServletRequest request) throws Exception{
+		releaseInfoService.updateReleaseInfo(vo, request);
 		
 		return "redirect:releaseInfoView.do";
 	}

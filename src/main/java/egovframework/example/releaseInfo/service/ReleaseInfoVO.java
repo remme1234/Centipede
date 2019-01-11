@@ -11,6 +11,10 @@ public class ReleaseInfoVO {
 	private int visitCnt;
 	private String rsgstDt;
 	private String useYn;
+	private String fileNo;
+	
+	public String getFileNo() {return fileNo;}
+	public void setFileNo(String fileNo) {this.fileNo = fileNo;}
 	
 	public int getCount() {return count;}
 	public void setCount(int count) {this.count = count;}

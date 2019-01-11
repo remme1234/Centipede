@@ -78,4 +78,51 @@
 		SET VISIT_CNT = VISIT_CNT +1
 		WHERE NUMBER = #{number}
 	</update>
+	
+	<!-- 첨부파일저장 -->
+	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
+    	<![CDATA[
+	        INSERT INTO T_FILE
+	        (
+	            FILE_NO,
+	            BOARD_UID,
+	            ORIGIN_FILE_NM,
+	            SAVED_FILE_NM,
+	            SAVED_FILE_PATH,
+	            FILE_SIZE,
+	            RSGST_DT,
+	            RSGSTR_ID
+	        )
+	        VALUES
+	        (
+	            (SELECT MAX(FILE_NO)+1 FROM T_FILE AS TC),
+	            #{boardUid},
+	            #{originFileNm},
+	            #{savedFileNm},
+	            #{savedFilePath},
+	            #{fileSize},
+	            NOW(),
+	            'Admin'
+	        )
+    	]]>
+	</insert>
+	
+	<!-- 첨부파일 불러오기 -->
+	<select id="selectFileList" parameterType="egovframework.example.util.FileVO" resultType="egovframework.example.util.FileVO">
+	    <![CDATA[
+	        SELECT
+	            NUMBER,
+	            ORIGIN_FILE_NM,
+	            ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+	        FROM
+	            T_FILE
+	        WHERE
+	            BOARD_UID = #{boardUid}
+	            AND DEL_GB = 'Y'
+	            AND NUMBER = #{number}
+	    ]]>
+	</select>
+
+
+	
 </mapper>
