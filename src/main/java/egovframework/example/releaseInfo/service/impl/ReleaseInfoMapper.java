@@ -13,7 +13,7 @@ public interface ReleaseInfoMapper {
 	int selectReleaseInfoListCnt();
 
 	ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo);
-	List<FileVO> selectFileList();
+	List<FileVO> selectFileList(ReleaseInfoVO vo);
 
 	void updateReleaseInfo(ReleaseInfoVO vo);;
 

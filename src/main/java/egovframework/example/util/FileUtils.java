@@ -24,6 +24,7 @@ public class FileUtils {
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
         
+        // 저장할 컬럼들을 생성
         MultipartFile multipartFile = null;
         String originFileNm = null;
         String originalFileExtension = null;

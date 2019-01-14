@@ -35,10 +35,4 @@
 		FROM T_REVIEW
 		WHERE USE_YN = 'Y'	
 	</select>
-	
-	
-	
-	
-	
-	
 </mapper>

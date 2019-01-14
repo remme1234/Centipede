@@ -10,7 +10,7 @@ public class FileVO {
 	private String fileSize;
 	private String rsgstDt;
 	private String rsgstrId;
-	private String useId;
+	private String useYn;
 	
 	public String getFileNo() {return fileNo;}
 	public void setFileNo(String fileNo) {this.fileNo = fileNo;}
@@ -36,7 +36,7 @@ public class FileVO {
 	public String getRsgstrId() {return rsgstrId;}
 	public void setRsgstrId(String rsgstrId) {this.rsgstrId = rsgstrId;}
 	
-	public String getUseId() {return useId;}
-	public void setUseId(String useId) {this.useId = useId;}
+	public String getUseId() {return useYn;}
+	public void setUseId(String useId) {this.useYn = useId;}
 	
 }

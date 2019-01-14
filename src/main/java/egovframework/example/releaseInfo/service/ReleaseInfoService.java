@@ -11,13 +11,11 @@ public interface ReleaseInfoService {
 	List<ReleaseInfoVO> selectReleaseInfoList();
 
 	ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo);
-	List<FileVO> selectFileList();
-
+	List<FileVO> selectFileList(ReleaseInfoVO vo);
+	
 	void updateReleaseInfo(ReleaseInfoVO vo, HttpServletRequest request)throws Exception;
 
 	void deleteReleaseInfoDelete(ReleaseInfoVO vo);
 
 	void addVisitCnt(ReleaseInfoVO vo);
-
-
 }

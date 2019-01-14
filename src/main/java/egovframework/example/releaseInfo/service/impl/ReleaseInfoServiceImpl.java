@@ -43,30 +43,33 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	public ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo) {
 		return releaseInfoMapper.selectReleaseInfoDetail(vo);
 	}
-
+	
+	// 첨부파일 리스트를 호출하는 메서드
 	@Override
-	public List<FileVO> selectFileList() {
-		return releaseInfoMapper.selectFileList();
+	public List<FileVO> selectFileList(ReleaseInfoVO vo) {
+		List<FileVO> fileInfo = releaseInfoMapper.selectFileList(vo);
+		return fileInfo;
 	}
 	
+	// 발매정보 게시글 입력기능 , 첨부파일 등록 기능
 	@Override
 	public void updateReleaseInfo(ReleaseInfoVO vo, HttpServletRequest request) throws Exception {
 		releaseInfoMapper.updateReleaseInfo(vo);
 		
-		 MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-		 Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		 MultipartFile multipartFile = null;
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
 		 
-		 while(iterator.hasNext()){
-		        multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-		        if(multipartFile.isEmpty() == false){
+		while(iterator.hasNext()){
+		       multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+		       if(multipartFile.isEmpty() == false){
 		            System.out.println("------------- file start -------------");
 		            System.out.println("name : "+multipartFile.getName());
 		            System.out.println("filename : "+multipartFile.getOriginalFilename());
 		            System.out.println("size : "+multipartFile.getSize());
 		            System.out.println("-------------- file end --------------\n");
-		        }
-		 }
+		       }
+		}
 		 
 		 List<FileVO> list = fileUtils.parseInsertFileInfo(vo, request);
 	     for(int i=0, size=list.size(); i<size; i++){

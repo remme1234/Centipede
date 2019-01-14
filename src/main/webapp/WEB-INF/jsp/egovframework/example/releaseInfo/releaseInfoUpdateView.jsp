@@ -20,10 +20,9 @@
 			return
 		}
 		
-		
 		$form.attr("action","releaseInfoUpdate.do")
 		$form.submit()
-		alert("입력한 글이 정상적으로 등록되었습니다.")		
+		alert("입력한 글이 정상적으로 등록되었습니다.")	
 	}
 	
 	
@@ -46,9 +45,8 @@
 			</tr>
 		</tbody>
 	</table>
-	<input type="file" name="file">
+	<input type="file" name="file" >
 	
-	<!-- menu.save 메서드는 default-header에 정의되어 있습니다. -->
 	<button type="button" onclick="save()">저장</button>
 	
 	<!-- 취소시 번호설정 -->

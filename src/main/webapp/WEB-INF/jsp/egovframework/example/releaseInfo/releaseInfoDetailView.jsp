@@ -20,10 +20,11 @@
 		<tr>
       	<th>첨부파일</th>
             <td>
-             <c:forEach items="${fileDetail }" var="fvo" >
-                 <input type="hidden" id="NUMBER" value="${fvo.NUMBER }">
-                 <a href="#this" id="file">${fvo.ORIGIN_FILE_NM }</a>
-                 (${fvo.FILE_SIZE}kb)
+             <c:forEach items="${fileInfo }" var="fileInfo" >
+                 <c:if test="${fileInfo.fileNo ne null}">
+                 	<input type="hidden" id="number" value="${fileInfo.fileNo }">
+                 	<a href="#this" id="file">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
+                 </c:if>
              </c:forEach>
             </td>
         </tr>
