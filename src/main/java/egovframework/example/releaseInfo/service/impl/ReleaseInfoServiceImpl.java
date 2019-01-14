@@ -30,6 +30,7 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 		List<ReleaseInfoVO> list = releaseInfoMapper.selectReleaseInfoList();
 		int cnt = releaseInfoMapper.selectReleaseInfoListCnt();
 		
+		// 게시글 번호 설정
 		for(ReleaseInfoVO vo : list) {
 			vo.setCount(cnt);
 			cnt -= 1;
@@ -40,10 +41,14 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	
 	@Override
 	public ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo) {
-		
 		return releaseInfoMapper.selectReleaseInfoDetail(vo);
 	}
 
+	@Override
+	public List<FileVO> selectFileList() {
+		return releaseInfoMapper.selectFileList();
+	}
+	
 	@Override
 	public void updateReleaseInfo(ReleaseInfoVO vo, HttpServletRequest request) throws Exception {
 		releaseInfoMapper.updateReleaseInfo(vo);
@@ -78,4 +83,5 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	public void addVisitCnt(ReleaseInfoVO vo) {
 		releaseInfoMapper.addVisitCnt(vo);
 	}
+
 }

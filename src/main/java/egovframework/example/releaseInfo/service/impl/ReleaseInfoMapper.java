@@ -13,11 +13,12 @@ public interface ReleaseInfoMapper {
 	int selectReleaseInfoListCnt();
 
 	ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo);
+	List<FileVO> selectFileList();
 
-	void updateReleaseInfo(ReleaseInfoVO vo)throws Exception;
-	void insertFile(FileVO fileVO);
+	void updateReleaseInfo(ReleaseInfoVO vo);;
 
 	void deleteReleaseInfoDelete(ReleaseInfoVO vo);
 	
 	void addVisitCnt(ReleaseInfoVO vo);
+	void insertFile(FileVO fileVO);
 }

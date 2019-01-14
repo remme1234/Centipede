@@ -49,9 +49,22 @@
 		WHERE  NUMBER = #{number}
 	</select>
 	
+	<!-- 세부항목에 첨부파일 불러오기 -->
+	<select id="selectFileList" parameterType="egovframework.example.util.FileVO" resultType="egovframework.example.util.FileVO">
+	    <![CDATA[
+	        SELECT FILE_NO,
+	               ORIGIN_FILE_NM,
+	               ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+	        FROM   T_FILE
+	        WHERE  BOARD_UID = #{boardUid}
+	               AND USE_YN = 'Y'
+	               AND FILE_NO = #{fileNo}
+	    ]]>
+	</select>
+	
 	<!-- 발매정보게시판 작성 및 수정시 DB에 추가 하는 쿼리 -->
 	<update id="updateReleaseInfo" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO">
-		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, USER_ID, VISIT_CNT, RSGST_DT, USE_YN)
+		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, USER_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
 		VALUES 		(#{boardUid}
 		<if test='number == null or "".equals(number)'>
 			, (SELECT MAX(NUMBER)+1 FROM T_RELEASEINFO AS TC)
@@ -59,7 +72,7 @@
 		<if test='number != null and !"".equals(number)'>
 			,#{number}
 		</if>
-		, #{title}, #{contents}, "SAMPLE", "0", now(), "Y")
+		, #{title}, #{contents}, "SAMPLE", "0", now(), (SELECT MAX(FILE_NO)+1 FROM T_RELEASEINFO AS TC),"Y")
 		ON DUPLICATE KEY 
 		UPDATE TITLE 	= #{title},
 			   CONTENTS = #{contents}
@@ -95,33 +108,18 @@
 	        )
 	        VALUES
 	        (
-	            (SELECT MAX(FILE_NO)+1 FROM T_FILE AS TC),
+	            (SELECT (COUNT(1)+1) FROM T_FILE AS T_F),
 	            #{boardUid},
 	            #{originFileNm},
 	            #{savedFileNm},
 	            #{savedFilePath},
 	            #{fileSize},
 	            NOW(),
-	            'Admin'
+	            'SAMPLE'
 	        )
     	]]>
 	</insert>
 	
-	<!-- 첨부파일 불러오기 -->
-	<select id="selectFileList" parameterType="egovframework.example.util.FileVO" resultType="egovframework.example.util.FileVO">
-	    <![CDATA[
-	        SELECT
-	            NUMBER,
-	            ORIGIN_FILE_NM,
-	            ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
-	        FROM
-	            T_FILE
-	        WHERE
-	            BOARD_UID = #{boardUid}
-	            AND DEL_GB = 'Y'
-	            AND NUMBER = #{number}
-	    ]]>
-	</select>
 
 
 	

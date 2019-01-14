@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.example.releaseInfo.service.ReleaseInfoService;
 import egovframework.example.releaseInfo.service.ReleaseInfoVO;
+import egovframework.example.util.FileVO;
 
 @Controller
 public class ReleaseInfoController {
@@ -33,12 +34,15 @@ public class ReleaseInfoController {
 	public String releaseInfoDetailView (ModelMap model, ReleaseInfoVO vo) {
 		// 상세정보 조회
 		vo = releaseInfoService.selectReleaseInfoDetail(vo);
+		// 첨부파일정보 조회
+		List<FileVO> fvo = releaseInfoService.selectFileList();
 		
 		// 조회수 증가
 		releaseInfoService.addVisitCnt(vo);
 		model.addAttribute("releaseInfoDetail", vo);
-		model.addAttribute("fileDetail", vo);
+		model.addAttribute("fileDetail", fvo);
 		
+		System.out.println("fileDetail : " + fvo);
 		return "releaseInfo/releaseInfoDetailView.tiles";
 	}
 	
