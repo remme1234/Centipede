@@ -18,15 +18,15 @@
 			<td colspan="2">${releaseInfoDetail.contents}</td>
 		</tr>
 		<tr>
-      	<th>첨부파일</th>
+	        <c:forEach items="${fileInfo }" var="fileInfo" >
+	      	<th>첨부파일</th>
             <td>
-             <c:forEach items="${fileInfo }" var="fileInfo" >
-                 <c:if test="${fileInfo.fileNo ne null}">
-                 	<input type="hidden" id="number" value="${fileInfo.fileNo }">
-                 	<a href="#this" id="file">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
-                 </c:if>
-             </c:forEach>
+              <c:if test="${fileInfo.fileNo ne null}">
+              	<input type="hidden" id="number" value="${fileInfo.fileNo }">
+              	<a href="#this" id="file">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
+              </c:if>
             </td>
+	        </c:forEach>
         </tr>
 	</tbody>
 </table>
