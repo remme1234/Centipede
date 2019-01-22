@@ -12,6 +12,7 @@ public class ReleaseInfoVO {
 	private String rsgstDt;
 	private String useYn;
 	private String fileNo;
+	private String savedFileNm;
 	
 	public String getFileNo() {return fileNo;}
 	public void setFileNo(String fileNo) {this.fileNo = fileNo;}
@@ -42,4 +43,7 @@ public class ReleaseInfoVO {
 	
 	public String getUseYn() {return useYn;}
 	public void setUseYn(String useYn) {this.useYn = useYn;}
+	
+	public String getSavedFileNm() {return savedFileNm;}
+	public void setSavedFileNm(String savedFileNm) {this.savedFileNm = savedFileNm;}
 }

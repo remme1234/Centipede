@@ -6,4 +6,6 @@ public interface ReviewService {
 
 	List<ReviewVO> selectReviewList();
 
+	ReviewVO selectReviewDetailList(ReviewVO vo);
+
 }

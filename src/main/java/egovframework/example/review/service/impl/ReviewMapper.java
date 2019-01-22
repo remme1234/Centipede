@@ -10,6 +10,7 @@ public interface ReviewMapper {
 
 	List<ReviewVO> selectReviewList();
 	int selectReviewListCnt();
+	ReviewVO selectReviewDetailList(ReviewVO vo);
 
 
 }

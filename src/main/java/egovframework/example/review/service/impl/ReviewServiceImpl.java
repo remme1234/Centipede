@@ -27,4 +27,9 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		return list;
 	}
+
+	@Override
+	public ReviewVO selectReviewDetailList(ReviewVO vo) {
+		return reviewMapper.selectReviewDetailList(vo);
+	}
 }

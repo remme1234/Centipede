@@ -5,7 +5,7 @@ public class ReviewVO {
 	private int count;
 	private String boardUid;
 	private String number;
-	private String subTitle;
+	private String catCd;
 	private String title;
 	private String contents;
 	private String userId;
@@ -19,8 +19,6 @@ public class ReviewVO {
 	public String getNumber() {return number;}
 	public void setNumber(String number) {this.number = number;}
 	
-	public String getSubTitle() {return subTitle;}
-	public void setSubTitle(String subTitle) {this.subTitle = subTitle;}
 	
 	public String getTitle() {return title;}
 	public void setTitle(String title) {this.title = title;}
@@ -42,5 +40,8 @@ public class ReviewVO {
 	
 	public int getCount() {return count;}
 	public void setCount(int count) {this.count = count;}
+	
+	public String getCatCd() {return catCd;}
+	public void setCatCd(String catCd) {this.catCd = catCd;}
 	
 }

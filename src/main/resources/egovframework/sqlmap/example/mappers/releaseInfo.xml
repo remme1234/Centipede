@@ -12,7 +12,8 @@
 	 	<result property="visitCnt"		column="VISIT_CNT"/>
 	 	<result property="rsgstDt"		column="RSGST_DT"/>
 	 	<result property="useYn"		column="USE_YN"/>
-	 	<result property="fileNo"			column="FILE_NO"/>
+	 	<result property="fileNo"		column="FILE_NO"/>
+	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
 	</resultMap>
 	
 	<!-- 첨부파일정보VO resultMap 설정 -->
@@ -29,15 +30,18 @@
 	
 	<!-- 발매정보게시판 목록 불러오기 -->
 	<select id="selectReleaseInfoList" resultMap="releaseInfoList">
-		SELECT   BOARD_UID
-			   , NUMBER
-			   , TITLE
-			   , CONTENTS
-			   , USER_ID
-			   , VISIT_CNT
-			   , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
-			   , USE_YN
-		FROM     T_RELEASEINFO
+		SELECT BOARD_UID
+			 , NUMBER
+		     , TITLE
+		     , CONTENTS
+		     , USER_ID
+		     , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+			 , USE_YN
+			 , (SELECT SAVED_FILE_NM
+				FROM   T_FILE
+				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		FROM  T_RELEASEINFO TR
 		WHERE USE_YN='Y'
 		ORDER BY RSGST_DT DESC
 	</select>
@@ -68,6 +72,8 @@
 	<select id="selectFileList" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO" resultMap="fileInfoList">
 		SELECT 	FILE_NO
 			   ,ORIGIN_FILE_NM
+			   ,SAVED_FILE_NM
+			   ,SAVED_FILE_PATH
 			   ,ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
 		FROM   	T_FILE 
 		WHERE  	FILE_NO =  #{fileNo}
@@ -79,12 +85,12 @@
 		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, USER_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
 		VALUES 		(#{boardUid}
 		<if test='number == null or "".equals(number)'>
-			, (SELECT MAX(NUMBER)+1 FROM T_RELEASEINFO AS TC)
+			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)
 		</if>
 		<if test='number != null and !"".equals(number)'>
 			,#{number}
 		</if>
-		, #{title}, #{contents}, "SAMPLE", "0", now(), (SELECT MAX(FILE_NO)+1 FROM T_RELEASEINFO AS TC),"Y")
+		, #{title}, #{contents}, "SAMPLE", "0", now(), (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_RELEASEINFO AS TC),"Y")
 		ON DUPLICATE KEY 
 		UPDATE TITLE 	= #{title},
 			   CONTENTS = #{contents}

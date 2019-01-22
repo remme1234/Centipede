@@ -25,7 +25,6 @@ public class ReleaseInfoController {
 		// 목록 조회
 		List<ReleaseInfoVO> releaseInfoList = releaseInfoService.selectReleaseInfoList();
 		model.addAttribute("releaseInfoList", releaseInfoList);
-		System.out.println(releaseInfoList);
 		return "releaseInfo/releaseInfoView.tiles";
 	}
 	
@@ -34,12 +33,8 @@ public class ReleaseInfoController {
 	public String releaseInfoDetailView (ModelMap model, ReleaseInfoVO vo) {
 		// 상세정보 조회
 		vo = releaseInfoService.selectReleaseInfoDetail(vo);
-		System.out.println("파일 fileNo : " + vo.getFileNo());
-		System.out.println("게시글 number : " + vo.getNumber());
 		// 첨부파일정보 조회
 		List<FileVO> fileInfo = releaseInfoService.selectFileList(vo);
-		System.out.println("두번쩌 fileNo : " + vo.getFileNo());
-		System.out.println("fileInfo List : " + fileInfo);
 		
 		// 조회수 증가
 		releaseInfoService.addVisitCnt(vo);
@@ -65,6 +60,7 @@ public class ReleaseInfoController {
 		
 		return "redirect:releaseInfoView.do";
 	}
+	
 	
 	// 발매정보게시판 삭제 기능
 	@RequestMapping(value="releaseInfoDelete.do")

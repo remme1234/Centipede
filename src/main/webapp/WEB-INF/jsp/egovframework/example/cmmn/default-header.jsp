@@ -23,5 +23,5 @@
 			} 
 		}
 	</script>
-	<a href="main.do"> <h2>centipede</h2></a>
 </div>
+<hr/>

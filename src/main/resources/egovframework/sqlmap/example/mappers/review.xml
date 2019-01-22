@@ -5,7 +5,7 @@
 	<resultMap type="egovframework.example.review.service.ReviewVO" id="reviewList">
 		<result property="boardUid"		column="BOARD_UID"/>
 	 	<result property="number"		column="NUMBER"/>
-	 	<result property="subTitle"		column="SUB_TITLE"/>
+	 	<result property="catCd"		column="CAT_CD"/>
 	 	<result property="title"		column="TITLE"/>
 	 	<result property="contents"		column="CONTENTS"/>
 	 	<result property="userId"		column="USER_ID"/>
@@ -18,21 +18,42 @@
 	<select id="selectReviewList" resultMap="reviewList">
 		SELECT 	 BOARD_UID
 				,NUMBER
-				,SUB_TITLE
+				,CASE 
+					WHEN CAT_CD = 01 THEN '나이키'
+					WHEN CAT_CD = 02 THEN '아디다스'
+					WHEN CAT_CD = 03 THEN '컨버스'
+					ELSE '기타'  	
+					END CAT_CD
 				,TITLE
 				,CONTENTS
 				,USER_ID
 				,VISIT_CNT
-				,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') 
+				,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 				,USE_YN
 		FROM 	T_REVIEW
 		WHERE USE_YN = 'Y'
 		ORDER BY RSGST_DT DESC
 	</select>
 	
+	<!-- 리뷰게시판 목록개수 불러오기 -->
 	<select id="selectReviewListCnt" resultType="java.lang.Integer">
 		SELECT COUNT(1)
 		FROM T_REVIEW
 		WHERE USE_YN = 'Y'	
+	</select>
+	
+	<!-- 리뷰게시판 상세정보 불러오기 -->
+	<select id="selectReviewDetailList" resultMap="reviewList">
+		SELECT  BOARD_UID
+			   ,USER_ID
+			   ,NUMBER
+			   ,TITLE
+			   ,CAT_CD
+			   ,CONTENTS
+			   ,VISIT_CNT
+			   ,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+			   ,FILE_NO
+		FROM	T_REVIEW
+		WHERE   NUMBER=#[number]
 	</select>
 </mapper>

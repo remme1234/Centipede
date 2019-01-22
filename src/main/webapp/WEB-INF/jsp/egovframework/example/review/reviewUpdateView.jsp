@@ -37,18 +37,28 @@
 
 <form name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0001" />
-	<input type="hidden" name="number" value="${releaseInfoDetail.number}" />
+	<input type="hidden" name="number" value="${reviewDetail.number}" />
 	<table class="table">
 		<thead>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="title" value="${releaseInfoDetail.title}" style= width:300px></td>
+				<td><input type="text" name="title" value="${reviewDetail.title}" style= width:300px></td>
+			</tr>
+			<tr>
+				<th>말머리</th>
+				<td>
+					<select name="catCd">
+						<option value="01">나이키</option>
+						<option value="02">아디다스</option>
+						<option value="03">컨버스</option>
+					</select>
+				</td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>	
 				<th>내용</th>
-				<td><textarea rows="13" cols="50" name="contents" style="resize: vertical;">${releaseInfoDetail.contents}</textarea></td>
+				<td><textarea rows="13" cols="50" name="contents" style="resize: vertical;">${reviewDetail.contents}</textarea></td>
 			</tr>
 		</tbody>
 	</table>
@@ -59,7 +69,7 @@
 	
 	<!-- 취소시 번호설정 -->
 	<c:if test="${releaseInfoDetail.number ne null}">
-		<a href ="releaseInfoDetailView.do?number=${releaseInfoDetail.number}"><button type="button">취소</button> </a>
+		<a href ="releaseInfoDetailView.do?number=${reviewDetail.number}"><button type="button">취소</button> </a>
 	</c:if>	
 	<c:if test="${releaseInfoDetail.number eq null}">
 		<a href="releaseInfoView.do"><button type="button">취소</button></a>

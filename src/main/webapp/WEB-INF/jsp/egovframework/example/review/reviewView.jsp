@@ -4,9 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 
 
+<div class="category">
+	<!-- 추후 말머리 카테고리를 받아서 쓰도록 만들 예정 -->
+</div>
+
  
 <table class="table table-hover">
-
 	<colgroup>
 		<col width="10%" />
 		<col width="15%" />
@@ -29,7 +32,7 @@
 		<c:forEach items="${reviewList}" var="vo">
 			<tr>
 				<td>${vo.count}</td>
-				<td>[${vo.subTitle}]</td>
+				<td>[${vo.catCd}]</td>
 				<td><a href="reviewDetailView.do?number=${vo.number}">${vo.title}</a></td>
 				<td>${vo.userId}</td>
 				<td>${vo.rsgstDt}</td>
@@ -39,4 +42,4 @@
 	</tbody>
 </table>
 
-<a href="releaseInfoUpdateView.do"><button type="button">글 작성</button></a>
+<a href="reviewUpdateView.do"><button type="button">글 작성</button></a>

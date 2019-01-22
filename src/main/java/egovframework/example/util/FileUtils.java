@@ -18,7 +18,7 @@ import egovframework.example.releaseInfo.service.ReleaseInfoVO;
 public class FileUtils {
 	
 	// 저장될 위치 선언
-    private static final String filePath = "C:\\dev\\file\\";
+    private static final String filePath = "C:\\eGovFrameDev-3.6.0-64bit\\shinu_pjt\\centipede\\src\\main\\webapp\\images\\centipede\\releaseInfo\\";
     
     public List<FileVO> parseInsertFileInfo(ReleaseInfoVO vo, HttpServletRequest request) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;

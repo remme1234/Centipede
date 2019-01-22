@@ -20,9 +20,7 @@
   <term name="순서" description="순서" physicalName="SEQ" physicalDescription="sequence"/>
   <term name="사용" description="사용" physicalName="USE" physicalDescription="use"/>
   <term name="여부" description="여부" physicalName="YN" physicalDescription="Y/N"/>
-  <term name="등록자" description="등록자" physicalName="REGR" physicalDescription="registrator"/>
   <term name="수정자" description="수정자" physicalName="UPDR" physicalDescription="updator"/>
-  <term name="등록" description="등록" physicalName="REG" physicalDescription="regist"/>
   <term name="수정" description="수정" physicalName="UPD" physicalDescription="update"/>
   <term name="회원" description="회원" physicalName="MBR" physicalDescription="member"/>
   <term name="상태" description="상태" physicalName="CND" physicalDescription="condition"/>
@@ -48,7 +46,7 @@
   <term name="필수" description="필수" physicalName="ESSN" physicalDescription="essential"/>
   <term name="HTML" description="HTML" physicalName="HTML" physicalDescription="HTML"/>
   <term name="시작" description="시작" physicalName="STRT" physicalDescription="start"/>
-  <term name="내용" description="내용" physicalName="CONTS" physicalDescription="contents"/>
+  <term name="내용" description="내용" physicalName="CONTENTS" physicalDescription="contents"/>
   <term name="가입" description="가입" physicalName="JOIN" physicalDescription="join"/>
   <term name="최종" description="최종" physicalName="LAST" physicalDescription="last"/>
   <term name="주문" description="주문" physicalName="ORD" physicalDescription="order"/>
@@ -67,7 +65,6 @@
   <term name="이미지" description="이미지" physicalName="IMG" physicalDescription="image"/>
   <term name="첨부" description="첨부" physicalName="ATT" physicalDescription="attach"/>
   <term name="파일" description="파일" physicalName="FILE" physicalDescription="file"/>
-  <term name="원본" description="원본" physicalName="ORG" physicalDescription="original"/>
   <term name="물리" description="물리" physicalName="PHS" physicalDescription="physical"/>
   <term name="경로" description="경로" physicalName="PATH" physicalDescription="path"/>
   <term name="확장자" description="확장자" physicalName="EXT" physicalDescription="extention"/>
@@ -80,4 +77,13 @@
   <term name="적용" description="적용" physicalName="APPL" physicalDescription="application"/>
   <term name="할인" description="할인" physicalName="DIS" physicalDescription="discount"/>
   <term name="종료" description="종료" physicalName="END" physicalDescription="end"/>
+  <term name="게시판" description="게시판" physicalName="BOARD" physicalDescription="board"/>
+  <term name="제목" description="제목" physicalName="TITLE" physicalDescription="title"/>
+  <term name="사용자" description="사용자" physicalName="USER" physicalDescription="user"/>
+  <term name="방문" description="방문" physicalName="VISIT" physicalDescription="visit"/>
+  <term name="등록" description="등록" physicalName="RSGST" physicalDescription="regist"/>
+  <term name="고유번호" description="고유번호" physicalName="UID" physicalDescription="unique id"/>
+  <term name="저장" description="저장" physicalName="SAVED" physicalDescription="saved"/>
+  <term name="등록자" description="등록자" physicalName="RSGSTR" physicalDescription="reistor"/>
+  <term name="원본" description="원본" physicalName="ORIGIN" physicalDescription="original"/>
 </tm:TermDictionary>

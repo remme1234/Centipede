@@ -13,8 +13,8 @@
 		}).mouseleave(function() {
 			$(this).find("div:visible").slideUp(50, function() {
 				// #menubar-menus li:hover 처리를 하지 않을 경우 아래 라인 활성,
-				$(this).parent().css("background", "#666");
-				$(this).parent().children("a").css("color", "#FFF");
+				$(this).parent().css("background", "#FFF");
+				$(this).parent().children("a").css("color", "#030303");
 			});
 		});
 	});
@@ -24,16 +24,19 @@
 	background: #424242; margin: 50px 0;
 } */
 #menubar {
-	width: 100%; height: 40px; background: #666;
+	width: 100%; height: 40px; background: #FFF;
 }
 #menubar-menus {
-	width: 600px; margin: 0 auto; list-style: none; padding: 0; text-align: center; font-size: 0; display: table;
+	width: 900px; margin: 0 auto; list-style: none; padding: 0; text-align: center; font-size: 0; display: table;
 }
-#menubar-menus > li {
-	width: 200px; height: 40px; display: table-cell; vertical-align: middle; text-align: center; font-size: 14px;
+#menubar-menus > .menu {
+	width: 200px; height: 40px; display: table-cell; vertical-align: middle; text-align: center; font-size: 20px;
+}
+#menubar-menus > #mainLogo {
+	width: 200px; height: 40px; display: table-cell; vertical-align: middle; text-align: center; font-size: 18px;
 }
 #menubar-menus > li > a {
-	 display: table-cell; vertical-align: middle; width: 200px; height: 40px; text-decoration: none; color: #FFF;
+	 display: table-cell; vertical-align: middle; width: 200px; height: 40px; text-decoration: none; color: #030303;
 	/* 서브 메뉴 영역이 가로 방향으로 100% 보이는 것을 원치 않을 때 아래 라인을 활성 */
 	/*position: relative;*/
 }
@@ -42,32 +45,35 @@
 	background: #FFF;
 }*/
 #menubar-menus > li > div {
-	position: absolute; background: #FFF; color: #000; left: 0; width: 100%; top: auto; display: none; opacity: 0.5;
+	position: absolute; background: #FFF; color: #000; left: 0; width: 100%; top: auto; display: none; /*opacity: 0.5;*/
 	padding: 50px 0; z-index: 10;
 }
 
 </style>
-
 <div id="menubar">
 	<ul id="menubar-menus">
-		<li>
+		<li id="mainLogo" class="menu">
+			<a href="main.do">
+				<img src="images/centipede/main/logo_sample.jpg" style="width:100px; height:80px;"/>
+			</a>
+		</li>
+		<li class="menu">
 			<a href="#">introduce</a>
 			<div><p>Submenu 1</p></div>		
 		</li>
-		<li>
+		<li class="menu">
 			<a href="#">community</a>
 			<div>
 				<p><a href="releaseInfoView.do">Release Information</a></p>	
 				<p><a href="reviewView.do">Sneaker Review</a></p>
 			</div>	
 		</li>
-		<li>
+		<li class="menu">
 			<a href="#">notice</a>
 		</li>
-		<li>
+		<li class="menu">
 			<a href="#">my page</a>
 			<div><p>Submenu 4</p></div>		
 		</li>
 	</ul>
 </div>
-
