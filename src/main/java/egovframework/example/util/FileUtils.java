@@ -54,7 +54,7 @@ public class FileUtils {
                 file = new File(filePath + savedFileNm);
                 multipartFile.transferTo(file);
                  
-                // 위에서 만든 정보를 list에 추가하는 부분
+                // 위에서 만든 정보를 list에 추가하는 부분0
                 fvo = new FileVO();
                 fvo.setBoardUid(boardUid);
                 fvo.setOriginFileNm(originFileNm);

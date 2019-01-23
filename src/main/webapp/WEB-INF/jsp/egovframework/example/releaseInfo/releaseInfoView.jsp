@@ -3,6 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
  
+ 
+
 <style>
 .releases-list .draw-title {
 	font-weight: 700;
@@ -30,28 +32,6 @@ li { list-style: none }
 }
 </style>
  
-<%-- <table class="table table-hover">
-	<thead>
-		<tr>
-			<td>번호</td>
-			<td>제목</td>
-			<td>글쓴이</td>
-			<td>날짜</td>
-			<td>조회수</td>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach items="${releaseInfoList}" var="vo">
-			<tr>
-				<td>${vo.count}</td>
-				<td><a href="releaseInfoDetailView.do?number=${vo.number}">${vo.title}</a></td>
-				<td>${vo.userId}</td>
-				<td>${vo.rsgstDt}</td>
-				<td>${vo.visitCnt}</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table> --%>
 <div class="title" style="text-align:center ">
 <h3>RELEASE INFO</h3>
 </div>
@@ -62,7 +42,7 @@ li { list-style: none }
 			<img src="centipede/../images/centipede/releaseInfo/${vo.savedFileNm}" width="400px" height="200px">
 		</a>
 		<h3 class="draw-title">${vo.title}</h3>
-		<div>18.12.18</div>	
+		<div>${vo.relDt}</div>	
 	</li>
 	</c:forEach>
 </ul>

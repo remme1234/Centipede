@@ -3,12 +3,18 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    
+
 <script>
 	var save = function() {
 		var $form = $("form[name=saveForm]"),  
 			$title = $("input[name=title]"),
 			$contents = $("textarea[name=contents]");
 			$file = $("input[name=file]");
+			$relDt = $("input[name=relDt]");
 		
 		if($title.val() === null || $title.val() === "") {
 			alert ("제목을 입력해주세요");
@@ -25,14 +31,28 @@
 			$file.focus()
 			return
 		}
-		
+		if($relDt.val() === null || $relDt.val() === ""){
+			alert("발매일을 지정해 주세요")
+			$file.focus()
+			return
+		}
 		
 		$form.attr("action","releaseInfoUpdate.do")
 		$form.submit()
 		alert("입력한 글이 정상적으로 등록되었습니다.")	
 	}
 	
-	
+	// 달력출력 메서드 
+		$(function() {
+			$( "#datepicker1" ).datepicker({
+				dateFormat: 'yy-mm-dd',
+			    changeMonth: true, 
+			    changeYear: true,
+			    nextText: '다음 달',
+			    prevText: '이전 달' 
+			});
+		});
+    
 </script>
 
 <form name="saveForm" method="POST" action="" enctype="multipart/form-data">
@@ -49,6 +69,10 @@
 			<tr>	
 				<th>내용</th>
 				<td><textarea rows="13" cols="50" name="contents" style="resize: vertical;">${releaseInfoDetail.contents}</textarea></td>
+			</tr>
+			<tr>
+				<th>발매일</th>
+				<td><input type="text" id="datepicker1" name="relDt"></td>
 			</tr>
 		</tbody>
 	</table>
