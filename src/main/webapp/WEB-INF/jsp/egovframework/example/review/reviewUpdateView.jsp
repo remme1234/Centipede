@@ -26,8 +26,7 @@
 			return
 		}
 		
-		
-		$form.attr("action","releaseInfoUpdate.do")
+		$form.attr("action","reviewUpdate.do")
 		$form.submit()
 		alert("입력한 글이 정상적으로 등록되었습니다.")	
 	}
@@ -35,7 +34,7 @@
 	
 </script>
 
-<form name="saveForm" method="POST" action="" enctype="multipart/form-data">
+<form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0001" />
 	<input type="hidden" name="number" value="${reviewDetail.number}" />
 	<table class="table">

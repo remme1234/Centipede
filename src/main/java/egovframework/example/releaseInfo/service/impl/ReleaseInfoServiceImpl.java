@@ -54,8 +54,11 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	// 발매정보 게시글 입력기능 , 첨부파일 등록 기능
 	@Override
 	public void updateReleaseInfo(ReleaseInfoVO vo, HttpServletRequest request) throws Exception {
+		
+		// 발매정보 입력한 값
 		releaseInfoMapper.updateReleaseInfo(vo);
 		
+		// 이하 파일 저장 메서드
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 		MultipartFile multipartFile = null;

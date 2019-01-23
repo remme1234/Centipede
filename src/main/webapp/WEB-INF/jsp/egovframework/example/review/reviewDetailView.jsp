@@ -3,6 +3,21 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
+<script>
+	var review = {
+		
+		del : function() {
+			if(confirm("리뷰 게시글을 삭제하시겠습니까?")) {
+				var doc = document.sendForm;
+				
+				doc.action = "reviewDelete.do";
+				doc.submit();
+			}
+		} 
+	}
+</script>
+
+
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -25,7 +40,7 @@
 		              </c:if>
 	             </c:forEach>
 			</div> --%>
-				<p>${reviewDetail.category}</p>
+				<p>${reviewDetail.catCd}</p>
 				<p>${reviewDetail.contents}</p>
 			</td>
 		</tr>
@@ -44,11 +59,11 @@
 </table>
 
 <form action="" name="sendForm" method="POST">
-	<input type="hidden" name="number" value="${releaseInfoDetail.number}" />
+	<input type="hidden" name="number" value="${reviewDetail.number}" />
 </form>
 
 <td>&nbsp;</td>
-<a href="releaseInfoView.do"><button type="button" >목록으로</button></a>
-<button type="button" onclick="menu.del()">삭제하기</button>
-<a href="releaseInfoUpdateView.do?number=${releaseInfoDetail.number}"><button type="button">수정하기</button></a>
+<a href="reviewView.do"><button type="button" >목록으로</button></a>
+<button type="button" onclick="review.del()">삭제하기</button>
+<a href="reviewUpdateView.do?number=${reviewDetail.number}"><button type="button">수정하기</button></a>
 <td>&nbsp;</td>

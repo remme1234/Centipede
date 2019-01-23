@@ -92,7 +92,14 @@
 		<if test='number != null and !"".equals(number)'>
 			,#{number}
 		</if>
-		, #{title}, #{contents},#{relDt}, "SAMPLE", "0", now(), (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_RELEASEINFO AS TC),"Y")
+		, #{title}, #{contents},#{relDt}, "SAMPLE", "0", now()
+		<if test='fileNo == null or "".equals(fileNo)'>
+			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_RELEASEINFO AS TR)
+		</if>
+		<if test='fileNo != null and !"".equals(fileNo)'>
+			,#{fileNo}
+		</if>
+		,"Y")
 		ON DUPLICATE KEY 
 		UPDATE TITLE 	= #{title},
 			   CONTENTS = #{contents}
@@ -114,7 +121,6 @@
 	
 	<!-- 첨부파일저장 -->
 	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-    	<![CDATA[
 	        INSERT INTO T_FILE
 	        (
 	            FILE_NO,
@@ -127,16 +133,20 @@
 	            RSGSTR_ID
 	        )
 	        VALUES
-	        (
-	            (SELECT (COUNT(1)+1) FROM T_FILE AS T_F),
-	            #{boardUid},
-	            #{originFileNm},
-	            #{savedFileNm},
-	            #{savedFilePath},
-	            #{fileSize},
-	            NOW(),
-	            'SAMPLE'
+	        (	
+		        <if test='fileNo == null or "".equals(fileNo)'>
+					(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
+				</if>
+				<if test='fileNo != null and !"".equals(fileNo)'>
+					,#{fileNo}
+				</if>
+	            ,#{boardUid}
+	            ,#{originFileNm}
+	            ,#{savedFileNm}
+	            ,#{savedFilePath}
+	            ,#{fileSize}
+	            ,NOW()
+	            ,'SAMPLE'
 	        )
-    	]]>
 	</insert>
 </mapper>

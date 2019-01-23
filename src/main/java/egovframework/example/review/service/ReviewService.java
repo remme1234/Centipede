@@ -8,4 +8,6 @@ public interface ReviewService {
 
 	ReviewVO selectReviewDetailList(ReviewVO vo);
 
+	void deleteReviewDelete(ReviewVO vo);
+
 }

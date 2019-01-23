@@ -55,7 +55,7 @@
     
 </script>
 
-<form name="saveForm" method="POST" action="" enctype="multipart/form-data">
+<form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0001" />
 	<input type="hidden" name="number" value="${releaseInfoDetail.number}" />
 	<table class="table">

@@ -43,17 +43,24 @@
 	</select>
 	
 	<!-- 리뷰게시판 상세정보 불러오기 -->
-	<select id="selectReviewDetailList" resultMap="reviewList">
+	<select id="selectReviewDetailList" parameterType="egovframework.example.review.service.ReviewVO" resultMap="reviewList">
 		SELECT  BOARD_UID
-			   ,USER_ID
 			   ,NUMBER
-			   ,TITLE
 			   ,CAT_CD
+			   ,TITLE
 			   ,CONTENTS
+			   ,USER_ID
 			   ,VISIT_CNT
 			   ,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 			   ,FILE_NO
+			   ,USE_YN
 		FROM	T_REVIEW
-		WHERE   NUMBER=#[number]
+		WHERE   NUMBER=#{number}
 	</select>
+	
+	<update id="deleteReviewDelete" parameterType="egovframework.example.review.service.ReviewVO">
+		UPDATE T_REVIEW
+		SET USE_YN = 'N'
+		WHERE NUMBER = #{number}
+	</update>
 </mapper>

@@ -3,6 +3,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
+<script>
+	var releseInfo = {
+		
+		del : function() {
+			if(confirm("삭제하시겠습니까?")) {
+				var doc = document.sendForm;
+				
+				doc.action = "releaseInfoDelete.do";
+				doc.submit();
+			}
+		} 
+	}
+</script>
+
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -48,6 +62,6 @@
 
 <td>&nbsp;</td>
 <a href="releaseInfoView.do"><button type="button" >목록으로</button></a>
-<button type="button" onclick="menu.del()">삭제하기</button>
+<button type="button" onclick="releseInfo.del()">삭제하기</button>
 <a href="releaseInfoUpdateView.do?number=${releaseInfoDetail.number}"><button type="button">수정하기</button></a>
 <td>&nbsp;</td>

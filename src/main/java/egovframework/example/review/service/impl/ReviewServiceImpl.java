@@ -32,4 +32,9 @@ public class ReviewServiceImpl implements ReviewService{
 	public ReviewVO selectReviewDetailList(ReviewVO vo) {
 		return reviewMapper.selectReviewDetailList(vo);
 	}
+
+	@Override
+	public void deleteReviewDelete(ReviewVO vo) {
+		reviewMapper.deleteReviewDelete(vo);
+	}
 }

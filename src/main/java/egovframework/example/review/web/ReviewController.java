@@ -42,4 +42,12 @@ public class ReviewController {
 		
 		return "review/reviewUpdateView.tiles";
 	}
+	
+	// 리뷰게시판 삭제 기능
+	@RequestMapping(value="reviewDelete.do") 
+	public String reviewDelete(ReviewVO vo) {
+		reviewService.deleteReviewDelete(vo);
+		
+		return "redirect:reviewView.do";
+	}
 }
