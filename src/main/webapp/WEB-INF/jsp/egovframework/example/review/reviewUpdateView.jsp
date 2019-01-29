@@ -35,7 +35,7 @@
 </script>
 
 <form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
-	<input type="hidden" name="boardUid" value="B0001" />
+	<input type="hidden" name="boardUid" value="B0002" />
 	<input type="hidden" name="number" value="${reviewDetail.number}" />
 	<table class="table">
 		<thead>
@@ -67,11 +67,11 @@
 	<button type="button" onclick="save()">저장</button>
 	
 	<!-- 취소시 번호설정 -->
-	<c:if test="${releaseInfoDetail.number ne null}">
-		<a href ="releaseInfoDetailView.do?number=${reviewDetail.number}"><button type="button">취소</button> </a>
+	<c:if test="${reviewDetail.number ne null}">
+		<a href ="reviewDetailView.do?number=${reviewDetail.number}"><button type="button">취소</button> </a>
 	</c:if>	
-	<c:if test="${releaseInfoDetail.number eq null}">
-		<a href="releaseInfoView.do"><button type="button">취소</button></a>
+	<c:if test="${reviewDetail.number eq null}">
+		<a href="reviewView.do"><button type="button">취소</button></a>
 	</c:if>
 </form>
 

@@ -4,18 +4,19 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
 
 public interface ReleaseInfoService {
 
-	List<ReleaseInfoVO> selectReleaseInfoList();
+	List<BoardVO> selectReleaseInfoList();
 
-	ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo);
-	List<FileVO> selectFileList(ReleaseInfoVO vo);
+	BoardVO selectReleaseInfoDetail(BoardVO vo);
+	List<FileVO> selectFileList(BoardVO vo);
 	
-	void updateReleaseInfo(ReleaseInfoVO vo, HttpServletRequest request)throws Exception;
+	void updateReleaseInfo(BoardVO vo, HttpServletRequest request)throws Exception;
 
-	void deleteReleaseInfoDelete(ReleaseInfoVO vo);
+	void deleteReleaseInfoDelete(BoardVO vo);
 
-	void addVisitCnt(ReleaseInfoVO vo);
+	void addVisitCnt(BoardVO vo);
 }

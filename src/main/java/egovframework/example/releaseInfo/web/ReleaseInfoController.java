@@ -10,7 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.example.releaseInfo.service.ReleaseInfoService;
-import egovframework.example.releaseInfo.service.ReleaseInfoVO;
+import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
 
 @Controller
@@ -23,14 +23,14 @@ public class ReleaseInfoController {
 	@RequestMapping(value="releaseInfoView.do")
 	public String releaseInfoView (ModelMap model) {
 		// 목록 조회
-		List<ReleaseInfoVO> releaseInfoList = releaseInfoService.selectReleaseInfoList();
+		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList();
 		model.addAttribute("releaseInfoList", releaseInfoList);
 		return "releaseInfo/releaseInfoView.tiles";
 	}
 	
 	// 발매정보게시판 상세정보 조회
 	@RequestMapping(value="releaseInfoDetailView.do") 
-	public String releaseInfoDetailView (ModelMap model, ReleaseInfoVO vo) {
+	public String releaseInfoDetailView (ModelMap model, BoardVO vo) {
 		// 상세정보 조회
 		vo = releaseInfoService.selectReleaseInfoDetail(vo);
 		// 첨부파일정보 조회
@@ -46,7 +46,7 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 작성 및 수정 페이지
 	@RequestMapping(value="releaseInfoUpdateView.do") 
-	public String releaseInfoUpdateView (ModelMap model, ReleaseInfoVO vo) {
+	public String releaseInfoUpdateView (ModelMap model, BoardVO vo) {
 		vo = releaseInfoService.selectReleaseInfoDetail(vo);
 		model.addAttribute("releaseInfoDetail", vo);
 		
@@ -55,7 +55,7 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 작성 및 수정 기능
 	@RequestMapping(value="releaseInfoUpdate.do")
-	public String releaseInfoUpdate (ReleaseInfoVO vo, HttpServletRequest request) throws Exception{
+	public String releaseInfoUpdate (BoardVO vo, HttpServletRequest request) throws Exception{
 		releaseInfoService.updateReleaseInfo(vo, request);
 		
 		return "redirect:releaseInfoView.do";
@@ -64,7 +64,7 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 삭제 기능
 	@RequestMapping(value="releaseInfoDelete.do")
-	public String releaseInfoDelete(ReleaseInfoVO vo) {
+	public String releaseInfoDelete(BoardVO vo) {
 		releaseInfoService.deleteReleaseInfoDelete(vo);
 		
 		return "redirect:releaseInfoView.do";

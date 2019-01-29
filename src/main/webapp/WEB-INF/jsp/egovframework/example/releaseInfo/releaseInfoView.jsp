@@ -39,7 +39,7 @@ li { list-style: none }
 	<c:forEach items="${releaseInfoList}" var="vo">
 	<li>
 		<a href="releaseInfoDetailView.do?number=${vo.number}">
-			<img src="centipede/../images/centipede/releaseInfo/${vo.savedFileNm}" width="400px" height="200px">
+			<img src="centipede/../images/centipede/board/${vo.savedFileNm}" width="400px" height="200px">
 		</a>
 		<h3 class="draw-title">${vo.title}</h3>
 		<div>${vo.relDt}</div>	

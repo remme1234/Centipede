@@ -2,12 +2,22 @@ package egovframework.example.review.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import egovframework.example.util.BoardVO;
+import egovframework.example.util.FileVO;
+
 public interface ReviewService {
 
-	List<ReviewVO> selectReviewList();
+	List<BoardVO> selectReviewList();
 
-	ReviewVO selectReviewDetailList(ReviewVO vo);
+	BoardVO selectReviewDetailList(BoardVO vo);
+	List<FileVO> selectFileList(BoardVO vo);
 
-	void deleteReviewDelete(ReviewVO vo);
+	void deleteReviewDelete(BoardVO vo);
+
+	void updateReview(BoardVO vo, HttpServletRequest request) throws Exception;
+
+	List<BoardVO> selectCatCdList();
 
 }

@@ -11,16 +11,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import egovframework.example.releaseInfo.service.ReleaseInfoVO;
-
 // 어노테이션을 통해 스프링이 관리
 @Component("fileUtils")
 public class FileUtils {
 	
 	// 저장될 위치 선언
-    private static final String filePath = "C:\\eGovFrameDev-3.6.0-64bit\\shinu_pjt\\centipede\\src\\main\\webapp\\images\\centipede\\releaseInfo\\";
+    private static final String filePath = "C:\\eGovFrameDev-3.6.0-64bit\\shinu_pjt\\centipede\\src\\main\\webapp\\images\\centipede\\board\\";
     
-    public List<FileVO> parseInsertFileInfo(ReleaseInfoVO vo, HttpServletRequest request) throws Exception{
+    public List<FileVO> parseInsertFileInfo(BoardVO vo, HttpServletRequest request) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
         

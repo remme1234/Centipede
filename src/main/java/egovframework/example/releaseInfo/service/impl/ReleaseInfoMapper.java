@@ -2,23 +2,23 @@ package egovframework.example.releaseInfo.service.impl;
 
 import java.util.List;
 
-import egovframework.example.releaseInfo.service.ReleaseInfoVO;
+import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("ReleaseInfoMapper")
 public interface ReleaseInfoMapper {
 	
-	List<ReleaseInfoVO> selectReleaseInfoList();
+	List<BoardVO> selectReleaseInfoList();
 	int selectReleaseInfoListCnt();
 
-	ReleaseInfoVO selectReleaseInfoDetail(ReleaseInfoVO vo);
-	List<FileVO> selectFileList(ReleaseInfoVO vo);
+	BoardVO selectReleaseInfoDetail(BoardVO vo);
+	List<FileVO> selectFileList(BoardVO vo);
 
-	void updateReleaseInfo(ReleaseInfoVO vo);;
+	void updateReleaseInfo(BoardVO vo);;
 
-	void deleteReleaseInfoDelete(ReleaseInfoVO vo);
+	void deleteReleaseInfoDelete(BoardVO vo);
 	
-	void addVisitCnt(ReleaseInfoVO vo);
+	void addVisitCnt(BoardVO vo);
 	void insertFile(FileVO fileVO);
 }

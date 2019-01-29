@@ -33,28 +33,28 @@
 			<td colspan="2">
 			
 			<!-- 파일 경로 이상으로 추후 보완 예정 -->
-			<%-- <div id="imageArea">
+			<div id="imageArea">
 				<c:forEach items="${fileInfo }" var="fileInfo" >
 					 <c:if test="${fileInfo.fileNo ne null}">
-						<img src="centipede/../images/centipede/releaseInfo/${fileInfo.savedFileNm}"  width="200px" height="200px" >
+						<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}"  width="200px" height="200px" >
 		              </c:if>
 	             </c:forEach>
-			</div> --%>
+			</div>
 				<p>${reviewDetail.catCd}</p>
 				<p>${reviewDetail.contents}</p>
 			</td>
 		</tr>
 		<tr>
-	        <%-- <c:forEach items="${fileInfo }" var="fileInfo" >
-	      	<th>첨부파일</th>
-            <td>
-              <c:if test="${fileInfo.fileNo ne null}">
-              	<input type="hidden" id="number" value="${fileInfo.fileNo }">
-              	<a href="downloadFile.do?fileNo=${fileInfo.fileNo }">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
-              </c:if>
-            </td>
+	        <c:forEach items="${fileInfo }" var="fileInfo" >
+		      	<th>첨부파일</th>
+	            <td>
+	              <c:if test="${fileInfo.fileNo ne null}">
+	              	<input type="hidden" id="number" value="${fileInfo.fileNo }">
+	              	<a href="downloadFile.do?fileNo=${fileInfo.fileNo }">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
+	              </c:if>
+	            </td>
 	        </c:forEach>
- --%>        </tr>
+	      </tr>
 	</tbody>
 </table>
 

@@ -6,12 +6,15 @@ public class ReviewVO {
 	private String boardUid;
 	private String number;
 	private String catCd;
+	private String catCdNm;
 	private String title;
 	private String contents;
 	private String userId;
 	private String visitCnt;
 	private String rsgstDt;
+	private String fileNo;
 	private String useYn;
+	
 	
 	public String getBoardUid() {return boardUid;}
 	public void setBoardUid(String boardUid) {this.boardUid = boardUid;}
@@ -43,5 +46,8 @@ public class ReviewVO {
 	
 	public String getCatCd() {return catCd;}
 	public void setCatCd(String catCd) {this.catCd = catCd;}
+	
+	public String getFileNo() {return fileNo;}
+	public void setFileNo(String fileNo) {this.fileNo = fileNo;}
 	
 }

@@ -3,7 +3,7 @@
 <mapper namespace="egovframework.example.releaseInfo.service.impl.ReleaseInfoMapper">
 	
 	<!-- 발매정보VO resultMap 설정 -->
-	<resultMap id="releaseInfoList" type="egovframework.example.releaseInfo.service.ReleaseInfoVO">
+	<resultMap id="releaseInfoList" type="egovframework.example.util.BoardVO">
 	 	<result property="boardUid"		column="BOARD_UID"/>
 	 	<result property="number"		column="NUMBER"/>
 	 	<result property="title"		column="TITLE"/>
@@ -57,7 +57,7 @@
 	</select>
 	
 	<!-- 발매정보게시판 세부항목 불러오기 -->
-	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO" resultMap="releaseInfoList">
+	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.util.BoardVO" resultMap="releaseInfoList">
 		SELECT BOARD_UID
 			 , USER_ID
 			 , NUMBER
@@ -71,7 +71,7 @@
 	</select>
 	
 	<!-- 세부항목에 첨부파일 정보 불러오기 -->
-	<select id="selectFileList" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO" resultMap="fileInfoList">
+	<select id="selectFileList" parameterType="egovframework.example.util.BoardVO" resultMap="fileInfoList">
 		SELECT 	FILE_NO
 			   ,ORIGIN_FILE_NM
 			   ,SAVED_FILE_NM
@@ -83,7 +83,7 @@
 	</select>
 	
 	<!-- 발매정보게시판 작성 및 수정시 DB에 추가 하는 쿼리 -->
-	<update id="updateReleaseInfo" parameterType="egovframework.example.releaseInfo.service.ReleaseInfoVO">
+	<update id="updateReleaseInfo" parameterType="egovframework.example.util.BoardVO">
 		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, REL_DT,USER_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
 		VALUES 		(#{boardUid}
 		<if test='number == null or "".equals(number)'>
@@ -94,7 +94,7 @@
 		</if>
 		, #{title}, #{contents},#{relDt}, "SAMPLE", "0", now()
 		<if test='fileNo == null or "".equals(fileNo)'>
-			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_RELEASEINFO AS TR)
+			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
 		</if>
 		<if test='fileNo != null and !"".equals(fileNo)'>
 			,#{fileNo}

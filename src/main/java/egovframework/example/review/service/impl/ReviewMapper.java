@@ -2,16 +2,22 @@ package egovframework.example.review.service.impl;
 
 import java.util.List;
 
-import egovframework.example.review.service.ReviewVO;
+import egovframework.example.util.BoardVO;
+import egovframework.example.util.FileVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper
 public interface ReviewMapper {
 
-	List<ReviewVO> selectReviewList();
+	List<BoardVO> selectReviewList();
+	List<BoardVO> selectCatCdList();
 	int selectReviewListCnt();
 	
-	ReviewVO selectReviewDetailList(ReviewVO vo);
+	BoardVO selectReviewDetailList(BoardVO vo);
+	List<FileVO> selectFileList(BoardVO vo);
 	
-	void deleteReviewDelete(ReviewVO vo);
+	void deleteReviewDelete(BoardVO vo);
+	
+	void updateReview(BoardVO vo);
+	void insertFile(FileVO fileVO);
 }

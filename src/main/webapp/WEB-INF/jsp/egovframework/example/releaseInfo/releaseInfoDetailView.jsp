@@ -35,7 +35,7 @@
 			<div id="imageArea">
 				<c:forEach items="${fileInfo }" var="fileInfo" >
 					 <c:if test="${fileInfo.fileNo ne null}">
-						<img src="centipede/../images/centipede/releaseInfo/${fileInfo.savedFileNm}"  width="200px" height="200px" >
+						<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}"  width="200px" height="200px" >
 		              </c:if>
 	             </c:forEach>
 			</div>

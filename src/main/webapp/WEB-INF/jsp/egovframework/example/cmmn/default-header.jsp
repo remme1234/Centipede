@@ -11,19 +11,3 @@
 
 
 
-<div id="header">
-	<script>
-		var menu = {
-			
-			del : function() {
-				if(confirm("삭제하시겠습니까?")) {
-					var doc = document.sendForm;
-					
-					doc.action = "releaseInfoDelete.do";
-					doc.submit();
-				}
-			} 
-		}
-	</script>
-</div>
-<hr/>

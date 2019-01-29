@@ -4,8 +4,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 
 
-<div class="category">
-	<!-- 추후 말머리 카테고리를 받아서 쓰도록 만들 예정 -->
+<style>
+.title h3 {
+	font-size: 36px;
+    color: #1a1a1a;
+    font-weight: bold;
+    line-height: 36px;
+    text-transform: uppercase;
+}
+</style>
+	
+	
+<script>
+	var reviewList = {
+			
+		sortBrand : function(catCd){
+			$(this).attr("id",catCd);
+			
+		}
+	}
+</script>
+
+<div class="title" style="text-align:center ">
+<h3>REVIEW BOARD</h3>
+</div>
+
+<div class="category" >
+	<c:forEach items="${catCdList}" var="catCdList">
+		<button type="button" onclick="reviewList.sortBrand(${catCdList.catCd})">
+			<c:out value ="${catCdList.catCdNm}"/>
+		</button>
+	</c:forEach>
 </div>
 
  
@@ -29,16 +58,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${reviewList}" var="vo">
-			<tr>
-				<td>${vo.count}</td>
-				<td>[${vo.catCd}]</td>
-				<td><a href="reviewDetailView.do?number=${vo.number}">${vo.title}</a></td>
-				<td>${vo.userId}</td>
-				<td>${vo.rsgstDt}</td>
-				<td>${vo.visitCnt}</td>
-			</tr>
-		</c:forEach>
+		<div id ="reivew_contents">
+			<%-- <c:forEach items="${reviewList}" var="vo">
+				<tr>
+					<td>${vo.count}</td>
+					<td>[${vo.catCd}]</td>
+					<td><a href="reviewDetailView.do?number=${vo.number}">${vo.title}</a></td>
+					<td>${vo.userId}</td>
+					<td>${vo.rsgstDt}</td>
+					<td>${vo.visitCnt}</td>
+				</tr>
+			</c:forEach> --%>
+		</div>
 	</tbody>
 </table>
 
