@@ -5,7 +5,8 @@
 
 <script>
 	var review = {
-		
+			
+		// 리뷰게시글 삭제 버튼 
 		del : function() {
 			if(confirm("리뷰 게시글을 삭제하시겠습니까?")) {
 				var doc = document.sendForm;
@@ -15,10 +16,39 @@
 			}
 		},
 		
-		reply : function() {
+		// 하위 셀렉트박스 option value를 붙여주는 기능 
+		displayRplPrdSelectBox : function(rplPrdList) {
+			if(rplPrdList.length > 0) {
+				$.each(rplPrdList, function(i,item) {
+					var optionPrd = "<option value=" + item.gdCd + ">" +  item.gdNm + "</option>"
+					
+					$(".rpl_prd").append(optionPrd);
+				})
+			} else { 
+				$(".rpl_prd").append("<option value=''>없음</option>");
+			}
+		},
+		
+		// 리플 저장 메서드
+		rplSave : function() {
+			var $form = $("form[name=rplSave]"),
+				$pastLength = $("input[name=pastLength]"),
+				$newLength = $("input[name=newLength]");
+				
+			if($pastLength.val() === null || $pastLength.val() === ""
+				|| $newLength.val() === null || $newLength.val() === ""){
+				alert("빈칸을 채워주세요")
+				return
+			}
+			
+			$form.attr("action","rplUpdate.do")
+			$form.submit()
+			alert("입력한 사이즈 후기가 정상적으로 등록되었습니다.")
 		}
+		
 	}
 	
+	// 하위 셀랙트박스를 호출하는 ajax  
 	$(function() {
 		$(".rpl_cat").change(function() {
 			var thisParam = $(this).val();
@@ -32,11 +62,17 @@
 				data : JSON.stringify(form),
 				contentType : "application/Json",
 				success : function(data) {
+					var jObj = JSON.parse(data);
 					
+					console.log(jObj)
+					if(jObj.result === "SUCCESS") {
+						review.displayRplPrdSelectBox	(jObj.rplPrdList);
+					}
 				}
 			})
 		})
 	})
+	
 </script>
 
 
@@ -82,42 +118,30 @@
 
 
 <!-- 댓글로 사이즈 평가 -->
-<h4>사이즈 후기</h4>
-<div class="rpl">
-	<select class="rpl_cat">
-		<c:forEach items="${rplCatList}" var="rplCatList">
-		<option value="<c:out value='${rplCatList.catCd }'/>">
-			<c:out value='${rplCatList.brndNm }'/>
-		</option>
-		</c:forEach>
-	</select>
-	<select class="rpl_prd">
-		<option value="">없음</option>
-	</select>
-	<select class="rpl_size">
-		<option value="1">작음</option>
-	</select>
-</div>
+<h4>사이즈 후기 // 기존 신발과 새로산 신발을 비교한 평가</h4>
+<form autocomplete="off" name="rplSave" method="POST" action="" >
+	<div class="rpl">
+		<select class="rpl_cat" name="catCd">
+			<c:forEach items="${rplCatList}" var="rplCatList">
+			<option value="<c:out value='${rplCatList.catCd }'/>">
+				<c:out value='${rplCatList.brndNm }'/>
+			</option>
+			</c:forEach>
+		</select>
+		<select class="rpl_prd" name="gdNM">
+		</select>
+		<input type="text" class="rpl_past_length" name="pastLength" value="소유한 신발 사이즈">
+		<input type="text" class="rpl_new_length" name="newLength" value="새로산 신발 사이즈">
+		<select class="rpl_size" name="size">
+			<option value="s">작음</option>
+			<option value="m">적당함</option>
+			<option value="l">큼</option>
+		</select>
+	</div>
+</form>
+<button type="button" onclick="review.rplSave()">입력</button>
 
-
-<button type="button" class="AddRplBtn" onclick="review.reply()"> 추가  </button>
-<!-- <div class="rpl">
-	<div class="rpl_cat">
-		<select>
-			<option value="01">나이키</option>
-		</select>
-	</div>
-	<div class="rpl_prd">
-		<select>
-			<option value="a00001">허라취</option>
-		</select>
-	</div>
-	<div class="rpl_size">
-		<select>
-			<option value="1">작음</option>
-		</select>
-	</div>
-</div> -->
+<!-- <button type="button" class="AddRplBtn" onclick="review.reply()"> 추가  </button> -->
 
 <form action="" name="sendForm" method="POST">
 	<input type="hidden" name="number" value="${reviewDetail.number}" />

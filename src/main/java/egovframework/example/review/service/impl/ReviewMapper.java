@@ -6,6 +6,7 @@ import egovframework.example.review.service.ReviewVO;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 @Mapper
 public interface ReviewMapper {
@@ -22,4 +23,7 @@ public interface ReviewMapper {
 	
 	void updateReview(BoardVO vo);
 	void insertFile(FileVO fileVO);
+	List<EgovMap> selectRplPrdList(String param);
+	
+	void rplUpdate(ReviewVO vo);
 }

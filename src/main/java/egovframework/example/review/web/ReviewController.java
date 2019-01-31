@@ -1,10 +1,13 @@
 package egovframework.example.review.web;
 
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,6 +19,7 @@ import egovframework.example.review.service.ReviewService;
 import egovframework.example.review.service.ReviewVO;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 @Controller
 public class ReviewController {
@@ -52,22 +56,42 @@ public class ReviewController {
 		return "review/reviewDetailView.tiles";
 	}
 	
-	// 사이즈 후기에 쓰일 ajax 호출
+	// 사이즈 후기 select Box에 쓰일 ajax 호출
 	@RequestMapping(value="rplPrd.do")
 	public void rplPrd(@RequestBody String catCd,
+			HttpServletResponse response,
 			ModelMap model) throws Exception {
-		String param = "";
 		
 		System.out.println("catCd : " + catCd);
-		System.out.println("JsonToMap : " + JsonUtil.JsonToMap(catCd));
 		
 		Map<String,Object> resMap =  JsonUtil.JsonToMap(catCd);
+		System.out.println("JsonToMap : " + JsonUtil.JsonToMap(catCd));
 		
-		param = (String) resMap.get(catCd);
+		String param = (String) resMap.get("catCd");
+		List<EgovMap> rplPrdList = reviewService.selectRplPrdList(param);
 		
-		//List<EgovMap> rplPrdList = reviewService.selectRplPrdList(param);
+		HashMap<String,Object> resultMap = new HashMap<String,Object>();
 		
+		resultMap.put("result", "SUCCESS");
+		resultMap.put("rplPrdList", rplPrdList);
+		
+		response.setCharacterEncoding("utf-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		String resultMapToJson = JsonUtil.HashMapToJson(resultMap);
+		
+		out.write(resultMapToJson);
 	}
+	
+	// 리뷰게시판 사이즈 후기 리플 작성시 업데이트 기능
+	@RequestMapping(value="rplUpdate.do")
+	public String rplUpdate (ReviewVO vo) {
+		reviewService.rplUpdate(vo);
+		
+		return "redirect:reviewView.do";
+	}
+	
 	
 	// 리뷰게시판 업데이트 페이지 호출 메서드
 	@RequestMapping(value="reviewUpdateView.do")
@@ -82,7 +106,6 @@ public class ReviewController {
 		reviewService.updateReview(vo,request);
 		
 		return "redirect:reviewView.do";
-
 	}
 	
 	// 리뷰게시판 삭제 기능

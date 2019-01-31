@@ -15,6 +15,7 @@ import egovframework.example.review.service.ReviewVO;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileUtils;
 import egovframework.example.util.FileVO;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -95,5 +96,15 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public List<ReviewVO> selectRplCatList() {
 		return reviewMapper.selectRplCatList();
+	}
+
+	@Override
+	public List<EgovMap> selectRplPrdList(String param) {
+		return reviewMapper.selectRplPrdList(param);
+	}
+
+	@Override
+	public void rplUpdate(ReviewVO vo) {
+		reviewMapper.rplUpdate(vo);
 	}
 }

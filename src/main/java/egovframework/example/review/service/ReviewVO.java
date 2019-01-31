@@ -8,8 +8,8 @@ public class ReviewVO {
 	private String sortNo;
 	private String regr;
 	private String regDt;
-	private String prdCd;
-	private String prdNm;
+	private String gdCd;
+	private String gdNm;
 	
 	
 	public String getCatCd() {
@@ -42,17 +42,17 @@ public class ReviewVO {
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
-	public String getPrdCd() {
-		return prdCd;
+	public String getGdCd() {
+		return gdCd;
 	}
-	public void setPrdCd(String prdCd) {
-		this.prdCd = prdCd;
+	public void setGdCd(String gdCd) {
+		this.gdCd = gdCd;
 	}
-	public String getPrdNm() {
-		return prdNm;
+	public String getGdNm() {
+		return gdNm;
 	}
-	public void setPrdNm(String prdNm) {
-		this.prdNm = prdNm;
+	public void setGdNm(String gdNm) {
+		this.gdNm = gdNm;
 	}
 	
 }
