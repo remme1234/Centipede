@@ -19,9 +19,11 @@
 		// 하위 셀렉트박스 option value를 붙여주는 기능 
 		displayRplPrdSelectBox : function(rplPrdList) {
 			if(rplPrdList.length > 0) {
+				
+				$(".rpl_prd").append("<option value=''>Product</option>");
+				
 				$.each(rplPrdList, function(i,item) {
 					var optionPrd = "<option value=" + item.gdCd + ">" +  item.gdNm + "</option>"
-					
 					$(".rpl_prd").append(optionPrd);
 				})
 			} else { 
@@ -35,7 +37,7 @@
 				$pastLength = $("input[name=pastLength]"),
 				$newLength = $("input[name=newLength]");
 				
-			if($pastLength.val() === null || $pastLength.val() === ""
+			if($pastLength.val() 	=== null || $pastLength.val() === ""
 				|| $newLength.val() === null || $newLength.val() === ""){
 				alert("빈칸을 채워주세요")
 				return
@@ -52,7 +54,7 @@
 	$(function() {
 		$(".rpl_cat").change(function() {
 			var thisParam = $(this).val();
-			var	form  = {"catCd" : thisParam}; 
+			var	form  	  = {"catCd" : thisParam}; 
 			
 			$(".rpl_prd").children().remove();
 			
@@ -71,7 +73,16 @@
 				}
 			})
 		})
+		
+		for(var i=0; i<21; i++) {
+			var length = 200+i*5;
+			
+			$(".rpl_past_length").append("<option value='"+length+"'>"+length+"</option>"); 
+			$(".rpl_new_length").append("<option value='"+length+"'>"+length+"</option>"); 
+		}
 	})
+	
+	
 	
 </script>
 
@@ -122,17 +133,20 @@
 <form autocomplete="off" name="rplSave" method="POST" action="" >
 	<div class="rpl">
 		<select class="rpl_cat" name="catCd">
+		<option>Brand</option>
 			<c:forEach items="${rplCatList}" var="rplCatList">
 			<option value="<c:out value='${rplCatList.catCd }'/>">
 				<c:out value='${rplCatList.brndNm }'/>
 			</option>
 			</c:forEach>
 		</select>
-		<select class="rpl_prd" name="gdNM">
+		<select class="rpl_prd" name="gdNm" >
+			<option value=''>Product</option>
 		</select>
-		<input type="text" class="rpl_past_length" name="pastLength" value="소유한 신발 사이즈">
-		<input type="text" class="rpl_new_length" name="newLength" value="새로산 신발 사이즈">
+		<select class="rpl_past_length" name="pastLength"> <option value="">Owned shoe size</option></select>
+		<select class="rpl_new_length" name="newLength"> <option value="">New shoe size</option> </select>
 		<select class="rpl_size" name="size">
+			<option value="">Size</option>
 			<option value="s">작음</option>
 			<option value="m">적당함</option>
 			<option value="l">큼</option>

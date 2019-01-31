@@ -56,8 +56,18 @@
 				,VISIT_CNT
 				,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 				,USE_YN
-		FROM 	T_REVIEW
+				,(SELECT 	SAVED_FILE_NM
+					FROM	T_FILE
+					WHERE   FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		FROM  T_REVIEW TR
 		WHERE USE_YN = 'Y'
+		<if test="searchText != null and !searchText.equals('')">
+			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+		<if test="catCd != null and !catCd.equals('')">
+			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
+		</if>
 		ORDER BY RSGST_DT DESC
 	</select>
 	
@@ -110,6 +120,11 @@
 		AND     USE_YN = 'Y'
 	</select>
 	
+	<update id="rplUpdate" parameterType="egovframework.example.review.service.ReviewVO">
+			
+	
+	</update>
+		
 	<update id="deleteReviewDelete" parameterType="egovframework.example.util.BoardVO">
 		UPDATE T_REVIEW
 		SET USE_YN = 'N'
@@ -137,7 +152,7 @@
 		UPDATE TITLE 	= #{title},
 			   CONTENTS = #{contents}
 	</update>	
-	
+
 	<!-- 첨부파일저장 -->
 	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
 	        INSERT INTO T_FILE

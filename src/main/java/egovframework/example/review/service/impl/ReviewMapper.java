@@ -11,7 +11,7 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
 @Mapper
 public interface ReviewMapper {
 
-	List<BoardVO> selectReviewList();
+	List<BoardVO> selectReviewList(BoardVO vo);
 	List<BoardVO> selectCatCdList();
 	int selectReviewListCnt();
 	

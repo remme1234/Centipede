@@ -10,8 +10,44 @@ public class ReviewVO {
 	private String regDt;
 	private String gdCd;
 	private String gdNm;
+	private String rplNo;
+	private String number;
+	private String pastLength;
+	private String newtLength;
+	private String size;
 	
 	
+	
+	public String getRplNo() {
+		return rplNo;
+	}
+	public void setRplNo(String rplNo) {
+		this.rplNo = rplNo;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	public String getPastLength() {
+		return pastLength;
+	}
+	public void setPastLength(String pastLength) {
+		this.pastLength = pastLength;
+	}
+	public String getNewtLength() {
+		return newtLength;
+	}
+	public void setNewtLength(String newtLength) {
+		this.newtLength = newtLength;
+	}
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
 	public String getCatCd() {
 		return catCd;
 	}

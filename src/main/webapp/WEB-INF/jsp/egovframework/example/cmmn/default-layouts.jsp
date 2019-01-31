@@ -6,11 +6,13 @@
 <html>
 	<head>
   		<tiles:insertAttribute name="header"/>
+		<tiles:insertAttribute name="nav"/>
   	</head>
 	<body>
-		<tiles:insertAttribute name="nav"/>
+	<div style="margin-top: 100px;">
 		<%-- <tiles:insertAttribute name="left"/> --%>
 		<tiles:insertAttribute name="content"/>
  		<tiles:insertAttribute name="footer"/>
+	</div>
 	</body>
 </html>

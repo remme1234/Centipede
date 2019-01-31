@@ -15,7 +15,15 @@ public class BoardVO {
 	private String relDt;
 	private String catCd;
 	private String catCdNm;
+	private String searchText;
 	
+	
+	public String getSearchText() {
+		return searchText;
+	}
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
 	public int getCount() {
 		return count;
 	}

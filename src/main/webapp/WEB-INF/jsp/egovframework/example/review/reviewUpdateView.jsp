@@ -5,10 +5,10 @@
 
 <script>
 	var save = function() {
-		var $form = $("form[name=saveForm]"),  
-			$title = $("input[name=title]"),
+		var $form 	  = $("form[name=saveForm]"),  
+			$title	  = $("input[name=title]"),
 			$contents = $("textarea[name=contents]");
-			$file = $("input[name=file]");
+			$file 	  = $("input[name=file]");
 		
 		if($title.val() === null || $title.val() === "") {
 			alert ("제목을 입력해주세요");

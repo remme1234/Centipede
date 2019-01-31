@@ -28,14 +28,14 @@ public class ReviewServiceImpl implements ReviewService{
 	
 	// 리뷰 게시판 내용출력
 	@Override
-	public List<BoardVO> selectReviewList() {
-		List<BoardVO> list = reviewMapper.selectReviewList();
-		int cnt = reviewMapper.selectReviewListCnt();
+	public List<BoardVO> selectReviewList(BoardVO vo) {
+		List<BoardVO> list = reviewMapper.selectReviewList(vo);
+		// int cnt = reviewMapper.selectReviewListCnt();
 		
-		for(BoardVO vo : list) {
+		/*for(BoardVO vo : list) {
 			vo.setCount(cnt);
 			cnt -= 1;
-		}
+		}*/
 		
 		return list;
 	}

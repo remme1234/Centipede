@@ -29,11 +29,10 @@ public class ReviewController {
 	
 	// 리뷰게시판 리스트
 	@RequestMapping(value="reviewView.do")
-	public String reviewView (ModelMap model) {
-		
-		List<BoardVO> reviewList = reviewService.selectReviewList();
+	public String reviewView (ModelMap model,BoardVO vo) {
+		List<BoardVO> reviewList = reviewService.selectReviewList(vo);
 		List<BoardVO> catCdList = reviewService.selectCatCdList();
-		
+	
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("catCdList", catCdList);
 		return "review/reviewView.tiles";
@@ -59,13 +58,9 @@ public class ReviewController {
 	// 사이즈 후기 select Box에 쓰일 ajax 호출
 	@RequestMapping(value="rplPrd.do")
 	public void rplPrd(@RequestBody String catCd,
-			HttpServletResponse response,
-			ModelMap model) throws Exception {
-		
-		System.out.println("catCd : " + catCd);
+			HttpServletResponse response) throws Exception {
 		
 		Map<String,Object> resMap =  JsonUtil.JsonToMap(catCd);
-		System.out.println("JsonToMap : " + JsonUtil.JsonToMap(catCd));
 		
 		String param = (String) resMap.get("catCd");
 		List<EgovMap> rplPrdList = reviewService.selectRplPrdList(param);
