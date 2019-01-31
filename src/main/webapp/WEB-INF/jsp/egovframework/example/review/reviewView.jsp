@@ -20,7 +20,7 @@
 			
 		sortBrand : function(catCd){
 			$(this).attr("id",catCd);
-			
+				
 		}
 	}
 </script>
@@ -59,7 +59,7 @@
 	</thead>
 	<tbody>
 		<div id ="reivew_contents">
-			<%-- <c:forEach items="${reviewList}" var="vo">
+			<c:forEach items="${reviewList}" var="vo">
 				<tr>
 					<td>${vo.count}</td>
 					<td>[${vo.catCd}]</td>
@@ -68,7 +68,7 @@
 					<td>${vo.rsgstDt}</td>
 					<td>${vo.visitCnt}</td>
 				</tr>
-			</c:forEach> --%>
+			</c:forEach>
 		</div>
 	</tbody>
 </table>

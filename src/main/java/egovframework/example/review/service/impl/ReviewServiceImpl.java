@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.example.review.service.ReviewService;
+import egovframework.example.review.service.ReviewVO;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileUtils;
 import egovframework.example.util.FileVO;
@@ -90,5 +91,9 @@ public class ReviewServiceImpl implements ReviewService{
 	    	 reviewMapper.insertFile(list.get(i));
 	     }
     }
-	
+
+	@Override
+	public List<ReviewVO> selectRplCatList() {
+		return reviewMapper.selectRplCatList();
+	}
 }

@@ -89,7 +89,4 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	public void addVisitCnt(BoardVO vo) {
 		releaseInfoMapper.addVisitCnt(vo);
 	}
-
-	
-
 }

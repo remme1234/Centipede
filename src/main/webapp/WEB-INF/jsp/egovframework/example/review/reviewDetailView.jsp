@@ -13,8 +13,30 @@
 				doc.action = "reviewDelete.do";
 				doc.submit();
 			}
-		} 
+		},
+		
+		reply : function() {
+		}
 	}
+	
+	$(function() {
+		$(".rpl_cat").change(function() {
+			var thisParam = $(this).val();
+			var	form  = {"catCd" : thisParam}; 
+			
+			$(".rpl_prd").children().remove();
+			
+			$.ajax({
+				type : "post",
+				url : "rplPrd.do",
+				data : JSON.stringify(form),
+				contentType : "application/Json",
+				success : function(data) {
+					
+				}
+			})
+		})
+	})
 </script>
 
 
@@ -44,7 +66,7 @@
 				<p>${reviewDetail.contents}</p>
 			</td>
 		</tr>
-		<tr>
+		<%-- <tr>
 	        <c:forEach items="${fileInfo }" var="fileInfo" >
 		      	<th>첨부파일</th>
 	            <td>
@@ -54,15 +76,55 @@
 	              </c:if>
 	            </td>
 	        </c:forEach>
-	      </tr>
+	      </tr> --%>
 	</tbody>
 </table>
+
+
+<!-- 댓글로 사이즈 평가 -->
+<h4>사이즈 후기</h4>
+<div class="rpl">
+	<select class="rpl_cat">
+		<c:forEach items="${rplCatList}" var="rplCatList">
+		<option value="<c:out value='${rplCatList.catCd }'/>">
+			<c:out value='${rplCatList.brndNm }'/>
+		</option>
+		</c:forEach>
+	</select>
+	<select class="rpl_prd">
+		<option value="">없음</option>
+	</select>
+	<select class="rpl_size">
+		<option value="1">작음</option>
+	</select>
+</div>
+
+
+<button type="button" class="AddRplBtn" onclick="review.reply()"> 추가  </button>
+<!-- <div class="rpl">
+	<div class="rpl_cat">
+		<select>
+			<option value="01">나이키</option>
+		</select>
+	</div>
+	<div class="rpl_prd">
+		<select>
+			<option value="a00001">허라취</option>
+		</select>
+	</div>
+	<div class="rpl_size">
+		<select>
+			<option value="1">작음</option>
+		</select>
+	</div>
+</div> -->
 
 <form action="" name="sendForm" method="POST">
 	<input type="hidden" name="number" value="${reviewDetail.number}" />
 </form>
 
 <td>&nbsp;</td>
+
 <a href="reviewView.do"><button type="button" >목록으로</button></a>
 <button type="button" onclick="review.del()">삭제하기</button>
 <a href="reviewUpdateView.do?number=${reviewDetail.number}"><button type="button">수정하기</button></a>

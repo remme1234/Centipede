@@ -42,7 +42,7 @@
 				<p>${releaseInfoDetail.contents}</p>
 			</td>
 		</tr>
-		<tr>
+		<%-- <tr>
 	        <c:forEach items="${fileInfo }" var="fileInfo" >
 	      	<th>첨부파일</th>
             <td>
@@ -52,7 +52,7 @@
               </c:if>
             </td>
 	        </c:forEach>
-        </tr>
+        </tr> --%>
 	</tbody>
 </table>
 

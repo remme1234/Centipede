@@ -20,4 +20,5 @@ public interface ReviewService {
 
 	List<BoardVO> selectCatCdList();
 
+	List<ReviewVO> selectRplCatList();
 }

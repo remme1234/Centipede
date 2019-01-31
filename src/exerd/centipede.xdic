@@ -86,4 +86,5 @@
   <term name="저장" description="저장" physicalName="SAVED" physicalDescription="saved"/>
   <term name="등록자" description="등록자" physicalName="RSGSTR" physicalDescription="reistor"/>
   <term name="원본" description="원본" physicalName="ORIGIN" physicalDescription="original"/>
+  <term name="상표" description="상표" physicalName="BRND" physicalDescription="brand"/>
 </tm:TermDictionary>
