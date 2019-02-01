@@ -70,8 +70,10 @@ li { list-style: none }
 	</c:forEach>
 </ul>
 
+
+<!-- 검색기능 -->
 <div style="clear:both; text-align:center;" class="search">
-	<form name="sendForm" method="get" action="">
+	<form autocomplete="off"name="sendForm" method="get" action="">
 		<select name="catCd">
 			<option value="">Brand</option>
 			<c:forEach items="${catCdList}" var="catCdList">

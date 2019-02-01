@@ -26,15 +26,15 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 
 	
 	@Override
-	public List<BoardVO> selectReleaseInfoList(){
-		List<BoardVO> list = releaseInfoMapper.selectReleaseInfoList();
-		int cnt = releaseInfoMapper.selectReleaseInfoListCnt();
+	public List<BoardVO> selectReleaseInfoList(BoardVO vo){
+		List<BoardVO> list = releaseInfoMapper.selectReleaseInfoList(vo);
+		/*int cnt = releaseInfoMapper.selectReleaseInfoListCnt();
 		
 		// 게시글 번호 설정
 		for(BoardVO vo : list) {
 			vo.setCount(cnt);
 			cnt -= 1;
-		}
+		}*/
 		
 		return list;
 	}

@@ -32,6 +32,18 @@ li { list-style: none }
 }
 </style>
  
+<script>
+	var releaseInfoList = {
+			
+		search : function() {
+			var $search = $("form[name=sendForm]");
+			
+			$search.attr("action","releaseInfoView.do");
+			$search.submit();
+		}
+	}
+</script>
+ 
 <div class="title" style="text-align:center ">
 <h3>RELEASE INFO</h3>
 </div>
@@ -46,6 +58,14 @@ li { list-style: none }
 	</li>
 	</c:forEach>
 </ul>
+
+<!-- 검색기능 -->
+<div style="clear:both; text-align:center;" class="search">
+	<form autocomplete="off"name="sendForm" method="get" action="">
+		<input type="text" name="searchText" value="">
+		<input type="button" onclick="releaseInfoList.search()" value="검색">
+	</form>
+</div>
 
 <div style="clear:both;">
 <a href="releaseInfoUpdateView.do"><button type="button">글 작성</button></a></div>

@@ -9,7 +9,7 @@ import egovframework.example.util.FileVO;
 
 public interface ReleaseInfoService {
 
-	List<BoardVO> selectReleaseInfoList();
+	List<BoardVO> selectReleaseInfoList(BoardVO vo);
 
 	BoardVO selectReleaseInfoDetail(BoardVO vo);
 	List<FileVO> selectFileList(BoardVO vo);

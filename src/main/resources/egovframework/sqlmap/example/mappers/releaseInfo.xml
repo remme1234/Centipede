@@ -45,6 +45,10 @@
 				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
 		FROM  T_RELEASEINFO TR
 		WHERE USE_YN='Y'
+		<if test="searchText != null and !searchText.equals('')">
+			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
 		ORDER BY RSGST_DT DESC
 	</select>
 	

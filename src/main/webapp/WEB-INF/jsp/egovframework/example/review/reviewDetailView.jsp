@@ -131,6 +131,7 @@
 <!-- 댓글로 사이즈 평가 -->
 <h4>사이즈 후기 // 기존 신발과 새로산 신발을 비교한 평가</h4>
 <form autocomplete="off" name="rplSave" method="POST" action="" >
+	<input type="hidden" name="number" value="${reviewDetail.number}">
 	<div class="rpl">
 		<select class="rpl_cat" name="catCd">
 		<option>Brand</option>
@@ -151,9 +152,9 @@
 			<option value="m">적당함</option>
 			<option value="l">큼</option>
 		</select>
+		<input type="button" value="입력" onclick="review.rplSave()">
 	</div>
 </form>
-<button type="button" onclick="review.rplSave()">입력</button>
 
 <!-- <button type="button" class="AddRplBtn" onclick="review.reply()"> 추가  </button> -->
 

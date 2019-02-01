@@ -9,7 +9,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("ReleaseInfoMapper")
 public interface ReleaseInfoMapper {
 	
-	List<BoardVO> selectReleaseInfoList();
+	List<BoardVO> selectReleaseInfoList(BoardVO vo);
 	int selectReleaseInfoListCnt();
 
 	BoardVO selectReleaseInfoDetail(BoardVO vo);

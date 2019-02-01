@@ -38,6 +38,11 @@
 		<result property="regDt"			column="REG_DT"/>
 		<result property="gdCd"				column="GD_CD"/>
 		<result property="gdNm"				column="GD_NM"/>
+		<result property="number"			column="NUMBER"/>
+		<result property="pastLength"		column="PAST_LENGTH"/>
+		<result property="newLength"		column="NEW_LENGTH"/>
+		<result property="size"				column="SIZE"/>
+		
 	</resultMap>
 	
 	<!-- 리뷰게시판 목록 List -->
@@ -120,9 +125,18 @@
 		AND     USE_YN = 'Y'
 	</select>
 	
+	<!-- 사이즈후기 업데이트 내용 -->
 	<update id="rplUpdate" parameterType="egovframework.example.review.service.ReviewVO">
-			
-	
+		INSERT INTO T_REVIEW_RPL ( RPL_NO, NUMBER, CAT_CD, GD_NM, PAST_LENGTH, NEW_LENGTH, SIZE, REGR, REG_DT)
+		VALUES 		((SELECT IFNULL(MAX(RPL_NO),0)+1 FROM T_REVIEW_RPL AS TV)
+					, #{number}
+					, #{catCd}
+					, #{gdNm}
+					, #{pastLength}
+					, #{newLength}
+					, #{size}
+					, 'SAMPLE'
+					, NOW())
 	</update>
 		
 	<update id="deleteReviewDelete" parameterType="egovframework.example.util.BoardVO">

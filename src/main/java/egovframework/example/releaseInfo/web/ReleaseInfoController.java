@@ -21,9 +21,9 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 리스트 
 	@RequestMapping(value="releaseInfoView.do")
-	public String releaseInfoView (ModelMap model) {
+	public String releaseInfoView (ModelMap model, BoardVO vo) {
 		// 목록 조회
-		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList();
+		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
 		model.addAttribute("releaseInfoList", releaseInfoList);
 		return "releaseInfo/releaseInfoView.tiles";
 	}

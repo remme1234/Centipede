@@ -13,7 +13,7 @@ public class ReviewVO {
 	private String rplNo;
 	private String number;
 	private String pastLength;
-	private String newtLength;
+	private String newLength;
 	private String size;
 	
 	
@@ -36,11 +36,11 @@ public class ReviewVO {
 	public void setPastLength(String pastLength) {
 		this.pastLength = pastLength;
 	}
-	public String getNewtLength() {
-		return newtLength;
+	public String getNewLength() {
+		return newLength;
 	}
-	public void setNewtLength(String newtLength) {
-		this.newtLength = newtLength;
+	public void setNewLength(String newtLength) {
+		this.newLength = newtLength;
 	}
 	public String getSize() {
 		return size;
