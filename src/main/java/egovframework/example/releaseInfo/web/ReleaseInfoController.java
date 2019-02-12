@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import egovframework.example.releaseInfo.service.ReleaseInfoService;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
+import egovframework.example.util.PageMakerVO;
 
 @Controller
 public class ReleaseInfoController {
@@ -21,10 +22,11 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 리스트 
 	@RequestMapping(value="releaseInfoView.do")
-	public String releaseInfoView (ModelMap model, BoardVO vo) {
+	public String releaseInfoView (ModelMap model, PageMakerVO vo) {
 		// 목록 조회
-		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
+		List<PageMakerVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
 		model.addAttribute("releaseInfoList", releaseInfoList);
+
 		return "releaseInfo/releaseInfoView.tiles";
 	}
 	

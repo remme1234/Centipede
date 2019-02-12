@@ -11,6 +11,7 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
 public interface ReviewService {
 
 	List<BoardVO> selectReviewList(BoardVO vo);
+	List<BoardVO> selectReviewSearchList(BoardVO vo);
 
 	BoardVO selectReviewDetailList(BoardVO vo);
 	List<FileVO> selectFileList(BoardVO vo);
@@ -25,4 +26,7 @@ public interface ReviewService {
 	List<EgovMap> selectRplPrdList(String param);
 
 	void rplUpdate(ReviewVO vo);
+
+	List<ReviewVO> selectRplDataList(BoardVO vo);
+
 }

@@ -9,5 +9,21 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-
-
+<script>
+	var reviewList = {
+			
+		search : function() {
+			var $search = $("form[name=sendForm]");
+			
+			$search.attr("action","reviewSearchView.do");
+			$search.submit();
+		},
+	
+		more : function(brndNm) {
+			var $searchFrm = $("form[name=sendForm]");
+			
+			$searchFrm.attr("action","reviewSearchView.do?catCd=" + "brndNm")
+			$searchFrm.submit();
+		}		
+	}
+</script>

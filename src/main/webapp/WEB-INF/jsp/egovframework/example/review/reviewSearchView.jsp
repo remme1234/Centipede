@@ -3,8 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 
-
-
+ 
 <style>
 .review-list .draw-title {
 	font-weight: 700;
@@ -31,36 +30,12 @@ li { list-style: none }
     text-transform: uppercase;
 }
 </style>
-	
 
 <div class="title" style="text-align:center ">
 <h3>REVIEW BOARD</h3>
 </div>
-
-<c:forEach items="${catCdList}" var="catCdList" >
-	<ul class="review-list">
-		<div class="review-cat-nm">
-			<c:out value="${catCdList.brndNm}"/>
-			<input type="button" onclick="reviewList.more('${catCdList.catCd}')" value="더보기" >
-		</div>
-		
-		<c:forEach items="${reviewList}" var="vo">
-			<c:if test="${catCdList.brndNm eq vo.catCd}" >
-				<li>
-					<a href="reviewDetailView.do?number=${vo.number}">
-						<img src="centipede/../images/centipede/board/${vo.savedFileNm}" width="300px" height="200px">
-					</a>
-					<div>[${vo.catCd}]</div>
-					<h3 class="draw-title">${vo.title}</h3>
-				</li>
-			</c:if>
-		</c:forEach>
-	</ul>
-</c:forEach>
-
-
-<%-- <ul class="review-list">
-	<c:forEach items="${reviewList}" var="vo">
+<ul class="review-list">
+	<c:forEach items="${reviewSearchList}" var="vo">
 		<li>
 			<a href="reviewDetailView.do?number=${vo.number}">
 				<img src="centipede/../images/centipede/board/${vo.savedFileNm}" width="400px" height="200px">
@@ -69,7 +44,7 @@ li { list-style: none }
 			<h3 class="draw-title">${vo.title}</h3>
 		</li>
 	</c:forEach>
-</ul> --%>
+</ul>
 
 <!-- 검색기능 -->
 <div style="clear:both; text-align:center;" class="search">
@@ -83,8 +58,4 @@ li { list-style: none }
 		<input type="text" name="searchText" value="">
 		<input type="button" onclick="reviewList.search()" value="검색">
 	</form>
-</div>
-
-<div style="clear:both">
-	<a href="reviewUpdateView.do"><button type="button">글 작성</button></a>
 </div>

@@ -38,6 +38,18 @@ public class ReviewController {
 		return "review/reviewView.tiles";
 	}
 	
+	// 리뷰게시판 검색 리스트
+	@RequestMapping(value="reviewSearchView.do")
+	public String reviewSearchView (ModelMap model, BoardVO vo) {
+		List<BoardVO> reviewSearchList = reviewService.selectReviewSearchList(vo);
+		List<BoardVO> catCdList = reviewService.selectCatCdList();
+		
+		model.addAttribute("reviewSearchList", reviewSearchList);
+		model.addAttribute("catCdList", catCdList);
+		
+		return "review/reviewSearchView.tiles";
+	}
+	
 	// 리뷰게시판 상세정보 조회
 	@RequestMapping(value="reviewDetailView.do")
 	public String reviewDetailView (BoardVO vo, ModelMap model) {
@@ -47,10 +59,15 @@ public class ReviewController {
 
 		// 사이즈 후기에 쓰일 select 박스 호출
 		List<ReviewVO> rplCatList = reviewService.selectRplCatList();
+		// 사이즈 후기 데이터를 호출하는 메서드
+		List<ReviewVO> rpldataList = reviewService.selectRplDataList(vo);
+		System.out.println(rpldataList);
 		
 		model.addAttribute("reviewDetail", vo);
 		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("rplCatList", rplCatList);
+		model.addAttribute("rpldataList", rpldataList);
+		
 		
 		return "review/reviewDetailView.tiles";
 	}
@@ -110,4 +127,5 @@ public class ReviewController {
 		
 		return "redirect:reviewView.do";
 	}
+	
 }

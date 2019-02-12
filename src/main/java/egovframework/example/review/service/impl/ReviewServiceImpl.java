@@ -1,3 +1,4 @@
+
 package egovframework.example.review.service.impl;
 
 import java.util.Iterator;
@@ -38,6 +39,12 @@ public class ReviewServiceImpl implements ReviewService{
 		}*/
 		
 		return list;
+	}
+	
+	// 리뷰 검색 게시판 내용출력
+	@Override
+	public List<BoardVO> selectReviewSearchList(BoardVO vo) {
+		return reviewMapper.selectReviewSearchList(vo);
 	}
 	
 	@Override
@@ -107,4 +114,10 @@ public class ReviewServiceImpl implements ReviewService{
 	public void rplUpdate(ReviewVO vo) {
 		reviewMapper.rplUpdate(vo);
 	}
+
+	@Override
+	public List<ReviewVO> selectRplDataList(BoardVO vo) {
+		return reviewMapper.selectRplDataList(vo);
+	}
+
 }

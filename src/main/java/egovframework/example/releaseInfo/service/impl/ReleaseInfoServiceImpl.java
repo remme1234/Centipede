@@ -14,6 +14,7 @@ import egovframework.example.releaseInfo.service.ReleaseInfoService;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileUtils;
 import egovframework.example.util.FileVO;
+import egovframework.example.util.PageMakerVO;
 
 @Service("ReleaseInfoService")
 public class ReleaseInfoServiceImpl implements ReleaseInfoService {
@@ -26,8 +27,8 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 
 	
 	@Override
-	public List<BoardVO> selectReleaseInfoList(BoardVO vo){
-		List<BoardVO> list = releaseInfoMapper.selectReleaseInfoList(vo);
+	public List<PageMakerVO> selectReleaseInfoList(PageMakerVO vo){
+		List<PageMakerVO> list = releaseInfoMapper.selectReleaseInfoList(vo);
 		/*int cnt = releaseInfoMapper.selectReleaseInfoListCnt();
 		
 		// 게시글 번호 설정
@@ -88,5 +89,10 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	@Override
 	public void addVisitCnt(BoardVO vo) {
 		releaseInfoMapper.addVisitCnt(vo);
+	}
+
+	@Override
+	public int Allcount() {
+		return releaseInfoMapper.Allcount();
 	}
 }

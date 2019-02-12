@@ -34,9 +34,10 @@
 		// 리플 저장 메서드
 		rplSave : function() {
 			var $form = $("form[name=rplSave]"),
-				$pastLength = $("input[name=pastLength]"),
-				$newLength = $("input[name=newLength]");
-				
+				$pastLength = $("select[name=pastLength]"),
+				$newLength = $("select[name=newLength]");
+			
+			// 유효성검사 
 			if($pastLength.val() 	=== null || $pastLength.val() === ""
 				|| $newLength.val() === null || $newLength.val() === ""){
 				alert("빈칸을 채워주세요")
@@ -68,7 +69,7 @@
 					
 					console.log(jObj)
 					if(jObj.result === "SUCCESS") {
-						review.displayRplPrdSelectBox	(jObj.rplPrdList);
+						review.displayRplPrdSelectBox(jObj.rplPrdList);
 					}
 				}
 			})
@@ -86,7 +87,6 @@
 	
 </script>
 
-
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -99,19 +99,41 @@
 			<td colspan="2">${reviewDetail.userId}</td>
 		</tr>
 		<tr>
-			<td colspan="2">
-			
-			<!-- 파일 경로 이상으로 추후 보완 예정 -->
-			<div id="imageArea">
-				<c:forEach items="${fileInfo }" var="fileInfo" >
-					 <c:if test="${fileInfo.fileNo ne null}">
-						<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}"  width="200px" height="200px" >
-		              </c:if>
-	             </c:forEach>
-			</div>
-				<p>${reviewDetail.catCd}</p>
+			<td>
+				<!-- 파일 경로 이상으로 추후 보완 예정 -->
+				<div id="imageArea">
+					<c:forEach items="${fileInfo }" var="fileInfo" >
+						 <c:if test="${fileInfo.fileNo ne null}">
+							<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}"  width="200px" height="200px" >
+			              </c:if>
+		             </c:forEach>
+				</div>
 				<p>${reviewDetail.contents}</p>
 			</td>
+			<td>
+				<table class="table table-hover" id="rplArea">
+					<thead>
+						<tr>
+							<td>Brand</td>
+							<td>Product</td>
+							<td>Owned shoe size</td>
+							<td>New shoe size</td>
+							<td>Size</td>
+							<td>User Id</td>
+						</tr>
+						<c:forEach items="${rpldataList}" var="rpldataList">
+							<tr>
+								<td>${rpldataList.brndNm }</td>
+								<td>${rpldataList.gdNm}</td>
+								<td>${rpldataList.pastLength }</td>
+								<td>${rpldataList.newLength }</td>
+								<td>${rpldataList.size }</td>
+								<td>${rpldataList.regr }</td>
+							</tr>
+						</c:forEach>
+					</thead>
+				</table>
+			</td>	
 		</tr>
 		<%-- <tr>
 	        <c:forEach items="${fileInfo }" var="fileInfo" >
@@ -128,8 +150,8 @@
 </table>
 
 
+
 <!-- 댓글로 사이즈 평가 -->
-<h4>사이즈 후기 // 기존 신발과 새로산 신발을 비교한 평가</h4>
 <form autocomplete="off" name="rplSave" method="POST" action="" >
 	<input type="hidden" name="number" value="${reviewDetail.number}">
 	<div class="rpl">
@@ -141,7 +163,7 @@
 			</option>
 			</c:forEach>
 		</select>
-		<select class="rpl_prd" name="gdNm" >
+		<select class="rpl_prd" name="gdCd" >
 			<option value=''>Product</option>
 		</select>
 		<select class="rpl_past_length" name="pastLength"> <option value="">Owned shoe size</option></select>
@@ -156,7 +178,6 @@
 	</div>
 </form>
 
-<!-- <button type="button" class="AddRplBtn" onclick="review.reply()"> 추가  </button> -->
 
 <form action="" name="sendForm" method="POST">
 	<input type="hidden" name="number" value="${reviewDetail.number}" />
@@ -164,7 +185,9 @@
 
 <td>&nbsp;</td>
 
-<a href="reviewView.do"><button type="button" >목록으로</button></a>
-<button type="button" onclick="review.del()">삭제하기</button>
-<a href="reviewUpdateView.do?number=${reviewDetail.number}"><button type="button">수정하기</button></a>
-<td>&nbsp;</td>
+<div align="right">
+	<a href="reviewView.do"><button type="button" >목록으로</button></a>
+	<button type="button" onclick="review.del()">삭제하기</button>
+	<a href="reviewUpdateView.do?number=${reviewDetail.number}"><button type="button">수정하기</button></a>
+	<td>&nbsp;</td>
+</div>

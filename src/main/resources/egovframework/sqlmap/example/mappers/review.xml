@@ -6,7 +6,7 @@
 		<result property="boardUid"		column="BOARD_UID"/>
 	 	<result property="number"		column="NUMBER"/>
 	 	<result property="catCd"		column="CAT_CD"/>
-	 	<result property="catCdNm"		column="CAT_CD_NM"/>
+	 	<result property="brndNm"		column="BRND_NM"/>
 	 	<result property="title"		column="TITLE"/>
 	 	<result property="contents"		column="CONTENTS"/>
 	 	<result property="userId"		column="USER_ID"/>
@@ -47,6 +47,43 @@
 	
 	<!-- 리뷰게시판 목록 List -->
 	<select id="selectReviewList" resultMap="reviewList">
+		SELECT 	 T_REVIEW.BOARD_UID
+				,T_REVIEW.NUMBER
+				,CASE 
+					WHEN T_REVIEW.CAT_CD = 01 THEN '나이키'
+					WHEN T_REVIEW.CAT_CD = 02 THEN '아디다스'
+					WHEN T_REVIEW.CAT_CD = 03 THEN '컨버스'
+					ELSE '기타'  	
+					END CAT_CD
+				 ,T_REVIEW.TITLE
+				 ,T_REVIEW.CONTENTS
+				 ,T_REVIEW.USER_ID
+				 ,T_REVIEW.VISIT_CNT
+				 ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+				 ,T_REVIEW.USE_YN
+				 ,(SELECT 	SAVED_FILE_NM
+						FROM	T_FILE
+						WHERE   FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
+		FROM T_REVIEW 
+		INNER JOIN ( SELECT   CAT_CD
+		 					 ,GROUP_CONCAT(NUMBER ORDER BY RSGST_DT DESC) GROUPED_NUMBER
+					 FROM	  T_REVIEW 
+					 GROUP BY CAT_CD) GROUP_MAX
+		ON T_REVIEW.CAT_CD = GROUP_MAX.CAT_CD
+		WHERE T_REVIEW.USE_YN = 'Y'
+		<!-- <if test="searchText != null and !searchText.equals('')">
+			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+		<if test="catCd != null and !catCd.equals('')">
+			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
+		</if> -->
+		AND FIND_IN_SET(NUMBER,GROUPED_NUMBER) BETWEEN 1 AND 3
+		ORDER BY T_REVIEW.CAT_CD,T_REVIEW.RSGST_DT DESC
+	</select>
+	
+	<!-- 리뷰 검색 게시판 출력 쿼리 -->
+	<select id="selectReviewSearchList" resultMap="reviewList">
 		SELECT 	 BOARD_UID
 				,NUMBER
 				,CASE 
@@ -54,8 +91,8 @@
 					WHEN CAT_CD = 02 THEN '아디다스'
 					WHEN CAT_CD = 03 THEN '컨버스'
 					ELSE '기타'  	
-					END CAT_CD
-				,TITLE
+				END CAT_CD
+			 	,TITLE
 				,CONTENTS
 				,USER_ID
 				,VISIT_CNT
@@ -63,8 +100,8 @@
 				,USE_YN
 				,(SELECT 	SAVED_FILE_NM
 					FROM	T_FILE
-					WHERE   FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
-		FROM  T_REVIEW TR
+				   WHERE	FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		FROM T_REVIEW TR
 		WHERE USE_YN = 'Y'
 		<if test="searchText != null and !searchText.equals('')">
 			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
@@ -76,7 +113,7 @@
 		ORDER BY RSGST_DT DESC
 	</select>
 	
-	<!-- 리뷰게시판 말머리 버튼생성위한 리스트 출력 sql -->
+	<!-- 리뷰게시판 말머리 select box생성위한 리스트 출력 sql -->
 	<select id="selectCatCdList" resultMap="reviewList">
 		SELECT   CAT_CD
 			    ,CASE 
@@ -84,7 +121,7 @@
 				   WHEN CAT_CD = 02 THEN '아디다스'
 				   WHEN CAT_CD = 03 THEN '컨버스'
 				   ELSE '전체'
-				   END AS CAT_CD_NM
+			   	END AS BRND_NM
 		FROM     T_REVIEW
 		WHERE    USE_YN ='Y'
 		GROUP BY CAT_CD
@@ -127,18 +164,39 @@
 	
 	<!-- 사이즈후기 업데이트 내용 -->
 	<update id="rplUpdate" parameterType="egovframework.example.review.service.ReviewVO">
-		INSERT INTO T_REVIEW_RPL ( RPL_NO, NUMBER, CAT_CD, GD_NM, PAST_LENGTH, NEW_LENGTH, SIZE, REGR, REG_DT)
+		INSERT INTO T_REVIEW_RPL ( RPL_NO, NUMBER, CAT_CD, GD_CD, PAST_LENGTH, NEW_LENGTH, SIZE, REGR, REG_DT)
 		VALUES 		((SELECT IFNULL(MAX(RPL_NO),0)+1 FROM T_REVIEW_RPL AS TV)
 					, #{number}
 					, #{catCd}
-					, #{gdNm}
+					, #{gdCd}
 					, #{pastLength}
 					, #{newLength}
 					, #{size}
 					, 'SAMPLE'
 					, NOW())
 	</update>
-		
+	
+	<!-- 사이즈 후기 테이블 구성요소 호출하기 -->
+	<select id="selectRplDataList" parameterType="egovframework.example.util.BoardVO" resultMap="rplInfoList">
+		SELECT 	BRND_NM,
+				GD_NM,
+				PAST_LENGTH,
+				NEW_LENGTH,
+				CASE 
+					WHEN SIZE = 's' THEN '작음'
+					WHEN SIZE = 'm' THEN '적당함'
+					WHEN SIZE = 'l' THEN '크다'
+				END AS SIZE,
+				T_REVIEW_RPL.REGR
+		FROM	T_REVIEW_RPL
+					JOIN T_PRD ON
+						T_REVIEW_RPL.GD_CD=T_PRD.GD_CD
+					JOIN T_BRAND ON
+						T_REVIEW_RPL.CAT_CD=T_BRAND.CAT_CD
+		WHERE T_REVIEW_RPL.NUMBER = #{number}
+	</select>
+	
+	<!-- 리뷰 게시판 삭제기능 -->
 	<update id="deleteReviewDelete" parameterType="egovframework.example.util.BoardVO">
 		UPDATE T_REVIEW
 		SET USE_YN = 'N'

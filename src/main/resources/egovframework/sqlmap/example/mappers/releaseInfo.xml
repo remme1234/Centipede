@@ -3,7 +3,7 @@
 <mapper namespace="egovframework.example.releaseInfo.service.impl.ReleaseInfoMapper">
 	
 	<!-- 발매정보VO resultMap 설정 -->
-	<resultMap id="releaseInfoList" type="egovframework.example.util.BoardVO">
+	<resultMap id="releaseInfoList" type="egovframework.example.util.PageMakerVO">
 	 	<result property="boardUid"		column="BOARD_UID"/>
 	 	<result property="number"		column="NUMBER"/>
 	 	<result property="title"		column="TITLE"/>
@@ -49,7 +49,13 @@
 			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-		ORDER BY RSGST_DT DESC
+		ORDER BY RSGST_DT DESC 
+	</select>
+	
+	<select id="Allcount" resultMap="releaseInfoList">
+		SELECT COUNT(*)
+		FROM T_RELEASEINFO
+		WHERE USE_YN = 'Y'
 	</select>
 	
 	<!-- 발매정보게시판 목록개수 불러오기 -->

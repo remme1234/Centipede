@@ -48,6 +48,7 @@ li { list-style: none }
 <h3>RELEASE INFO</h3>
 </div>
 <ul class="releases-list">
+	
 	<c:forEach items="${releaseInfoList}" var="vo">
 	<li>
 		<a href="releaseInfoDetailView.do?number=${vo.number}">
@@ -58,7 +59,7 @@ li { list-style: none }
 	</li>
 	</c:forEach>
 </ul>
-
+<
 <!-- 검색기능 -->
 <div style="clear:both; text-align:center;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">
