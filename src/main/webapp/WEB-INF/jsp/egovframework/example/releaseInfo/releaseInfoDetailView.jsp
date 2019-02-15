@@ -26,7 +26,7 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="2">${releaseInfoDetail.userId}</td>
+			<td colspan="2">${releaseInfoDetail.rsgstrId}</td>
 		</tr>
 		<tr>
 			<td colspan="2">

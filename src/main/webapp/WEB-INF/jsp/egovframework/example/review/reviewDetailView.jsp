@@ -96,7 +96,7 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="2">${reviewDetail.userId}</td>
+			<td colspan="2">${reviewDetail.rsgstrId}</td>
 		</tr>
 		<tr>
 			<td>
@@ -128,7 +128,7 @@
 								<td>${rpldataList.pastLength }</td>
 								<td>${rpldataList.newLength }</td>
 								<td>${rpldataList.size }</td>
-								<td>${rpldataList.regr }</td>
+								<td>${rpldataList.rsgstrId }</td>
 							</tr>
 						</c:forEach>
 					</thead>

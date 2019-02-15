@@ -42,7 +42,7 @@ li { list-style: none }
 			$search.submit();
 		}
 	}
-</script>
+</script>	
  
 <div class="title" style="text-align:center ">
 <h3>RELEASE INFO</h3>
@@ -59,7 +59,7 @@ li { list-style: none }
 	</li>
 	</c:forEach>
 </ul>
-<
+
 <!-- 검색기능 -->
 <div style="clear:both; text-align:center;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">

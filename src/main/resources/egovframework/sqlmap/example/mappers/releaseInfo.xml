@@ -3,14 +3,14 @@
 <mapper namespace="egovframework.example.releaseInfo.service.impl.ReleaseInfoMapper">
 	
 	<!-- 발매정보VO resultMap 설정 -->
-	<resultMap id="releaseInfoList" type="egovframework.example.util.PageMakerVO">
+	<resultMap id="releaseInfoList" type="egovframework.example.util.BoardVO">
 	 	<result property="boardUid"		column="BOARD_UID"/>
 	 	<result property="number"		column="NUMBER"/>
 	 	<result property="title"		column="TITLE"/>
 	 	<result property="contents"		column="CONTENTS"/>
-	 	<result property="userId"		column="USER_ID"/>
 	 	<result property="visitCnt"		column="VISIT_CNT"/>
 	 	<result property="rsgstDt"		column="RSGST_DT"/>
+	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
 	 	<result property="useYn"		column="USE_YN"/>
 	 	<result property="fileNo"		column="FILE_NO"/>
 	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
@@ -35,7 +35,7 @@
 			 , NUMBER
 		     , TITLE
 		     , CONTENTS
-		     , USER_ID
+		     , RSGSTR_ID
 		     , VISIT_CNT
 			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
 			 , USE_YN
@@ -52,24 +52,18 @@
 		ORDER BY RSGST_DT DESC 
 	</select>
 	
-	<select id="Allcount" resultMap="releaseInfoList">
-		SELECT COUNT(*)
-		FROM T_RELEASEINFO
-		WHERE USE_YN = 'Y'
-	</select>
-	
 	<!-- 발매정보게시판 목록개수 불러오기 -->
-	<select id="selectReleaseInfoListCnt" resultType="java.lang.Integer">
-		<!-- 1은 count하기 위한 임의의 숫자 -->
+	<!-- <select id="selectReleaseInfoListCnt" resultType="java.lang.Integer">
+		1은 count하기 위한 임의의 숫자
 		SELECT 	COUNT(1)
 		FROM 	T_RELEASEINFO
 		WHERE	USE_YN = 'Y'
-	</select>
+	</select> -->
 	
 	<!-- 발매정보게시판 세부항목 불러오기 -->
 	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.util.BoardVO" resultMap="releaseInfoList">
 		SELECT BOARD_UID
-			 , USER_ID
+			 , RSGSTR_ID
 			 , NUMBER
 			 , TITLE
 			 , CONTENTS
@@ -94,7 +88,7 @@
 	
 	<!-- 발매정보게시판 작성 및 수정시 DB에 추가 하는 쿼리 -->
 	<update id="updateReleaseInfo" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, REL_DT,USER_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
+		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, REL_DT,RSGSTR_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
 		VALUES 		(#{boardUid}
 		<if test='number == null or "".equals(number)'>
 			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)

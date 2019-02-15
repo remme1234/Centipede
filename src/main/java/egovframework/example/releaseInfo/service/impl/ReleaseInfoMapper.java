@@ -4,14 +4,13 @@ import java.util.List;
 
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
-import egovframework.example.util.PageMakerVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("ReleaseInfoMapper")
 public interface ReleaseInfoMapper {
 	
-	List<PageMakerVO> selectReleaseInfoList(PageMakerVO vo);
-
+	List<BoardVO> selectReleaseInfoList(BoardVO vo);
+	
 	BoardVO selectReleaseInfoDetail(BoardVO vo);
 	List<FileVO> selectFileList(BoardVO vo);
 
@@ -22,5 +21,5 @@ public interface ReleaseInfoMapper {
 	void addVisitCnt(BoardVO vo);
 	void insertFile(FileVO fileVO);
 	int Allcount();
-	
+
 }

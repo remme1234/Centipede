@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import egovframework.example.releaseInfo.service.ReleaseInfoService;
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
-import egovframework.example.util.PageMakerVO;
 
 @Controller
 public class ReleaseInfoController {
@@ -22,11 +21,28 @@ public class ReleaseInfoController {
 	
 	// 발매정보게시판 리스트 
 	@RequestMapping(value="releaseInfoView.do")
-	public String releaseInfoView (ModelMap model, PageMakerVO vo) {
+	public String releaseInfoView (ModelMap model, BoardVO vo) {
 		// 목록 조회
-		List<PageMakerVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
+		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
 		model.addAttribute("releaseInfoList", releaseInfoList);
-
+		
+		/*PageMakerVO pagemaker = new PageMakerVO();
+		String pagenum = request.getParameter("pagenum");
+		String contentnum = request.getParameter("contentnum");
+		int cpagenum = Integer.parseInt(pagenum);
+		int ccontentnum = Integer.parseInt(contentnum);	
+		
+		pagemaker.setTotalcount(releaseInfoService.testcount());
+		pagemaker.setPagenum(cpagenum-1);
+		pagemaker.setContentnum(ccontentnum);
+		pagemaker.setCurrentblock(cpagenum);
+		pagemaker.setLastblock(pagemaker.getTotalcount());
+		
+		pagemaker.prevnext(cpagenum);
+		pagemaker.setStartPage(pagemaker.getCurrentblock());
+		pagemaker.setEndPage(pagemaker.getLastblock(), pagemaker.getCurrentblock());*/
+		
+		
 		return "releaseInfo/releaseInfoView.tiles";
 	}
 	

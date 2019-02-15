@@ -7,9 +7,9 @@ public class ReleaseInfoVO {
 	private String number;
 	private String title;
 	private String contents;
-	private String userId;
 	private int visitCnt;
 	private String rsgstDt;
+	private String rsgstrId;
 	private String useYn;
 	private String fileNo;
 	private String savedFileNm;
@@ -30,8 +30,6 @@ public class ReleaseInfoVO {
 	public String getTitle() {return title;}
 	public void setTitle(String title) {this.title = title;}
 	
-	public String getUserId() {return userId;}
-	public void setUserId(String userId) {this.userId = userId;}
 	
 	public String getContents() {return contents;}
 	public void setContents(String contents) {this.contents = contents;}
@@ -41,6 +39,9 @@ public class ReleaseInfoVO {
 	
 	public String getRsgstDt() {return rsgstDt;}
 	public void setRsgstDt(String rsgstDt) {this.rsgstDt = rsgstDt;}
+	
+	public String getRsgstrId() {return rsgstrId;}
+	public void setRsgstrId(String rsgstrId) {this.rsgstrId = rsgstrId;}
 	
 	public String getUseYn() {return useYn;}
 	public void setUseYn(String useYn) {this.useYn = useYn;}

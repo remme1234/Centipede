@@ -9,9 +9,9 @@
 	 	<result property="brndNm"		column="BRND_NM"/>
 	 	<result property="title"		column="TITLE"/>
 	 	<result property="contents"		column="CONTENTS"/>
-	 	<result property="userId"		column="USER_ID"/>
 	 	<result property="visitCnt"		column="VISIT_CNT"/>
 	 	<result property="rsgstDt"		column="RSGST_DT"/>
+	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
 	 	<result property="useYn"		column="USE_YN"/>
 	 	<result property="fileNo"		column="FILE_NO"/>
 	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
@@ -34,8 +34,8 @@
 		<result property="catCd"			column="CAT_CD"/>
 		<result property="brndNm"			column="BRND_NM"/>
 		<result property="sortNo"			column="SORT_NO"/>
-		<result property="regr"				column="REGR"/>
-		<result property="regDt"			column="REG_DT"/>
+		<result property="rsgstrId"			column="RSGSTR_ID"/>
+		<result property="rsgstDt"			column="RSGST_DT"/>
 		<result property="gdCd"				column="GD_CD"/>
 		<result property="gdNm"				column="GD_NM"/>
 		<result property="number"			column="NUMBER"/>
@@ -57,7 +57,7 @@
 					END CAT_CD
 				 ,T_REVIEW.TITLE
 				 ,T_REVIEW.CONTENTS
-				 ,T_REVIEW.USER_ID
+				 ,T_REVIEW.RSGSTR_ID
 				 ,T_REVIEW.VISIT_CNT
 				 ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 				 ,T_REVIEW.USE_YN
@@ -94,7 +94,7 @@
 				END CAT_CD
 			 	,TITLE
 				,CONTENTS
-				,USER_ID
+				,RSGSTR_ID
 				,VISIT_CNT
 				,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 				,USE_YN
@@ -110,7 +110,7 @@
 		<if test="catCd != null and !catCd.equals('')">
 			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if>
-		ORDER BY RSGST_DT DESC
+		ORDER BY RSGST_DT DESCr
 	</select>
 	
 	<!-- 리뷰게시판 말머리 select box생성위한 리스트 출력 sql -->
@@ -141,7 +141,7 @@
 			   ,CAT_CD
 			   ,TITLE
 			   ,CONTENTS
-			   ,USER_ID
+			   ,RSGSTR_ID
 			   ,VISIT_CNT
 			   ,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 			   ,FILE_NO
@@ -164,7 +164,7 @@
 	
 	<!-- 사이즈후기 업데이트 내용 -->
 	<update id="rplUpdate" parameterType="egovframework.example.review.service.ReviewVO">
-		INSERT INTO T_REVIEW_RPL ( RPL_NO, NUMBER, CAT_CD, GD_CD, PAST_LENGTH, NEW_LENGTH, SIZE, REGR, REG_DT)
+		INSERT INTO T_REVIEW_RPL ( RPL_NO, NUMBER, CAT_CD, GD_CD, PAST_LENGTH, NEW_LENGTH, SIZE, RSGSTR_ID, RSGST_DT)
 		VALUES 		((SELECT IFNULL(MAX(RPL_NO),0)+1 FROM T_REVIEW_RPL AS TV)
 					, #{number}
 					, #{catCd}
@@ -187,7 +187,7 @@
 					WHEN SIZE = 'm' THEN '적당함'
 					WHEN SIZE = 'l' THEN '크다'
 				END AS SIZE,
-				T_REVIEW_RPL.REGR
+				T_REVIEW_RPL.RSGSTR_ID
 		FROM	T_REVIEW_RPL
 					JOIN T_PRD ON
 						T_REVIEW_RPL.GD_CD=T_PRD.GD_CD
@@ -205,7 +205,7 @@
 	
 	<!-- 리뷰게시판 게시글 업데이트 쿼리 -->
 	<update id="updateReview" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_REVIEW (BOARD_UID, NUMBER, CAT_CD, TITLE, CONTENTS, USER_ID, VISIT_CNT, RSGST_DT, USE_YN,FILE_NO)
+		INSERT INTO T_REVIEW (BOARD_UID, NUMBER, CAT_CD, TITLE, CONTENTS, RSGSTR_ID, VISIT_CNT, RSGST_DT, USE_YN,FILE_NO)
 		VALUES 		(#{boardUid}
 		<if test='number == null or "".equals(number)'>
 			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)

@@ -41,7 +41,7 @@ li { list-style: none }
 	<ul class="review-list">
 		<div class="review-cat-nm">
 			<c:out value="${catCdList.brndNm}"/>
-			<input type="button" onclick="reviewList.more('${catCdList.catCd}')" value="더보기" >
+			<a href ="reviewSearchView.do?catCd=${catCdList.catCd}"> 》</a>
 		</div>
 		
 		<c:forEach items="${reviewList}" var="vo">

@@ -118,7 +118,12 @@
 				<groupId>org.apache.tiles</groupId>
 				<artifactId>tiles-core</artifactId>
 				<version>${org.apache.tiles-version}</version>
-			</dependency>		
+			</dependency>	
+			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-servlet</artifactId>
+				<version>${org.apache.tiles-version}</version>
+			</dependency>	
 		<!-- 타일즈 라이브러리 : 끝 -->
         
         <!-- mysql이나 oracle 필요시 사용 -->

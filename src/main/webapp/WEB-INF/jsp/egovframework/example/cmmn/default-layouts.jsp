@@ -7,12 +7,12 @@
 	<head>
   		<tiles:insertAttribute name="header"/>
 		<tiles:insertAttribute name="nav"/>
+		<%-- <tiles:insertAttribute name="left"/> --%>
   	</head>
 	<body>
-	<div style="margin-top: 100px;">
-		<%-- <tiles:insertAttribute name="left"/> --%>
-		<tiles:insertAttribute name="content"/>
- 		<tiles:insertAttribute name="footer"/>
-	</div>
+		<div style="margin-top: 100px;">
+			<tiles:insertAttribute name="content"/>
+	 		<tiles:insertAttribute name="footer"/>
+		</div>
 	</body>
 </html>

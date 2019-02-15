@@ -58,22 +58,31 @@
 			</a>
 		</li>
 		<li class="menu">
-			<a href="#">introduce</a>
+			<a href="#">Introduce</a>
 			<div><p>Submenu 1</p></div>		
 		</li>
 		<li class="menu">
-			<a href="#">community</a>
+			<a href="#">Community</a>
 			<div>
 				<p><a href="releaseInfoView.do">Release Information</a></p>	
 				<p><a href="reviewView.do">Sneaker Review</a></p>
 			</div>	
 		</li>
 		<li class="menu">
-			<a href="#">notice</a>
+			<a href="noticeView.do">Notice</a>
 		</li>
 		<li class="menu">
-			<a href="#">my page</a>
+			<a href="#">My page</a>
 			<div><p>Submenu 4</p></div>		
 		</li>
+		<li class="menu">
+			<a href="#">manage page</a>
+			<div>
+				<p><a href="mngReleaseInfo.do">Release Information</a></p>	
+				<p><a href="mngReviewView.do">Sneaker Review</a></p>
+				<p><a href="mngNotice.do">Notice</a></p>
+			</div>		
+		</li>
+		
 	</ul>
 </div>

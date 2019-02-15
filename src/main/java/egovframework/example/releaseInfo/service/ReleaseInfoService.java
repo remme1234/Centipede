@@ -6,11 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
-import egovframework.example.util.PageMakerVO;
 
 public interface ReleaseInfoService {
 
-	List<PageMakerVO> selectReleaseInfoList(PageMakerVO vo);
+	List<BoardVO> selectReleaseInfoList(BoardVO vo);
 
 	BoardVO selectReleaseInfoDetail(BoardVO vo);
 	List<FileVO> selectFileList(BoardVO vo);
@@ -21,5 +20,4 @@ public interface ReleaseInfoService {
 
 	void addVisitCnt(BoardVO vo);
 
-	int Allcount();
 }
