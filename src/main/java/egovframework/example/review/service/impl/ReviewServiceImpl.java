@@ -116,7 +116,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<ReviewVO> selectRplDataList(BoardVO vo) {
+	public List<ReviewVO> selectRplDataList(ReviewVO vo) {
 		return reviewMapper.selectRplDataList(vo);
 	}
 

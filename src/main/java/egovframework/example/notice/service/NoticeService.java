@@ -8,5 +8,4 @@ public interface NoticeService {
 
 	List<BoardVO> selectNoticeViewList(BoardVO vo);
 
-
 }

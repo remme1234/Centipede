@@ -76,9 +76,9 @@
 			<div><p>Submenu 4</p></div>		
 		</li>
 		<li class="menu">
-			<a href="#">manage page</a>
+			<a href="#">Managing page</a>
 			<div>
-				<p><a href="mngReleaseInfo.do">Release Information</a></p>	
+				<p><a href="mngRelInfoList.do">Release Information</a></p>	
 				<p><a href="mngReviewView.do">Sneaker Review</a></p>
 				<p><a href="mngNotice.do">Notice</a></p>
 			</div>		

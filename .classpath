@@ -33,5 +33,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="egovframework.rte.ptl.mvc-3.5.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

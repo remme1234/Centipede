@@ -27,6 +27,6 @@ public interface ReviewService {
 
 	void rplUpdate(ReviewVO vo);
 
-	List<ReviewVO> selectRplDataList(BoardVO vo);
+	List<ReviewVO> selectRplDataList(ReviewVO vo);
 
 }

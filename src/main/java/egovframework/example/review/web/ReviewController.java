@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.example.cmmn.web.JsonUtil;
 import egovframework.example.review.service.ReviewService;
@@ -59,15 +60,10 @@ public class ReviewController {
 
 		// 사이즈 후기에 쓰일 select 박스 호출
 		List<ReviewVO> rplCatList = reviewService.selectRplCatList();
-		// 사이즈 후기 데이터를 호출하는 메서드
-		List<ReviewVO> rpldataList = reviewService.selectRplDataList(vo);
-		System.out.println(rpldataList);
 		
 		model.addAttribute("reviewDetail", vo);
 		model.addAttribute("fileInfo", fileInfo);
 		model.addAttribute("rplCatList", rplCatList);
-		model.addAttribute("rpldataList", rpldataList);
-		
 		
 		return "review/reviewDetailView.tiles";
 	}
@@ -103,6 +99,23 @@ public class ReviewController {
 		
 		return "redirect:reviewView.do";
 	}
+	
+	// 리뷰게시판 사이즈 후기 jqgrid 호출 url
+	@RequestMapping(value="rplTableList.do", produces ="application/json; charset=utf-8")
+	@ResponseBody
+	public String rplTableList(ReviewVO vo) {
+		
+		// 사이즈 후기 데이터를 호출하는 메서드
+		List<ReviewVO> rpldataList = reviewService.selectRplDataList(vo);
+		System.out.println("###### : " + rpldataList);
+		
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		
+		resMap.put("rows", rpldataList);
+		
+		return JsonUtil.MapToJson(resMap);
+	}
+	
 	
 	
 	// 리뷰게시판 업데이트 페이지 호출 메서드

@@ -13,16 +13,17 @@ import egovframework.example.util.BoardVO;
 
 @Controller
 public class NoticeController {
-	
+
 	@Resource
 	private NoticeService noticeService;
 	
 	@RequestMapping(value="noticeView.do")
-	public String noticeView (BoardVO vo, ModelMap model) {
-		System.out.println("!!");
+	public String noticeView(BoardVO vo, ModelMap model) {
 		
 		List<BoardVO> noticeViewList = noticeService.selectNoticeViewList(vo);
+		
 		model.addAttribute("noticeViewList", noticeViewList);
+		
 		return "notice/noticeView.tiles";
 	}
 }

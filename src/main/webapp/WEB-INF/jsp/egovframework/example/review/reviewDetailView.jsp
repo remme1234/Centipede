@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<script type="text/javascript" src="<c:url value='/js/jquery.1.11.0.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='jqgrid/jqGrid-master/js/jquery.jqGrid.js'/>"></script>
+
+
+<style>
+.ui-jqgrid .ui-jqgrid-bdiv { overflow-y: scroll }
+</style>
 
 <script>
 	var review = {
@@ -45,7 +52,7 @@
 			}
 			
 			$form.attr("action","rplUpdate.do")
-			$form.submit()
+			$form.submit();
 			alert("입력한 사이즈 후기가 정상적으로 등록되었습니다.")
 		}
 		
@@ -60,11 +67,11 @@
 			$(".rpl_prd").children().remove();
 			
 			$.ajax({
-				type : "post",
-				url : "rplPrd.do",
-				data : JSON.stringify(form),
+				type 		: "post",
+				url 		: "rplPrd.do",
+				data 		: JSON.stringify(form),
 				contentType : "application/Json",
-				success : function(data) {
+				success 	: function(data) {
 					var jObj = JSON.parse(data);
 					
 					console.log(jObj)
@@ -83,11 +90,76 @@
 		}
 	})
 	
+	var rplCls = {
+			
+		$jqGrid		: $,
+		
+		gridInit	: function() {
+			this.$jqGrid = $("#rplArea");
+		},
+		
+		gridInitFn	: function() {
+			
+			this.$jqGrid.jqGrid({
+				
+				datatype   : "local",
+				colModel   : [
+					{label : "Brand", 			name : "brndNm", 		width : 80, 	align : "center" },
+					{label : "Product", 		name : "gdNm", 			width : 100, 	align : "center" },
+					{label : "Owned shoe size", name : "pastLength",	width : 150, 	align : "center" },
+					{label : "New shoe size", 	name : "newLength", 	width : 150, 	align : "center" },
+					{label : "Size", 			name : "size", 			width : 50, 	align : "center" },
+					{label : "User Id", 		name : "rsgstrId", 		width : 80, 	align : "center" },
+				],
+				height	   : 150,
+				autowidth  : true,
+				caption    : "Shoe size review table"
+			})
+		},
+		
+		goSearchFn	:function(number) {
+			
+			this.$jqGrid.setGridParam({
+				
+				// 해당게시글의 rpl을 가져오기 위해서 number 매개변수를 이용
+				url		   	: "<c:url value='rplTableList.do?number=" + number + "'/>",
+				datatype	: "json",
+				mtype		: "GET",
+				
+				loadCompelete	: function(data) {
+					cosole.log("data : ", data);
+				}
+			}).trigger("reloadGrid");
+		}
+	}
 	
+	$(function() {
+		rplCls.gridInit();
+		rplCls.gridInitFn();
+	})
 	
+	var goSearch = function(number) {
+		
+		$("#rplArea").setGridParam({
+			
+			// 해당게시글의 rpl을 가져오기 위해서 number 매개변수를 이용
+			url		   	: "<c:url value='rplTableList.do?number=" + number + "'/>",
+			datatype	: "json",
+			mtype		: "GET",
+			
+			loadCompelete	: function(data) {
+				cosole.log("data : ", data);
+			}
+		}).trigger("reloadGrid");
+	}
 </script>
 
 <table class="table table-hover">
+	<colgroup>
+		<col width="50px" />
+		<col width="100px" />
+		
+	</colgroup>
 	<thead>
 		<tr>
 			<td>${reviewDetail.title}</td>
@@ -111,29 +183,10 @@
 				<p>${reviewDetail.contents}</p>
 			</td>
 			<td>
-				<table class="table table-hover" id="rplArea">
-					<thead>
-						<tr>
-							<td>Brand</td>
-							<td>Product</td>
-							<td>Owned shoe size</td>
-							<td>New shoe size</td>
-							<td>Size</td>
-							<td>User Id</td>
-						</tr>
-						<c:forEach items="${rpldataList}" var="rpldataList">
-							<tr>
-								<td>${rpldataList.brndNm }</td>
-								<td>${rpldataList.gdNm}</td>
-								<td>${rpldataList.pastLength }</td>
-								<td>${rpldataList.newLength }</td>
-								<td>${rpldataList.size }</td>
-								<td>${rpldataList.rsgstrId }</td>
-							</tr>
-						</c:forEach>
-					</thead>
-				</table>
-			</td>	
+				<button type="button" onclick="rplCls.goSearchFn(${reviewDetail.number})">검색</button>
+				<!-- jqGrid를 통해서 테이블 생성 -->
+				<table id="rplArea"></table>
+			</td> 	
 		</tr>
 		<%-- <tr>
 	        <c:forEach items="${fileInfo }" var="fileInfo" >
@@ -148,6 +201,7 @@
 	      </tr> --%>
 	</tbody>
 </table>
+
 
 
 

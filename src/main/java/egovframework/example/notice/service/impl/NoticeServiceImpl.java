@@ -10,7 +10,7 @@ import egovframework.example.notice.service.NoticeService;
 import egovframework.example.util.BoardVO;
 
 @Service
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
 	
 	@Resource
 	private NoticeMapper noticeMapper;
@@ -19,6 +19,5 @@ public class NoticeServiceImpl implements NoticeService{
 	public List<BoardVO> selectNoticeViewList(BoardVO vo) {
 		return noticeMapper.selectNoticeViewList(vo);
 	}
-
 
 }

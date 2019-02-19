@@ -27,5 +27,5 @@ public interface ReviewMapper {
 	List<EgovMap> selectRplPrdList(String param);
 	
 	void rplUpdate(ReviewVO vo);
-	List<ReviewVO> selectRplDataList(BoardVO vo);
+	List<ReviewVO> selectRplDataList(ReviewVO vo);
 }
