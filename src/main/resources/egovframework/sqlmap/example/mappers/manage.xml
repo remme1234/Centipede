@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.manage.service.impl.ManageMapper">
+
+	<resultMap type="egovframework.example.util.BoardVO" id="manageList">
+		<result property="boardUid"		column="BOARD_UID"/>
+	 	<result property="number"		column="NUMBER"/>
+	 	<result property="catCd"		column="CAT_CD"/>
+	 	<result property="brndNm"		column="BRND_NM"/>
+	 	<result property="title"		column="TITLE"/>
+	 	<result property="contents"		column="CONTENTS"/>
+	 	<result property="visitCnt"		column="VISIT_CNT"/>
+	 	<result property="rsgstDt"		column="RSGST_DT"/>
+	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
+	 	<result property="useYn"		column="USE_YN"/>
+	 	<result property="fileNo"		column="FILE_NO"/>
+	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
+	</resultMap>
+	
+	
+	<select id="selectMngRelInfoList" resultMap="manageList" >
+		SELECT	  BOARD_UID
+				, NUMBER
+		        , TITLE
+				, CONTENTS
+		     	, RSGSTR_ID
+		     	, VISIT_CNT
+			 	, DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+			 	, USE_YN
+			 	, REL_DT
+			 	, (SELECT SAVED_FILE_NM
+					FROM   T_FILE
+					WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		FROM  T_RELEASEINFO TR
+		<if test="searchText != null and !searchText.equals('')">
+			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+		ORDER BY RSGST_DT DESC
+	</select>
+	
+	<select id="selectMngRevInfoList" resultMap="manageList" >
+		SELECT 	 BOARD_UID
+				,NUMBER
+				,CASE 
+					WHEN T_REVIEW.CAT_CD = 01 THEN '나이키'
+					WHEN T_REVIEW.CAT_CD = 02 THEN '아디다스'
+					WHEN T_REVIEW.CAT_CD = 03 THEN '컨버스'
+					ELSE '기타'  	
+					END CAT_CD
+				 ,TITLE
+				 ,CONTENTS
+				 ,RSGSTR_ID
+				 ,VISIT_CNT
+				 ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+				 ,USE_YN
+				 ,(SELECT 	SAVED_FILE_NM
+						FROM	T_FILE
+						WHERE   FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
+		FROM T_REVIEW 
+		<if test="searchText != null and !searchText.equals('')">
+			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+		<if test="catCd != null and !catCd.equals('')">
+			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
+		</if>
+	</select>
+	
+	<select id="selectMngNotInfoList" resultMap="manageList" >
+		SELECT 		NUMBER
+				  , TITLE
+				  , RSGST_DT
+				  , VISIT_CNT
+				  , RSGSTR_ID
+		FROM		T_NOTICE
+		ORDER BY    NUMBER DESC
+	</select>
+</mapper>
