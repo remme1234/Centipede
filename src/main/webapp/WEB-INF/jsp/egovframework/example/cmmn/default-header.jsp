@@ -36,19 +36,32 @@
 			$search.submit();
 		},
 		
-		disable : function(number, useYn) {
+		disable : function(number, useYn, boardUid) {
 			
 			if(confirm("상태를 변경하시겠습니까?")){
-				location.href="mngRelInfoDisable.do?number=" + number + "&useYn=" + useYn; 
+				if(boardUid == 'B0001'){
+					location.href="mngRelInfoDisable.do?number=" + number + "&useYn=" + useYn; 
+				} else if(boardUid == 'B0002') {
+					location.href="mngReviewDisable.do?number=" + number + "&useYn=" + useYn;
+				} else if(boardUid == 'B0003') {
+					location.href="mngNoticeDisable.do?number=" + number + "&useYn=" + useYn;
+				}
 			}
 		},
 		
-		del : function() {
+		del : function(boardUid) {
 			
 			if(confirm("삭제하시겠습니까?")) {
 				var doc = document.delForm;
 				
-				doc.action = "mngRelInfoDelete.do";
+				if(boardUid == 'B0001'){
+					doc.action = "mngRelInfoDelete.do"; 
+				} else if(boardUid == 'B0002') {
+					doc.action = "mngReviewDelete.do";
+				} else if(boardUid == 'B0003') {
+					doc.action = "mngNoticeDelete.do";
+				}
+				
 				doc.submit();
 			}
 		}

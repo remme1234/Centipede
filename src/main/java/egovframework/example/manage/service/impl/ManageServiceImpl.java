@@ -76,24 +76,68 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	//  review 게시판 목록 출력
 	@Override
 	public List<BoardVO> selectMngRevInfoList(BoardVO vo) {
 		return manageMapper.selectMngRevInfoList(vo);
 	}
 	
+	// review 글작성 수정 update 기능 
+	@Override
+	public void updateReview(BoardVO vo, HttpServletRequest request) throws Exception {
+		// review 내용 입력한 값
+		manageMapper.updateReview(vo);
+		
+		// 이하 파일 저장
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		
+		while(iterator.hasNext()){
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			if(multipartFile.isEmpty() == false){
+				System.out.println("------------- file start -------------");
+				System.out.println("name : "+multipartFile.getName());
+				System.out.println("filename : "+multipartFile.getOriginalFilename());
+				System.out.println("size : "+multipartFile.getSize());
+				System.out.println("-------------- file end --------------\n");
+			}
+		}
+		
+		List<FileVO> list = fileUtils.parseInsertFileInfo(vo, request);
+		for(int i=0, size=list.size(); i<size; i++){
+			manageMapper.insertFile(list.get(i));
+		}		
+	}
+	
+	// review 수정화면에 데이터 출력
+	@Override
+	public BoardVO selectReviewDetail(BoardVO vo) {
+		return manageMapper.selectReviewDetail(vo);
+	}
+	
+	// review 글 숨김, 보이기 설정 
+	@Override
+	public void deleteReviewDisable(BoardVO vo) {
+		manageMapper.deleteReviewDisable(vo);
+	}
+	
+	// review 게시글 삭제
+	@Override
+	public void mngReviewDelete(BoardVO vo) {
+		manageMapper.mngReviewDelete(vo);
+	}
+	
+	
 	// notice 게시판 목록 출력
 	@Override
 	public List<BoardVO> selectMngNotInfoList(BoardVO vo) {
 		return manageMapper.selectMngNotInfoList(vo);
 	}
+
+
+
+
 
 
 

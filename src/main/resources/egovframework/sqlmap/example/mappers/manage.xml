@@ -31,6 +31,20 @@
 	 	<result property="useYn"			column="USE_YN"/>
 	</resultMap>
 	
+	<!-- 사이즈 답글 ReviewVO resultMap 설정 -->
+	<resultMap id="rplInfoList" type="egovframework.example.review.service.ReviewVO">
+		<result property="catCd"			column="CAT_CD"/>
+		<result property="brndNm"			column="BRND_NM"/>
+		<result property="sortNo"			column="SORT_NO"/>
+		<result property="rsgstrId"			column="RSGSTR_ID"/>
+		<result property="rsgstDt"			column="RSGST_DT"/>
+		<result property="gdCd"				column="GD_CD"/>
+		<result property="gdNm"				column="GD_NM"/>
+		<result property="number"			column="NUMBER"/>
+		<result property="pastLength"		column="PAST_LENGTH"/>
+		<result property="newLength"		column="NEW_LENGTH"/>
+		<result property="size"				column="SIZE"/>
+	</resultMap>
 	
 	<!-- release info 게시판 목록 출력 쿼리 -->
 	<select id="selectMngRelInfoList" resultMap="manageList" >
@@ -94,37 +108,6 @@
 			   CONTENTS = #{contents}
 	</update>	
 	
-	<!-- release info 첨부파일 저장  -->
-	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-	        INSERT INTO T_FILE
-	        (
-	            FILE_NO,
-	            BOARD_UID,
-	            ORIGIN_FILE_NM,
-	            SAVED_FILE_NM,
-	            SAVED_FILE_PATH,
-	            FILE_SIZE,
-	            RSGST_DT,
-	            RSGSTR_ID
-	        )
-	        VALUES
-	        (	
-		        <if test='fileNo == null or "".equals(fileNo)'>
-					(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-				</if>
-				<if test='fileNo != null and !"".equals(fileNo)'>
-					,#{fileNo}
-				</if>
-	            ,#{boardUid}
-	            ,#{originFileNm}
-	            ,#{savedFileNm}
-	            ,#{savedFilePath}
-	            ,#{fileSize}
-	            ,NOW()
-	            ,'SAMPLE'
-	        )
-	</insert>
-	
 	<!-- release info 보이기와 숨기기  -->  
 	<update id="deleteReleaseInfoDisable">
 		UPDATE T_RELEASEINFO
@@ -137,7 +120,6 @@
 		DELETE FROM T_RELEASEINFO
 		WHERE NUMBER = #{number}
 	</delete>
-	
 	
 	
 	<!-- 이하 review 게시판   -->
@@ -167,7 +149,61 @@
 		<if test="catCd != null and !catCd.equals('')">
 			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if>
+		ORDER BY RSGST_DT DESC
 	</select>
+	
+	<!-- review 게시판 작성 및 수정 기능  -->
+	<update id="updateReview" parameterType="egovframework.example.util.BoardVO">
+		INSERT INTO T_REVIEW (BOARD_UID, NUMBER, CAT_CD, TITLE, CONTENTS, RSGSTR_ID, VISIT_CNT, RSGST_DT, USE_YN,FILE_NO)
+		VALUES 		(#{boardUid}
+		<if test='number == null or "".equals(number)'>
+			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)
+		</if>
+		<if test='number != null and !"".equals(number)'>
+			,#{number}
+		</if>
+		, #{catCd}, #{title}, #{contents}, "SAMPLE", "0", now(), 'Y'
+		<if test='fileNo == null or "".equals(fileNo)'>
+			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
+		</if>
+		<if test='fileNo != null and !"".equals(fileNo)'>
+			,#{fileNo})
+		</if>
+		ON DUPLICATE KEY 
+		UPDATE TITLE 	= #{title},
+			   CONTENTS = #{contents}
+	</update>	
+	
+	<!-- review 게시판 수정페이지 출력시 기존에 있던 내용 호출하는 쿼리 -->
+	<select id="selectReviewDetail" parameterType="egovframework.example.util.BoardVO" resultMap="manageList">
+		SELECT  BOARD_UID
+			   ,NUMBER
+			   ,CAT_CD
+			   ,TITLE
+			   ,CONTENTS
+			   ,RSGSTR_ID
+			   ,VISIT_CNT
+			   ,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+			   ,FILE_NO
+			   ,USE_YN
+		FROM	T_REVIEW
+		WHERE   NUMBER=#{number}
+	</select>
+	
+	<!-- review 보이기와 숨기기  -->  
+	<update id="deleteReviewDisable">
+		UPDATE T_REVIEW
+		SET USE_YN = IF(USE_YN = 'Y','N','Y')
+		WHERE NUMBER = #{number}
+	</update>
+	
+	<!-- review  데이터 삭제   -->
+	<delete id="mngReviewDelete">
+		DELETE FROM T_REVIEW
+		WHERE NUMBER = #{number}
+	</delete>
+	
+	
 	
 	<!-- 이하 notice 게시판  -->
 	<select id="selectMngNotInfoList" resultMap="manageList" >
@@ -179,4 +215,37 @@
 		FROM		T_NOTICE
 		ORDER BY    NUMBER DESC
 	</select>
+	
+	
+	
+	<!-- 공통 첨부파일 저장  -->
+	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
+        INSERT INTO T_FILE
+        (
+            FILE_NO,
+            BOARD_UID,
+            ORIGIN_FILE_NM,
+            SAVED_FILE_NM,
+            SAVED_FILE_PATH,
+            FILE_SIZE,
+            RSGST_DT,
+            RSGSTR_ID
+        )
+        VALUES
+        (	
+	        <if test='fileNo == null or "".equals(fileNo)'>
+				(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
+			</if>
+			<if test='fileNo != null and !"".equals(fileNo)'>
+				,#{fileNo}
+			</if>
+            ,#{boardUid}
+            ,#{originFileNm}
+            ,#{savedFileNm}
+            ,#{savedFilePath}
+            ,#{fileSize}
+            ,NOW()
+            ,'SAMPLE'
+        )
+	</insert>
 </mapper>

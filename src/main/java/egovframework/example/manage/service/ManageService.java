@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import egovframework.example.util.BoardVO;
 
 public interface ManageService {
-
+	
+	// 이하 release Info 
 	List<BoardVO> selectMngRelInfoList(BoardVO vo);
 
 	BoardVO selectReleaseInfoDetail(BoardVO vo);
@@ -18,9 +19,24 @@ public interface ManageService {
 	
 	void deleteReleaseInfdelete(BoardVO vo);
 	
+	
+	// 이하 review 
 	List<BoardVO> selectMngRevInfoList(BoardVO vo);
 	
+	BoardVO selectReviewDetail(BoardVO vo);
+	
+	void updateReview(BoardVO vo, HttpServletRequest request) throws Exception;
+
+	void deleteReviewDisable(BoardVO vo);
+	
+	void mngReviewDelete(BoardVO vo);
+	
+	// 이하 notice
 	List<BoardVO> selectMngNotInfoList(BoardVO vo);
+
+
+
+
 
 
 }

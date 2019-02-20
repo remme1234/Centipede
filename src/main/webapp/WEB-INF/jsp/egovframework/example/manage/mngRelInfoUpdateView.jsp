@@ -80,13 +80,13 @@
 	<input type="file" name="file"> 
 </form>
 	
-	<form action="" name="delForm" method="POST">
-		<input type="hidden" name="number" value="${mngRelInfoUpdateView.number}" />
-	</form>
-	
-	<button type="button" onclick="save()">저장</button>
-	<button type="button" onclick="manageCls.del()">삭제</button>
-	<a href="mngRelInfoList.do"><button type="button">취소</button></a>
+<form action="" name="delForm" method="POST">
+	<input type="hidden" name="number" value="${mngRelInfoUpdateView.number}" />
+</form>
+
+<button type="button" onclick="save()">저장</button>
+<button type="button" onclick="manageCls.del('${mngRelInfoUpdateView.boardUid}')">삭제</button>
+<a href="mngRelInfoList.do"><button type="button">취소</button></a>
 	
 	<!-- 취소시 번호설정 -->
 	<%-- <c:if test="${releaseInfoDetail.number ne null}">

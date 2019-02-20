@@ -19,7 +19,7 @@ public class ManageController {
 	private ManageService manageService;
 	
 	/** 이하 작업 releaseInfo 게시판  작업*/
-	// 목록 호출
+	// 게시글 목록 호출
 	@RequestMapping(value="mngRelInfoList.do")
 	public String mngRelInfoList(BoardVO vo, ModelMap model) {
 		List<BoardVO> mngRelInfoList = manageService.selectMngRelInfoList(vo);
@@ -62,15 +62,55 @@ public class ManageController {
 		return "redirect:mngRelInfoList.do";
 	}
 	
+	
 	/** 이하 작업 review 게시판 작업*/
-	@RequestMapping(value="mngRevInfoList.do")
-	public String mngRevInfoList(BoardVO vo,ModelMap model) {
+	// 게시글 목록 호출
+	@RequestMapping(value="mngReviewList.do")
+	public String mngReviewList(BoardVO vo,ModelMap model) {
 		
 		List<BoardVO> mngRevInfoList = manageService.selectMngRevInfoList(vo);
 		model.addAttribute("mngRevInfoList", mngRevInfoList);
 		
-		return "manage/mngRevInfoList.tiles";
+		return "manage/mngReviewList.tiles";
 	}
+	
+	// 글작성 및 수정 페이지 이동
+	@RequestMapping(value="mngReviewUpdateView.do")
+	public String mngReviewUpdateView(BoardVO vo, ModelMap model) {
+		
+		
+		vo = manageService.selectReviewDetail(vo);
+		model.addAttribute("mngReviewUpdateView", vo);
+		
+		return "manage/mngReviewUpdateView.tiles";
+	}
+	
+	// 작성 및 수정 기능 
+	@RequestMapping(value="mngReviewUpdate.do")
+	public String mngReviewUpdate(BoardVO vo, HttpServletRequest request) throws Exception {
+		manageService.updateReview(vo,request);
+		
+		return "redirect:mngReviewList.do";
+	}
+	
+	// 게시글 비활성화 기능
+	@RequestMapping(value="mngReviewDisable.do")
+	public String mngReviewDisable(BoardVO vo) {
+		
+		manageService.deleteReviewDisable(vo);
+		
+		return "redirect:mngReviewList.do";
+	}
+	
+	// 게시글 DB에서 삭제
+	@RequestMapping(value="mngReviewDelete.do")
+	public String mngReviewDelete(BoardVO vo) {
+		
+		manageService.mngReviewDelete(vo);
+		
+		return "redirect:mngReviewList.do";
+	}
+	
 	
 	/** 이하 작업 notice 게시판 작업*/
 	@RequestMapping(value="mngNotInfoList.do")

@@ -9,11 +9,13 @@
 <div class="notice">
 	<table class="table table-hover">
 		<colgroup>
+			<col width = "5%">
 			<col width = "10%">
 			<col width = "35%">
 			<col width = "20%">
+			<col width = "10%">
 			<col width = "15%">
-			<col width = "20%">
+			<col width = "5%">
 		</colgroup>
 		<thead>
 			<tr>
@@ -30,14 +32,18 @@
 			<c:forEach items="${mngRevInfoList}" var="mngRevInfoList">
 				<tr>
 					<td>${mngRevInfoList.number }</td>
-					<td>${mngRevInfoList.catCd }</td>
-					<td>${mngRevInfoList.title }</td>
+					<td>[${mngRevInfoList.catCd }]</td>
+					<td><a href="mngReviewUpdateView.do?number=${mngRevInfoList.number}">${mngRevInfoList.title }</a></td>
 					<td>${mngRevInfoList.rsgstDt }</td>
 					<td>${mngRevInfoList.visitCnt }</td>
 					<td>${mngRevInfoList.rsgstrId }</td>
-					<td>${mngRevInfoList.useYn }</td>
+					<td><a href="#" onclick="manageCls.disable('${mngRevInfoList.number}','${mngRevInfoList.useYn}','${mngRevInfoList.boardUid}')">${mngRevInfoList.useYn }</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+</div>
+
+<div style="clear:both">
+	<a href="mngReviewUpdateView.do"><button type="button">글 작성</button></a>
 </div>

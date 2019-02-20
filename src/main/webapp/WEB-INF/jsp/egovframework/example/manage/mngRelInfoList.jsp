@@ -35,7 +35,7 @@
 					<td>${mngRelInfoList.rsgstDt }</td>
 					<td>${mngRelInfoList.visitCnt }</td>
 					<td>${mngRelInfoList.rsgstrId }</td>
-					<td><a href="#" onclick="manageCls.disable('${mngRelInfoList.number}','${mngRelInfoList.useYn}')">${mngRelInfoList.useYn}</a></td>
+					<td><a href="#" onclick="manageCls.disable('${mngRelInfoList.number}','${mngRelInfoList.useYn}','${mngRelInfoList.boardUid}')">${mngRelInfoList.useYn}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
