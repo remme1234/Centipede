@@ -79,7 +79,7 @@
 			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if> -->
 		AND FIND_IN_SET(NUMBER,GROUPED_NUMBER) BETWEEN 1 AND 3
-		ORDER BY T_REVIEW.CAT_CD,T_REVIEW.RSGST_DT DESC
+		ORDER BY T_REVIEW.CAT_CD, T_REVIEW.RSGST_DT DESC
 	</select>
 	
 	<!-- 리뷰 검색 게시판 출력 쿼리 -->
@@ -110,7 +110,7 @@
 		<if test="catCd != null and !catCd.equals('')">
 			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if>
-		ORDER BY RSGST_DT DESCr
+		ORDER BY RSGST_DT DESC
 	</select>
 	
 	<!-- 리뷰게시판 말머리 select box생성위한 리스트 출력 sql -->

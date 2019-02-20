@@ -67,6 +67,3 @@ li { list-style: none }
 		<input type="button" onclick="releaseInfoList.search()" value="검색">
 	</form>
 </div>
-
-<div style="clear:both;">
-<a href="releaseInfoUpdateView.do"><button type="button">글 작성</button></a></div>

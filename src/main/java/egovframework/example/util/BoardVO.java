@@ -16,6 +16,11 @@ public class BoardVO {
 	private String catCd;
 	private String brndNm;
 	private String searchText;
+	private String rnum;
+	
+	
+	public String getRnum() {return rnum;}
+	public void setRnum(String rnum) {this.rnum = rnum;}
 	
 	public String getSearchText() {return searchText;}
 	public void setSearchText(String searchText) {this.searchText = searchText;}

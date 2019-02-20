@@ -26,4 +26,31 @@
 			$search.submit();
 		}
 	}
+	
+	var manageCls = {
+			
+		search : function() {
+			var $search = $("form[name = sendForm]");
+			
+			$search.attr("action","mngRelInfoList.do");
+			$search.submit();
+		},
+		
+		disable : function(number, useYn) {
+			
+			if(confirm("상태를 변경하시겠습니까?")){
+				location.href="mngRelInfoDisable.do?number=" + number + "&useYn=" + useYn; 
+			}
+		},
+		
+		del : function() {
+			
+			if(confirm("삭제하시겠습니까?")) {
+				var doc = document.delForm;
+				
+				doc.action = "mngRelInfoDelete.do";
+				doc.submit();
+			}
+		}
+	}
 </script>

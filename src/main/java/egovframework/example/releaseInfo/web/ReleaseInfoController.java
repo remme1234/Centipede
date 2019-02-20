@@ -26,23 +26,6 @@ public class ReleaseInfoController {
 		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
 		model.addAttribute("releaseInfoList", releaseInfoList);
 		
-		/*PageMakerVO pagemaker = new PageMakerVO();
-		String pagenum = request.getParameter("pagenum");
-		String contentnum = request.getParameter("contentnum");
-		int cpagenum = Integer.parseInt(pagenum);
-		int ccontentnum = Integer.parseInt(contentnum);	
-		
-		pagemaker.setTotalcount(releaseInfoService.testcount());
-		pagemaker.setPagenum(cpagenum-1);
-		pagemaker.setContentnum(ccontentnum);
-		pagemaker.setCurrentblock(cpagenum);
-		pagemaker.setLastblock(pagemaker.getTotalcount());
-		
-		pagemaker.prevnext(cpagenum);
-		pagemaker.setStartPage(pagemaker.getCurrentblock());
-		pagemaker.setEndPage(pagemaker.getLastblock(), pagemaker.getCurrentblock());*/
-		
-		
 		return "releaseInfo/releaseInfoView.tiles";
 	}
 	

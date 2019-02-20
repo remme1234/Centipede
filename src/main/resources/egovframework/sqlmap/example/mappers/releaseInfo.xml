@@ -125,32 +125,32 @@
 	
 	<!-- 첨부파일저장 -->
 	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-	        INSERT INTO T_FILE
-	        (
-	            FILE_NO,
-	            BOARD_UID,
-	            ORIGIN_FILE_NM,
-	            SAVED_FILE_NM,
-	            SAVED_FILE_PATH,
-	            FILE_SIZE,
-	            RSGST_DT,
-	            RSGSTR_ID
-	        )
-	        VALUES
-	        (	
-		        <if test='fileNo == null or "".equals(fileNo)'>
-					(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-				</if>
-				<if test='fileNo != null and !"".equals(fileNo)'>
-					,#{fileNo}
-				</if>
-	            ,#{boardUid}
-	            ,#{originFileNm}
-	            ,#{savedFileNm}
-	            ,#{savedFilePath}
-	            ,#{fileSize}
-	            ,NOW()
-	            ,'SAMPLE'
-	        )
+        INSERT INTO T_FILE
+        (
+            FILE_NO,
+            BOARD_UID,
+            ORIGIN_FILE_NM,
+            SAVED_FILE_NM,
+            SAVED_FILE_PATH,
+            FILE_SIZE,
+            RSGST_DT,
+            RSGSTR_ID
+        )
+        VALUES
+        (	
+	        <if test='fileNo == null or "".equals(fileNo)'>
+				(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
+			</if>
+			<if test='fileNo != null and !"".equals(fileNo)'>
+				,#{fileNo}
+			</if>
+            ,#{boardUid}
+            ,#{originFileNm}
+            ,#{savedFileNm}
+            ,#{savedFilePath}
+            ,#{fileSize}
+            ,NOW()
+            ,'SAMPLE'
+        )
 	</insert>
 </mapper>
