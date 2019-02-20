@@ -31,7 +31,7 @@
 		<tbody>
 			<c:forEach items="${mngRevInfoList}" var="mngRevInfoList">
 				<tr>
-					<td>${mngRevInfoList.number }</td>
+					<td>${mngRevInfoList.rnum }</td>
 					<td>[${mngRevInfoList.catCd }]</td>
 					<td><a href="mngReviewUpdateView.do?number=${mngRevInfoList.number}">${mngRevInfoList.title }</a></td>
 					<td>${mngRevInfoList.rsgstDt }</td>
@@ -46,4 +46,12 @@
 
 <div style="clear:both">
 	<a href="mngReviewUpdateView.do"><button type="button">글 작성</button></a>
+</div>
+
+<!-- 검색기능 -->
+<div style="clear:both; text-align:center;" class="search">
+	<form autocomplete="off"name="sendForm" method="get" action="">
+		<input type="text" name="searchText" value="">
+		<input type="button" onclick="manageCls.search('B0002')" value="검색">
+	</form>
 </div>

@@ -68,15 +68,18 @@
 	<input type="hidden" name="number" value="${mngReviewUpdateView.number}" />
 </form>
 
+<!-- rpl 삭제 -->
+<table id="mngReviewRpl">
+	<thead>
+		<tr>
+			<td></td>
+		</tr>
+	</thead>
+	
+</table>
+
 <button type="button" onclick="save()">저장</button>
 <button type="button" onclick="manageCls.del('${mngReviewUpdateView.boardUid}')">삭제</button>
 <a href="mngReviewList.do"><button type="button">취소</button></a>
 	
-	<!-- 취소시 번호설정 -->
-	<%-- <c:if test="${reviewDetail.number ne null}">
-		<a href ="reviewDetailView.do?number=${reviewDetail.number}"><button type="button">취소</button> </a>
-	</c:if>	
-	<c:if test="${reviewDetail.number eq null}">
-		<a href="reviewView.do"><button type="button">취소</button></a>
-	</c:if> --%>
 

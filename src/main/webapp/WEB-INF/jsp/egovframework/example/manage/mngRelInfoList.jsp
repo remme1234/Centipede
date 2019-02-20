@@ -49,6 +49,6 @@
 <div style="clear:both; text-align:center;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">
 		<input type="text" name="searchText" value="">
-		<input type="button" onclick="manageCls.search()" value="검색">
+		<input type="button" onclick="manageCls.search('B0001')" value="검색">
 	</form>
 </div>

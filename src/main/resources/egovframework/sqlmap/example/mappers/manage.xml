@@ -141,15 +141,17 @@
 				 ,(SELECT 	SAVED_FILE_NM
 						FROM	T_FILE
 						WHERE   FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
-		FROM T_REVIEW 
+				,@ROWNUM := @ROWNUM +1 AS RNUM
+		FROM T_REVIEW
+		 	, (SELECT @ROWNUM := 0) ROWNUM 
 		<if test="searchText != null and !searchText.equals('')">
-			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
 		<if test="catCd != null and !catCd.equals('')">
 			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if>
-		ORDER BY RSGST_DT DESC
+		ORDER BY RNUM DESC
 	</select>
 	
 	<!-- review 게시판 작성 및 수정 기능  -->

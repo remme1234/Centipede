@@ -19,7 +19,7 @@
 <script>
 	var reviewList = {
 			
-		search : function() {
+		search : function(boardUid) {
 			var $search = $("form[name=sendForm]");
 			
 			$search.attr("action","reviewSearchView.do");
@@ -29,10 +29,17 @@
 	
 	var manageCls = {
 			
-		search : function() {
+		search : function(boardUid) {
 			var $search = $("form[name = sendForm]");
 			
-			$search.attr("action","mngRelInfoList.do");
+			if(boardUid == 'B0001') {
+				$search.attr("action","mngRelInfoList.do");
+			} else if (boardUid == 'B0002') {
+				$search.attr("action","mngReviewList.do");
+			} else if (boardUid === 'B0003') {
+				$search.attr("action","mngNoticeList.do");
+			}
+			
 			$search.submit();
 		},
 		
