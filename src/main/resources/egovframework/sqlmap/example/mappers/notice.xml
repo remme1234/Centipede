@@ -33,7 +33,26 @@
 	
 	<!-- notice 게시판 출력 -->
 	<select id="selectNoticeViewList" parameterType="egovframework.example.util.BoardVO" resultMap="noticeList" >
-		SELECT 	A.*
+		SELECT A.*
+		FROM (
+				SELECT	NUMBER
+					  , TITLE
+					  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+					  , CONTENTS
+					  , VISIT_CNT
+					  , RSGSTR_ID
+					  , USE_YN 
+					  , @ROWNUM := @ROWNUM+1 AS ROWNUM
+			 FROM  T_NOTICE
+	 			,(SELECT @ROWNUM := 0) ROWNUM
+						WHERE USE_YN = 'Y' ) A
+		<if test="searchText != null and !searchText.equals('')">
+			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+		ORDER BY ROWNUM DESC LIMIT #{firstIndex},10
+		
+		<!-- SELECT 	A.*
 		  FROM	(
 				SELECT	NUMBER
 					  , TITLE
@@ -46,13 +65,14 @@
 				 FROM   T_NOTICE
 					  , (SELECT @ROWNUM := 0) ROWNUM 
 				WHERE USE_YN = 'Y'
+				ORDER BY NUMBER DESC
 			  )A
 		WHERE A.ROWNUM BETWEEN #{firstIndex} AND #{lastIndex}
 		<if test="searchText != null and !searchText.equals('')">
 			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-     ORDER BY NUMBER DESC
+     ORDER BY NUMBER DESC -->
 	</select>
 	
 	<!-- 페이징 처리를 위한 cnt  -->

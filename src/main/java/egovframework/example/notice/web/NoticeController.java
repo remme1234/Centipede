@@ -29,8 +29,7 @@ public class NoticeController {
 		vo.setPageUnit(10);   // rec count per page
 		vo.setRecordCountPerPage(vo.getPageUnit());
 		vo.setPageSize(5);   // page navi count
-		vo.setFirstIndex(vo.getPageUnit() * (vo.getPageIndex()-1) + 1);
-		vo.setLastIndex(vo.getPageUnit() * (vo.getPageIndex()-1) + vo.getPageUnit());
+		vo.setFirstIndex(vo.getPageUnit() * (vo.getPageIndex()-1));
 
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(vo.getPageIndex());

@@ -10,7 +10,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-
 <!-- jqGrid 설정 -->
 <link rel="stylesheet" type="text/css" href="<c:out value='/jqgrid/jqGrid-master/css/ui.jqgrid-bootstrap-ui.css'/>">
 <script type="text/javascript" src="<c:url value='/js/jquery.1.11.0.min.js'/>"></script>
@@ -18,7 +17,7 @@
 
 <script>
 	var reviewList = {
-			
+			 	
 		search : function(boardUid) {
 			var $search = $("form[name=sendForm]");
 			
