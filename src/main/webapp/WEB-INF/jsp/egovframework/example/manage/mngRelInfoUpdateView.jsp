@@ -77,7 +77,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<input type="file" name="file"> 
+	<input type="file" name="file" />
 </form>
 	
 <form action="" name="delForm" method="POST">

@@ -15,7 +15,6 @@ public interface ManageMapper {
 	BoardVO selectReleaseInfoDetail(BoardVO vo);
 	
 	void updateReleaseInfo(BoardVO vo);
-	void insertFile(FileVO fileVO) ;
 	
 	void deleteReleaseInfoDisable(BoardVO vo);
 	
@@ -33,9 +32,14 @@ public interface ManageMapper {
 	void mngReviewDelete(BoardVO vo);
 	
 	//이하 notice
-	List<BoardVO> selectMngNotInfoList(BoardVO vo);
+	List<BoardVO> selectMngNoticeList(BoardVO vo);
 
+	BoardVO selectNoticeDetail(BoardVO vo);
 
+	void updateNotice(BoardVO vo);
+
+	// 파일 insert 공통 메서드
+	void insertFile(FileVO fileVO) ;
 
 
 

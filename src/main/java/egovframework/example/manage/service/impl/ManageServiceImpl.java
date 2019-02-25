@@ -131,8 +131,41 @@ public class ManageServiceImpl implements ManageService{
 	
 	// notice 게시판 목록 출력
 	@Override
-	public List<BoardVO> selectMngNotInfoList(BoardVO vo) {
-		return manageMapper.selectMngNotInfoList(vo);
+	public List<BoardVO> selectMngNoticeList(BoardVO vo) {
+		return manageMapper.selectMngNoticeList(vo);
+	}
+	
+	// notice 수정화면에 데이터 출력
+	@Override
+	public BoardVO selectNoticeDetail(BoardVO vo) {
+		return manageMapper.selectNoticeDetail(vo);
+	}
+
+	@Override
+	public void updateNotice(BoardVO vo, HttpServletRequest request) throws Exception {
+		// review 내용 입력한 값
+		manageMapper.updateNotice(vo);
+		
+		// 이하 파일 저장
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		
+		while(iterator.hasNext()){
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			if(multipartFile.isEmpty() == false){
+				System.out.println("------------- file start -------------");
+				System.out.println("name : "+multipartFile.getName());
+				System.out.println("filename : "+multipartFile.getOriginalFilename());
+				System.out.println("size : "+multipartFile.getSize());
+				System.out.println("-------------- file end --------------\n");
+			}
+		}
+		
+		List<FileVO> list = fileUtils.parseInsertFileInfo(vo, request);
+		for(int i=0, size=list.size(); i<size; i++){
+			manageMapper.insertFile(list.get(i));
+		}	
 	}
 
 

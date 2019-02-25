@@ -25,7 +25,7 @@
 			$search.attr("action","reviewSearchView.do");
 			$search.submit();
 		}
-	}
+	}	
 	
 	var manageCls = {
 			

@@ -80,7 +80,7 @@
 			<div>
 				<p><a href="mngRelInfoList.do">Release Information</a></p>	
 				<p><a href="mngReviewList.do">Sneaker Review</a></p>
-				<p><a href="mngNotInfoList.do">Notice</a></p>
+				<p><a href="mngNoticeList.do">Notice</a></p>
 			</div>		
 		</li>
 		

@@ -32,7 +32,11 @@ public interface ManageService {
 	void mngReviewDelete(BoardVO vo);
 	
 	// 이하 notice
-	List<BoardVO> selectMngNotInfoList(BoardVO vo);
+	List<BoardVO> selectMngNoticeList(BoardVO vo);
+
+	BoardVO selectNoticeDetail(BoardVO vo);
+
+	void updateNotice(BoardVO vo, HttpServletRequest request)throws Exception;
 
 
 

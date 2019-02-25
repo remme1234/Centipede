@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.example.notice.service.impl.NoticeMapper">
 
+	<!-- notice resultMap 설정  -->
 	<resultMap type="egovframework.example.util.BoardVO" id="noticeList">
 		<result property="boardUid"		column="BOARD_UID"/>
 	 	<result property="number"		column="NUMBER"/>
@@ -15,17 +16,82 @@
 	 	<result property="useYn"		column="USE_YN"/>
 	 	<result property="fileNo"		column="FILE_NO"/>
 	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
+	 	<result property="rownum"		column="ROWNUM"/>
 	</resultMap>
 	
+	<!-- 첨부파일정보VO resultMap 설정 -->
+	<resultMap id="fileInfoList" type="egovframework.example.util.FileVO">
+	 	<result property="fileNo"			column="FILE_NO"/>
+	 	<result property="boardUid"			column="BOARD_UID"/>
+	 	<result property="originFileNm"		column="ORIGIN_FILE_NM"/>
+	 	<result property="savedFileNm"		column="SAVED_FILE_NM"/>
+	 	<result property="savedFilePath"	column="SAVED_FILE_PATH"/>
+	 	<result property="fileSize"			column="FILE_SIZE"/>
+	 	<result property="rsgstrId"			column="RSGST_DT"/>
+	 	<result property="useYn"			column="USE_YN"/>
+	</resultMap>
 	
-	<select id="selectNoticeViewList" resultMap="noticeList" >
-		SELECT 		NUMBER
-				  , TITLE
-				  , RSGST_DT
-				  , VISIT_CNT
-				  , RSGSTR_ID
-		FROM		T_NOTICE
-		WHERE 		USE_YN = 'Y'
-		ORDER BY    NUMBER DESC
+	<!-- notice 게시판 출력 -->
+	<select id="selectNoticeViewList" parameterType="egovframework.example.util.BoardVO" resultMap="noticeList" >
+		SELECT 	A.*
+		  FROM	(
+				SELECT	NUMBER
+					  , TITLE
+					  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+					  , CONTENTS
+					  , VISIT_CNT
+					  , RSGSTR_ID
+					  , USE_YN
+					  , @ROWNUM := @ROWNUM +1 AS ROWNUM
+				 FROM   T_NOTICE
+					  , (SELECT @ROWNUM := 0) ROWNUM 
+			  )A
+		WHERE A.USE_YN = 'Y'
+		  AND A.ROWNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		<if test="searchText != null and !searchText.equals('')">
+			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+     ORDER BY NUMBER DESC
 	</select>
+	
+	<!-- 페이징 처리를 위한 cnt  -->
+	<select id="selectNoticeViewListCnt" resultType="java.lang.Integer">
+		SELECT  COUNT(1)
+		FROM 	T_NOTICE
+		WHERE   USE_YN ='Y'  	  	 
+	</select>
+	
+	<!-- 상세내용 출력 -->
+	<select id="selectNoticeDetail" parameterType="egovframework.example.util.BoardVO" resultMap="noticeList" >
+		SELECT BOARD_UID
+			 , RSGSTR_ID
+			 , NUMBER
+			 , TITLE
+			 , CONTENTS
+			 , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+			 , FILE_NO
+		FROM   T_NOTICE
+		WHERE  NUMBER = #{number}
+	</select>
+	
+	<!-- 상세정보에 쓰일 파일정보 -->
+	<select id="selectFileList" parameterType="egovframework.example.util.BoardVO" resultMap="fileInfoList">
+		SELECT 	FILE_NO
+			   ,ORIGIN_FILE_NM
+			   ,SAVED_FILE_NM
+			   ,SAVED_FILE_PATH
+			   ,ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+		FROM   	T_FILE 
+		WHERE  	FILE_NO =  #{fileNo}
+		AND     USE_YN = 'Y'
+	</select>
+	
+	<!-- 조회수 증가 쿼리 -->
+	<update id="addVisitCnt"> 
+		UPDATE T_NOTICE
+		SET VISIT_CNT = VISIT_CNT +1
+		WHERE NUMBER = #{number}
+	</update>
 </mapper>

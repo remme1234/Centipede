@@ -71,7 +71,7 @@
 	</select>
 	
 	<!-- release info 게시판 수정페이지 출력시 기존에 있던 내용 호출하는 쿼리 -->
-	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.util.BoardVO" resultMap="manageList">
+	<select	id="selectNoticeDetail" parameterType="egovframework.example.util.BoardVO" resultMap="manageList">
 		SELECT BOARD_UID
 			 , RSGSTR_ID
 			 , NUMBER
@@ -208,16 +208,59 @@
 	
 	
 	<!-- 이하 notice 게시판  -->
-	<select id="selectMngNotInfoList" resultMap="manageList" >
+	<select id="selectMngNoticeList" resultMap="manageList" >
 		SELECT 		NUMBER
 				  , TITLE
-				  , RSGST_DT
+				  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+				  , CONTENTS
 				  , VISIT_CNT
 				  , RSGSTR_ID
+				  , USE_YN
+				  ,@ROWNUM := @ROWNUM +1 AS RNUM
 		FROM		T_NOTICE
-		ORDER BY    NUMBER DESC
+			      ,(SELECT @ROWNUM := 0) ROWNUM 
+		<if test="searchText != null and !searchText.equals('')">
+			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
+		ORDER BY   RNUM DESC
 	</select>
 	
+	<!-- notice update화면 출력시 기존에 데이터 화면에 표시하기 위한 쿼리 -->
+	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.util.BoardVO" resultMap="manageList">
+		SELECT BOARD_UID
+			 , RSGSTR_ID
+			 , NUMBER
+			 , TITLE
+			 , CONTENTS
+			 , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+			 , FILE_NO
+		FROM   T_NOTICE
+		WHERE  NUMBER = #{number}
+	</select>
+	
+	<!-- notice 게시판 작성 및 수정 기능  -->
+	<update id="updateNotice" parameterType="egovframework.example.util.BoardVO">
+		INSERT INTO T_NOTICE (BOARD_UID, NUMBER,  TITLE, CONTENTS, RSGSTR_ID, VISIT_CNT, RSGST_DT, USE_YN, FILE_NO)
+		VALUES 		(#{boardUid}
+		<if test='number == null or "".equals(number)'>
+			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_NOTICE AS TV)
+		</if>
+		<if test='number != null and !"".equals(number)'>
+			,#{number}
+		</if>
+		, #{title}, #{contents}, "SAMPLE", "0", now(), 'Y'
+		<if test='fileNo == null or "".equals(fileNo)'>
+			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
+		</if>
+		<if test='fileNo != null and !"".equals(fileNo)'>
+			,#{fileNo})
+		</if>
+		ON DUPLICATE KEY 
+		UPDATE TITLE 	= #{title},
+			   CONTENTS = #{contents}
+	</update>
 	
 	
 	<!-- 공통 첨부파일 저장  -->
