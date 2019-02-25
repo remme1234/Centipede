@@ -209,7 +209,8 @@
 	
 	<!-- 이하 notice 게시판  -->
 	<select id="selectMngNoticeList" resultMap="manageList" >
-		SELECT 		NUMBER
+		SELECT 	  BOARD_UID
+				  ,NUMBER
 				  , TITLE
 				  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 				  , CONTENTS
@@ -261,6 +262,19 @@
 		UPDATE TITLE 	= #{title},
 			   CONTENTS = #{contents}
 	</update>
+	
+	<!-- notice 보이기와 숨기기  -->
+	<update id="deleteNoticeDisable">
+		UPDATE T_NOTICE
+		SET USE_YN = IF(USE_YN = 'Y','N','Y')
+		WHERE NUMBER = #{number}
+	</update>
+	
+	<!-- notice 데이터 삭제   -->
+	<delete id="mngNoticeDelete">
+		DELETE FROM T_Notice
+		WHERE NUMBER = #{number}
+	</delete>
 	
 	
 	<!-- 공통 첨부파일 저장  -->

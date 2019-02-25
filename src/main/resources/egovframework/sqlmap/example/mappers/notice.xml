@@ -45,9 +45,9 @@
 					  , @ROWNUM := @ROWNUM +1 AS ROWNUM
 				 FROM   T_NOTICE
 					  , (SELECT @ROWNUM := 0) ROWNUM 
+				WHERE USE_YN = 'Y'
 			  )A
-		WHERE A.USE_YN = 'Y'
-		  AND A.ROWNUM BETWEEN #{firstIndex} AND #{lastIndex}
+		WHERE A.ROWNUM BETWEEN #{firstIndex} AND #{lastIndex}
 		<if test="searchText != null and !searchText.equals('')">
 			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))

@@ -38,9 +38,7 @@ public interface ManageService {
 
 	void updateNotice(BoardVO vo, HttpServletRequest request)throws Exception;
 
+	void deleteNoticeDisable(BoardVO vo);
 
-
-
-
-
+	void mngNoticeDelete(BoardVO vo);
 }

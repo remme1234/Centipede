@@ -140,10 +140,10 @@ public class ManageServiceImpl implements ManageService{
 	public BoardVO selectNoticeDetail(BoardVO vo) {
 		return manageMapper.selectNoticeDetail(vo);
 	}
-
+	// notice 글작성 수정 update 기능 
 	@Override
 	public void updateNotice(BoardVO vo, HttpServletRequest request) throws Exception {
-		// review 내용 입력한 값
+		// notice 내용 입력한 값
 		manageMapper.updateNotice(vo);
 		
 		// 이하 파일 저장
@@ -168,10 +168,16 @@ public class ManageServiceImpl implements ManageService{
 		}	
 	}
 
+	// notice 글 숨김, 보이기 설정 
+	@Override
+	public void deleteNoticeDisable(BoardVO vo) {
+		manageMapper.deleteNoticeDisable(vo);
+	}
 
-
-
-
-
+	// notice 게시글 삭제
+	@Override
+	public void mngNoticeDelete(BoardVO vo) {
+		manageMapper.mngNoticeDelete(vo);
+	}
 
 }

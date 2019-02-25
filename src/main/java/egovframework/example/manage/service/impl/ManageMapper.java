@@ -38,12 +38,10 @@ public interface ManageMapper {
 
 	void updateNotice(BoardVO vo);
 
+	void deleteNoticeDisable(BoardVO vo);
+	
+	void mngNoticeDelete(BoardVO vo);
+	
 	// 파일 insert 공통 메서드
 	void insertFile(FileVO fileVO) ;
-
-
-
-
-
-
 }

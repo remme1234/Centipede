@@ -58,7 +58,9 @@
 </form>
 
 <button type="button" onclick="save()">저장</button>
-<button type="button" onclick="manageCls.del('${mngNoticeUpdateView.boardUid}')">삭제</button>
+<c:if test="${mngReviewUpdateView ne null}">
+	<button type="button" onclick="manageCls.del('${mngNoticeUpdateView.boardUid}')">삭제</button>
+</c:if>
 <a href="mngNoticeList.do"><button type="button">취소</button></a>
 	
 

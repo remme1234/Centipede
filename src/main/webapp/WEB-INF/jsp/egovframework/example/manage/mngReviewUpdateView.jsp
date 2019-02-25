@@ -79,7 +79,9 @@
 </table>
 
 <button type="button" onclick="save()">저장</button>
-<button type="button" onclick="manageCls.del('${mngReviewUpdateView.boardUid}')">삭제</button>
+<c:if test="${mngReviewUpdateView ne null}">
+	<button type="button" onclick="manageCls.del('${mngReviewUpdateView.boardUid}')">삭제</button>
+</c:if>
 <a href="mngReviewList.do"><button type="button">취소</button></a>
 	
 

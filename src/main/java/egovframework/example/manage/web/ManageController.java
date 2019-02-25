@@ -1,4 +1,4 @@
-package egovframework.example.manage.web;
+  package egovframework.example.manage.web;
 
 import java.util.List;
 
@@ -139,5 +139,20 @@ public class ManageController {
 		return "redirect:mngNoticeList.do";
 	}
 	// 게시글 비활성화 기능
+	@RequestMapping(value="mngNoticeDisable.do")
+	public String mngNoticeDisable (BoardVO vo) {
+		
+		manageService.deleteNoticeDisable(vo);
+		
+		return "redirect:mngNoticeList.do";
+	}
+	
 	// 게시글 DB에서 삭제
+	@RequestMapping(value="mngNoticeDelete.do")
+	public String mngNoticeDelete(BoardVO vo) {
+		
+		manageService.mngNoticeDelete(vo);
+		
+		return "redirect:mngNoticeList.do";
+	}
 }
