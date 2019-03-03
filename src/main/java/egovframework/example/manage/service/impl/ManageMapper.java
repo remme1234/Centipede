@@ -20,6 +20,8 @@ public interface ManageMapper {
 	
 	void deleteReleaseInfdelete(BoardVO vo);
 	
+	int selectRelInfoViewListCnt(BoardVO vo);
+	
 	// 이하 review
 	List<BoardVO> selectMngRevInfoList(BoardVO vo);
 
@@ -31,6 +33,8 @@ public interface ManageMapper {
 	
 	void mngReviewDelete(BoardVO vo);
 	
+	int selectReviewViewListCnt(BoardVO vo);
+	
 	//이하 notice
 	List<BoardVO> selectMngNoticeList(BoardVO vo);
 
@@ -41,6 +45,8 @@ public interface ManageMapper {
 	void deleteNoticeDisable(BoardVO vo);
 	
 	void mngNoticeDelete(BoardVO vo);
+	
+	int selectNoticeViewListCnt(BoardVO vo);
 	
 	// 파일 insert 공통 메서드
 	void insertFile(FileVO fileVO) ;

@@ -1,2 +1,2 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>  
-<p>푸터입니다.</p>
+<img src="images/centipede/main/foot.jpg" alt="foot images" style="width: 100%; height: 10px;">

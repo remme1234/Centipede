@@ -20,4 +20,6 @@ public interface ReleaseInfoService {
 
 	void addVisitCnt(BoardVO vo);
 
+	int selectRelInfoViewListCnt(BoardVO vo);
+
 }

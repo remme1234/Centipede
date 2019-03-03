@@ -85,16 +85,8 @@
 </form>
 
 <button type="button" onclick="save()">저장</button>
-<c:if test="${mngReviewUpdateView ne null}">
+<c:if test="${mngRelInfoUpdateView ne null}">
 	<button type="button" onclick="manageCls.del('${mngRelInfoUpdateView.boardUid}')">삭제</button>
 </c:if>
 <a href="mngRelInfoList.do"><button type="button">취소</button></a>
 	
-	<!-- 취소시 번호설정 -->
-	<%-- <c:if test="${releaseInfoDetail.number ne null}">
-		<a href ="releaseInfoDetailView.do?number=${releaseInfoDetail.number}"><button type="button">취소</button> </a>
-	</c:if>	
-	<c:if test="${releaseInfoDetail.number eq null}">
-		<a href="mngRelInfoList.do"><button type="button">취소</button></a>
-	</c:if> --%>
-

@@ -31,34 +31,37 @@
 	
 	<!-- 발매정보게시판 목록 불러오기 -->
 	<select id="selectReleaseInfoList" resultMap="releaseInfoList">
-		SELECT BOARD_UID
-			 , NUMBER
-		     , TITLE
-		     , CONTENTS
-		     , RSGSTR_ID
-		     , VISIT_CNT
-			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
-			 , USE_YN
-			 , REL_DT
-			 , (SELECT SAVED_FILE_NM
-				FROM   T_FILE
-				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
-		FROM  T_RELEASEINFO TR
-		WHERE USE_YN='Y'
+		SELECT A.*
+		  FROM (
+				SELECT BOARD_UID
+					 , NUMBER
+				     , TITLE
+				     , CONTENTS
+				     , RSGSTR_ID
+				     , VISIT_CNT
+					 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+					 , USE_YN
+					 , REL_DT
+					 , (SELECT SAVED_FILE_NM
+						FROM   T_FILE
+						WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+				  FROM T_RELEASEINFO TR
+				 WHERE USE_YN='Y' 
+				) A 
 		<if test="searchText != null and !searchText.equals('')">
 			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-		ORDER BY RSGST_DT DESC 
+		ORDER BY RSGST_DT DESC LIMIT #{firstIndex},12
 	</select>
 	
-	<!-- 발매정보게시판 목록개수 불러오기 -->
-	<!-- <select id="selectReleaseInfoListCnt" resultType="java.lang.Integer">
-		1은 count하기 위한 임의의 숫자
-		SELECT 	COUNT(1)
+	<!-- 페이징 처리를 위한 cnt  -->
+	<select id="selectRelInfoViewListCnt" resultType="java.lang.Integer">
+		SELECT  COUNT(1)
 		FROM 	T_RELEASEINFO
-		WHERE	USE_YN = 'Y'
-	</select> -->
+		WHERE   USE_YN ='Y'  	  	 
+	</select>
+	
 	
 	<!-- 발매정보게시판 세부항목 불러오기 -->
 	<select	id="selectReleaseInfoDetail" parameterType="egovframework.example.util.BoardVO" resultMap="releaseInfoList">

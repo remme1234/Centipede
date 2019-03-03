@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.main.service.impl.MainMapper">
+
+	<!-- main resultMap 설정  -->
+	<resultMap type="egovframework.example.login.service.LoginVO" id="MainList">
+		<result property="mbrNo"			column="MBR_NO"/>
+	 	<result property="loginId"			column="LOGIN_ID"/>
+	 	<result property="pwd"				column="PWD"/>
+	 	<result property="pwdChgDt"			column="PWD_CHG_DT"/>
+	 	<result property="tmpPwdIssuDt"		column="TMP_PWD_ISSU_DT"/>
+	 	<result property="loginFailCnt"		column="LOGIN_FAIL_CNT"/>
+	 	<result property="cpNo"				column="CP_NO"/>
+	 	<result property="email"			column="EMAIL"/>
+	 	<result property="joinDt"			column="JOIN_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	</resultMap>
+	
+	<!-- main 정보 불러오기 -->
+	<select id="selectIdCheck" parameterType="egovframework.example.login.service.LoginVO" resultType="java.lang.Integer" >
+		SELECT count(1)
+		FROM T_MBR
+		WHERE LOGIN_ID = #{loginId}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMbr" parameterType="egovframework.example.login.service.LoginVO">
+		INSERT INTO T_MBR (
+			MBR_NO
+		  , LOGIN_ID
+		  , PWD
+		  , CP_NO
+		  , EMAIL)
+		VALUE (
+			(SELECT IFNULL(MAX(MBR_NO), 0) + 1 FROM T_MBR TM)
+		  , #{loginId}
+		  , #{pwd}
+		  , #{cpNo}
+		  , #{email}
+		)
+	</insert>
+	
+</mapper>

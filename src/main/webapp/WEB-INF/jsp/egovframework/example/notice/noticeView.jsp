@@ -16,9 +16,9 @@
 </script>	
 
 <div class="title" style="text-align:center ">
-<h3>NOTICE</h3>
+	<h3>NOTICE</h3>
 </div>
-<div class="notice">
+<div class="notice" style="margin-top: 20px;">
 	<table class="table table-hover">
 		<colgroup>
 			<col width = "10%">
@@ -52,7 +52,7 @@
 
 <!-- 페이징 시작 -->
 <div id="paging_div">
-   <ul class="paging_align">
+   <ul class="paging_align wn__pagination">
       <c:if test='${paging.getFirstPageNoOnPageList() > 1}'>
          <li class="first-page"><a href="?pageIndex=1&view_iframe=1&mod=list">처음</a></li>
          <li class="prev-page"><a href="?pageIndex=${paging.getFirstPageNoOnPageList()-paging.pageSize}&view_iframe=1&mod=list">≪</a></li>
@@ -75,7 +75,7 @@
 <!-- 페이징 끝 -->
 
 <!-- 검색기능 -->
-<div style="clear:both; text-align:center;" class="search">
+<div style="clear:both; text-align:center; margin-top: 15px;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">
 		<input type="text" name="searchText" value="">
 		<input type="button" onclick="noticeViewList.search()" value="검색">

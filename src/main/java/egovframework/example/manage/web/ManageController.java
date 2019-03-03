@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.example.manage.service.ManageService;
 import egovframework.example.util.BoardVO;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
 public class ManageController {
@@ -22,6 +23,25 @@ public class ManageController {
 	// 게시글 목록 호출
 	@RequestMapping(value="mngRelInfoList.do")
 	public String mngRelInfoList(BoardVO vo, ModelMap model) {
+		
+		// 이하 페이징 처리를 위한 메서드
+		int pageIndex = vo.getPageIndex();
+		if(pageIndex == 0)   vo.setPageIndex(1);
+
+		vo.setPageUnit(10);   // rec count per page
+		vo.setRecordCountPerPage(vo.getPageUnit());
+		vo.setPageSize(5);   // page navi count
+		vo.setFirstIndex(vo.getPageUnit() * (vo.getPageIndex()-1));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(vo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(vo.getPageUnit());
+		paginationInfo.setPageSize(vo.getPageSize());
+		
+		int totCnt = manageService.selectRelInfoViewListCnt(vo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paging", paginationInfo);
+		
 		List<BoardVO> mngRelInfoList = manageService.selectMngRelInfoList(vo);
 		model.addAttribute("mngRelInfoList", mngRelInfoList);
 		
@@ -67,6 +87,24 @@ public class ManageController {
 	// 게시글 목록 호출
 	@RequestMapping(value="mngReviewList.do")
 	public String mngReviewList(BoardVO vo,ModelMap model) {
+		
+		// 이하 페이징 처리를 위한 메서드
+		int pageIndex = vo.getPageIndex();
+		if(pageIndex == 0)   vo.setPageIndex(1);
+
+		vo.setPageUnit(10);   // rec count per page
+		vo.setRecordCountPerPage(vo.getPageUnit());
+		vo.setPageSize(5);   // page navi count
+		vo.setFirstIndex(vo.getPageUnit() * (vo.getPageIndex()-1));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(vo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(vo.getPageUnit());
+		paginationInfo.setPageSize(vo.getPageSize());
+		
+		int totCnt = manageService.selectReviewViewListCnt(vo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paging", paginationInfo);
 		
 		List<BoardVO> mngRevInfoList = manageService.selectMngRevInfoList(vo);
 		model.addAttribute("mngRevInfoList", mngRevInfoList);
@@ -116,6 +154,25 @@ public class ManageController {
 	@RequestMapping(value="mngNoticeList.do")
 	public String mngNoticeList(BoardVO vo,ModelMap model) {
 		
+		// 이하 페이징 처리를 위한 메서드
+		int pageIndex = vo.getPageIndex();
+		if(pageIndex == 0)   vo.setPageIndex(1);
+
+		vo.setPageUnit(10);   // rec count per page
+		vo.setRecordCountPerPage(vo.getPageUnit());
+		vo.setPageSize(5);   // page navi count
+		vo.setFirstIndex(vo.getPageUnit() * (vo.getPageIndex()-1));
+
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(vo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(vo.getPageUnit());
+		paginationInfo.setPageSize(vo.getPageSize());
+		
+		int totCnt = manageService.selectNoticeViewListCnt(vo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		model.addAttribute("paging", paginationInfo);
+		
+		// 이하 게시글 목록호출
 		List<BoardVO> mngNoticeList = manageService.selectMngNoticeList(vo);
 		model.addAttribute("mngNoticeList", mngNoticeList);
 		
@@ -125,8 +182,10 @@ public class ManageController {
 	// 글작성 및 수정 페이지 이동
 	@RequestMapping(value="mngNoticeUpdateView.do")
 	public String mngNoticeUpdateView (BoardVO vo, ModelMap model){
+
 		vo = manageService.selectNoticeDetail(vo);
 		model.addAttribute("mngNoticeUpdateView", vo);
+		
 		
 		return "manage/mngNoticeUpdateView.tiles";
 	}
@@ -136,8 +195,11 @@ public class ManageController {
 	public String mngNoticeUpdate(BoardVO vo, HttpServletRequest request) throws Exception {
 		manageService.updateNotice(vo,request);
 		
+		System.out.println(vo.getFileNo());
+		
 		return "redirect:mngNoticeList.do";
 	}
+	
 	// 게시글 비활성화 기능
 	@RequestMapping(value="mngNoticeDisable.do")
 	public String mngNoticeDisable (BoardVO vo) {
@@ -155,4 +217,5 @@ public class ManageController {
 		
 		return "redirect:mngNoticeList.do";
 	}
+	
 }

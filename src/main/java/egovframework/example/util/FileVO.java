@@ -4,6 +4,7 @@ public class FileVO {
 
 	private String fileNo;
 	private String boardUid;
+	private String number;
 	private String originFileNm;
 	private String savedFileNm;
 	private String savedFilePath;
@@ -17,6 +18,13 @@ public class FileVO {
 	
 	public String getBoardUid() {return boardUid;}
 	public void setBoardUid(String boardUid) {this.boardUid = boardUid;}
+	
+	
+	public String getNumber() {return number;}
+	public void setNumber(String number) {this.number = number;}
+	
+	public String getUseYn() {return useYn;}
+	public void setUseYn(String useYn) {this.useYn = useYn;}
 	
 	public String getOriginFileNm() {return originFileNm;}
 	public void setOriginFileNm(String originFileNm) {this.originFileNm = originFileNm;}

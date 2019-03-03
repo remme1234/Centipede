@@ -5,7 +5,6 @@
 <script type="text/javascript" src="<c:url value='/js/jquery.1.11.0.min.js'/>"></script>
 <script type="text/javascript" src="<c:url value='jqgrid/jqGrid-master/js/jquery.jqGrid.js'/>"></script>
 
-
 <style>
 .ui-jqgrid .ui-jqgrid-bdiv { overflow-y: scroll }
 </style>
@@ -74,7 +73,6 @@
 				success 	: function(data) {
 					var jObj = JSON.parse(data);
 					
-					console.log(jObj)
 					if(jObj.result === "SUCCESS") {
 						review.displayRplPrdSelectBox(jObj.rplPrdList);
 					}
@@ -188,22 +186,8 @@
 				<table id="rplArea"></table>
 			</td> 	
 		</tr>
-		<%-- <tr>
-	        <c:forEach items="${fileInfo }" var="fileInfo" >
-		      	<th>첨부파일</th>
-	            <td>
-	              <c:if test="${fileInfo.fileNo ne null}">
-	              	<input type="hidden" id="number" value="${fileInfo.fileNo }">
-	              	<a href="downloadFile.do?fileNo=${fileInfo.fileNo }">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
-	              </c:if>
-	            </td>
-	        </c:forEach>
-	      </tr> --%>
 	</tbody>
 </table>
-
-
-
 
 <!-- 댓글로 사이즈 평가 -->
 <form autocomplete="off" name="rplSave" method="POST" action="" >
@@ -241,7 +225,5 @@
 
 <div align="right">
 	<a href="reviewView.do"><button type="button" >목록으로</button></a>
-	<button type="button" onclick="review.del()">삭제하기</button>
-	<a href="reviewUpdateView.do?number=${reviewDetail.number}"><button type="button">수정하기</button></a>
 	<td>&nbsp;</td>
 </div>

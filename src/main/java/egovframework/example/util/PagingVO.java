@@ -24,60 +24,25 @@ public class PagingVO {
 	private int recordCountPerPage = 10;
 
 	
-	public String getRownum() {
-		return rownum;
-	}
+	public String getRownum() {return rownum;}
+	public void setRownum(String rownum) {this.rownum = rownum;}
 	
-	public void setRownum(String rownum) {
-		this.rownum = rownum;
-	}
+	public int getPageIndex() {return pageIndex;}
+	public void setPageIndex(int pageIndex) {this.pageIndex = pageIndex;}
 	
-	public int getPageIndex() {
-		return pageIndex;
-	}
+	public int getPageUnit() {return pageUnit;}
+	public void setPageUnit(int pageUnit) {this.pageUnit = pageUnit;}
 	
-	public void setPageIndex(int pageIndex) {
-		this.pageIndex = pageIndex;
-	}
+	public int getPageSize() {return pageSize;}
+	public void setPageSize(int pageSize) {this.pageSize = pageSize;}
 	
-	public int getPageUnit() {
-		return pageUnit;
-	}
+	public int getFirstIndex() {return firstIndex;}
+	public void setFirstIndex(int firstIndex) {this.firstIndex = firstIndex;}
 	
-	public void setPageUnit(int pageUnit) {
-		this.pageUnit = pageUnit;
-	}
+	public int getLastIndex() {return lastIndex;}
+	public void setLastIndex(int lastIndex) {this.lastIndex = lastIndex;}
 	
-	public int getPageSize() {
-		return pageSize;
-	}
-	
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-	
-	public int getFirstIndex() {
-		return firstIndex;
-	}
-	
-	public void setFirstIndex(int firstIndex) {
-		this.firstIndex = firstIndex;
-	}
-	
-	public int getLastIndex() {
-		return lastIndex;
-	}
-	
-	public void setLastIndex(int lastIndex) {
-		this.lastIndex = lastIndex;
-	}
-	
-	public int getRecordCountPerPage() {
-		return recordCountPerPage;
-	}
-	
-	public void setRecordCountPerPage(int recordCountPerPage) {
-		this.recordCountPerPage = recordCountPerPage;
-	}
+	public int getRecordCountPerPage() {return recordCountPerPage;}
+	public void setRecordCountPerPage(int recordCountPerPage) {this.recordCountPerPage = recordCountPerPage;}
 
 }

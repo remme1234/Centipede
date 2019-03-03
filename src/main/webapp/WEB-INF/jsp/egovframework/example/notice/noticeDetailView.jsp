@@ -18,18 +18,28 @@
 </script>
 
 <table class="table table-hover">
+	<colgroup>
+		<col width="10%"/>
+		<col width="50%"/>
+		<col width="10%"/>
+		<col width="30%"/>
+	</colgroup>
 	<thead>
 		<tr>
+			<th>TITLE</th>
 			<td>${noticeDetail.title}</td>
+			<th>DATE</th>
 			<td>${noticeDetail.rsgstDt}</td>
+		</tr>
+		<tr>
+			<th>USER</th>
+			<td colspan="3">${noticeDetail.rsgstrId}</td>
 		</tr>
 	</thead>
 	<tbody>
+		
 		<tr>
-			<td colspan="2">${noticeDetail.rsgstrId}</td>
-		</tr>
-		<tr>
-			<td colspan="2">
+			<td colspan="4">
 			
 			<!-- 파일 경로 이상으로 추후 보완 예정 -->
 			<div id="imageArea">

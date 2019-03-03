@@ -75,6 +75,12 @@ public class ManageServiceImpl implements ManageService{
 		manageMapper.deleteReleaseInfdelete(vo);
 	}
 	
+	// releaseInfo 페이지 처리를 위한 전체 목록 호출 메서드
+	@Override
+	public int selectRelInfoViewListCnt(BoardVO vo) {
+		return manageMapper.selectRelInfoViewListCnt(vo);
+	}
+	
 	
 	//  review 게시판 목록 출력
 	@Override
@@ -129,6 +135,13 @@ public class ManageServiceImpl implements ManageService{
 	}
 	
 	
+	// 페이지 처리를 위한 전체 목록 호출 메서드
+	@Override
+	public int selectReviewViewListCnt(BoardVO vo) {
+		return manageMapper.selectReviewViewListCnt(vo);
+	}
+
+	
 	// notice 게시판 목록 출력
 	@Override
 	public List<BoardVO> selectMngNoticeList(BoardVO vo) {
@@ -179,5 +192,10 @@ public class ManageServiceImpl implements ManageService{
 	public void mngNoticeDelete(BoardVO vo) {
 		manageMapper.mngNoticeDelete(vo);
 	}
-
+	
+	// 페이지 처리를 위한 전체 목록 호출 메서드
+	@Override
+	public int selectNoticeViewListCnt(BoardVO vo) {
+		return manageMapper.selectNoticeViewListCnt(vo);
+	}
 }

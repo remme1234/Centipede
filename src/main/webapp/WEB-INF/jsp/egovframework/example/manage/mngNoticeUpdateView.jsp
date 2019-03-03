@@ -30,11 +30,12 @@
 		$form.submit()
 		alert("입력한 글이 정상적으로 등록되었습니다.")	
 	}
-	
+	alert("!!!" + '${mngNoticeUpdateView.fileNo}' )
 </script>
 
 <form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0003" />
+	<input type="hidden" name="fileNo" value="${mngNoticeUpdateView.fileNo}" />
 	<input type="hidden" name="number" value="${mngNoticeUpdateView.number}" />
 	<table class="table">
 		<thead>
@@ -50,7 +51,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<input type="file" name="file" />
+	<input type="file" name="file"  />
 </form>
 	
 <form action="" name="delForm" method="POST">

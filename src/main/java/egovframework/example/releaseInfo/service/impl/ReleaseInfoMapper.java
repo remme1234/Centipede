@@ -19,7 +19,8 @@ public interface ReleaseInfoMapper {
 	void deleteReleaseInfoDelete(BoardVO vo);
 	
 	void addVisitCnt(BoardVO vo);
+	
 	void insertFile(FileVO fileVO);
-	int Allcount();
 
+	int selectRelInfoViewListCnt(BoardVO vo);
 }

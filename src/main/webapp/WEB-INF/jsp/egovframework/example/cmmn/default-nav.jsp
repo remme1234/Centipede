@@ -1,88 +1,101 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
-	$(function() {
-		$("#menubar-menus>li").mouseenter(function(event) {
-			$(this).find("div").parent().css("background", "#FFF");
-			$(this).find("div").parent().children("a").css("color", "#000");
-			$(this).find("div").slideDown("fast");
-		}).mouseleave(function() {
-			$(this).find("div:visible").slideUp(50, function() {
-				// #menubar-menus li:hover 처리를 하지 않을 경우 아래 라인 활성,
-				$(this).parent().css("background", "#FFF");
-				$(this).parent().children("a").css("color", "#030303");
-			});
-		});
-	});
-</script>
-<style>
-/* body {
-	background: #424242; margin: 50px 0;
-} */
-#menubar {
-	width: 100%; height: 40px; background: #FFF;
-}
-#menubar-menus {
-	width: 900px; margin: 0 auto; list-style: none; padding: 0; text-align: center; font-size: 0; display: table;
-}
-#menubar-menus > .menu {
-	width: 200px; height: 40px; display: table-cell; vertical-align: middle; text-align: center; font-size: 20px;
-}
-#menubar-menus > #mainLogo {
-	width: 200px; height: 40px; display: table-cell; vertical-align: middle; text-align: center; font-size: 18px;
-}
-#menubar-menus > li > a {
-	 display: table-cell; vertical-align: middle; width: 200px; height: 40px; text-decoration: none; color: #030303;
-	/* 서브 메뉴 영역이 가로 방향으로 100% 보이는 것을 원치 않을 때 아래 라인을 활성 */
-	/*position: relative;*/
-}
-/* #menubar-menus li를 position: relative 처리를 하는 경우에 아래 hover 상태 처리를 주석 처리 할 것. */
-/*#menubar-menus li:hover {
-	background: #FFF;
-}*/
-#menubar-menus > li > div {
-	position: absolute; background: #FFF; color: #000; left: 0; width: 100%; top: auto; display: none; /*opacity: 0.5;*/
-	padding: 50px 0; z-index: 10;
-}
 
-</style>
-<div id="menubar">
-	<ul id="menubar-menus">
-		<li id="mainLogo" class="menu">
-			<a href="main.do">
-				<img src="images/centipede/main/logo_sample.jpg" style="width:100px; height:80px;"/>
-			</a>
-		</li>
-		<li class="menu">
-			<a href="#">Introduce</a>
-			<div><p>Submenu 1</p></div>		
-		</li>
-		<li class="menu">
-			<a href="#">Community</a>
-			<div>
-				<p><a href="releaseInfoView.do">Release Information</a></p>	
-				<p><a href="reviewView.do">Sneaker Review</a></p>
-			</div>	
-		</li>
-		<li class="menu">
-			<a href="noticeView.do">Notice</a>
-		</li>
-		<li class="menu">
-			<a href="#">My page</a>
-			<div><p>Submenu 4</p></div>		
-		</li>
-		<li class="menu">
-			<a href="#">Managing page</a>
-			<div>
-				<p><a href="mngRelInfoList.do">Release Information</a></p>	
-				<p><a href="mngReviewList.do">Sneaker Review</a></p>
-				<p><a href="mngNoticeList.do">Notice</a></p>
-			</div>		
-		</li>
-		
-	</ul>
-</div>
+$(function() {
+	var settingTrigger = $('.setting__active'),
+		settingContainer = $('.setting__block');
+	
+	settingTrigger.on('click', function (e) {
+    	e.preventDefault();
+    	settingContainer.toggleClass('is-visible');
+	});
+	
+	settingTrigger.on('click', function (e) {
+		e.preventDefault();
+    	settingContainer.toggleClass('');
+	});
+});
+
+</script>
+
+<header id="wn__header" class="oth-page header__area header__absolute sticky__header">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4 col-sm-4 col-7 col-lg-2">
+				<div class="logo" style="text-align: center;">
+					<a href="main.do">
+						<img src="images/centipede/main/logo.jpg" alt="logo images">
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-8 d-none d-lg-block" style="margin-left: 50px;">
+				<nav class="mainmenu__nav">
+					<ul class="meninmenu d-flex justify-content-start">
+						<li class="drop with--one--item"><a href="#;">Introduce</a></li>
+						<li class="drop"><a href="#">Community</a>
+							<div class="megamenu mega03">
+								<ul class="item item03">
+									<li class="title">Release</li>
+									<li><a href="releaseInfoView.do">Release Information</a></li>
+								</ul>
+								<ul class="item item03">
+									<li class="title">Review</li>
+									<li><a href="reviewView.do">Sneaker Review</a></li>
+								</ul>
+								<ul class="item item03">
+									<li class="title">Sample</li>
+								</ul>
+							</div>
+						</li>
+						<li class="drop with--one--item"><a href="noticeView.do">Notice</a></li>
+						<li class="drop with--one--item"><a href="#;">My page</a></li>
+						<li class="drop"><a href="#">Managing page</a>
+							<div class="megamenu dropdown">
+								<ul class="item item01">
+									<li><a href="mngRelInfoList.do">Release Information</a></li>
+									<li><a href="mngReviewList.do">Sneaker Review</a></li>
+									<li><a href="mngNoticeList.do">Notice</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-md-6 col-sm-6 col-6 col-lg-1" style="margin-left: 30px;">
+				<ul class="header__sidebar__right d-flex justify-content-end align-items-center">
+					<li class="shop_search"><a class="search__active" href="#"></a></li>
+					<li class="setting__bar__icon" style="margin-left: 16px;">
+						<a class="setting__active" href="#"></a>
+						<div class="searchbar__content setting__block">
+							<div class="content-inner">
+								<c:choose>
+									<c:when test='${empty sessionScope}'>
+										<strong class="label switcher-label">
+											<span><a href="loginView.do">Sign In</a></span>
+										</strong>
+										<br/>
+										<strong class="label switcher-label">
+											<span><a href="joinView.do">Join</a></span>
+										</strong>
+									</c:when>
+									<c:otherwise>
+										<strong class="label switcher-label">
+											<span><a href="#">Mypage</a></span>
+										</strong>
+										<br/>
+										<strong class="label switcher-label">
+											<span><a href="logout.do">Logout</a></span>
+										</strong>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</header>

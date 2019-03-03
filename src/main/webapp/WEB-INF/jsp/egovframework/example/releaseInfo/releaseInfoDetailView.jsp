@@ -18,18 +18,27 @@
 </script>
 
 <table class="table table-hover">
+	<colgroup>
+		<col width="10%"/>
+		<col width="50%"/>
+		<col width="10%"/>
+		<col width="30%"/>
+	</colgroup>
 	<thead>
 		<tr>
+			<th>TITLE</th>
 			<td>${releaseInfoDetail.title}</td>
+			<th>DATE</th>
 			<td>${releaseInfoDetail.rsgstDt}</td>
+		</tr>
+		<tr>
+			<th>USER</th>
+			<td colspan="3">${releaseInfoDetail.rsgstrId}</td>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="2">${releaseInfoDetail.rsgstrId}</td>
-		</tr>
-		<tr>
-			<td colspan="2">
+			<td colspan="4">
 			
 			<!-- 파일 경로 이상으로 추후 보완 예정 -->
 			<div id="imageArea">
@@ -62,6 +71,4 @@
 
 <td>&nbsp;</td>
 <a href="releaseInfoView.do"><button type="button" >목록으로</button></a>
-<button type="button" onclick="releseInfo.del()">삭제하기</button>
-<a href="releaseInfoUpdateView.do?number=${releaseInfoDetail.number}"><button type="button">수정하기</button></a>
 <td>&nbsp;</td>

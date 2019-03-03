@@ -3,14 +3,14 @@
 
 
 <!DOCTYPE html>
-<html>
+<html style="width: 1024px; margin: auto;">
 	<head>
   		<tiles:insertAttribute name="header"/>
 		<tiles:insertAttribute name="nav"/>
 		<%-- <tiles:insertAttribute name="left"/> --%>
   	</head>
 	<body>
-		<div style="margin-top: 100px;">
+		<div style="margin-top: 120px;">
 			<tiles:insertAttribute name="content"/>
 	 		<tiles:insertAttribute name="footer"/>
 		</div>

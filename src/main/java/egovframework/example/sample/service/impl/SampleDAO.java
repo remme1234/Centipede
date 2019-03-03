@@ -17,12 +17,11 @@ package egovframework.example.sample.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
-
 import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
-
-import org.springframework.stereotype.Repository;
 
 /**
  * @Class Name : SampleDAO.java

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.login.service.impl.LoginMapper">
+
+	<!-- login resultMap 설정  -->
+	<resultMap type="egovframework.example.login.service.LoginVO" id="loginList">
+		<result property="mbrNo"			column="MBR_NO"/>
+	 	<result property="loginId"			column="LOGIN_ID"/>
+	 	<result property="pwd"				column="PWD"/>
+	 	<result property="pwdChgDt"			column="PWD_CHG_DT"/>
+	 	<result property="tmpPwdIssuDt"		column="TMP_PWD_ISSU_DT"/>
+	 	<result property="loginFailCnt"		column="LOGIN_FAIL_CNT"/>
+	 	<result property="cpNo"				column="CP_NO"/>
+	 	<result property="email"			column="EMAIL"/>
+	 	<result property="joinDt"			column="JOIN_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	</resultMap>
+	
+	<!-- login 정보 불러오기 -->
+	<select id="selectLoginInfo" parameterType="egovframework.example.login.service.LoginVO" resultMap="loginList" >
+		SELECT MBR_NO, LOGIN_ID
+		FROM T_MBR
+		WHERE LOGIN_ID = #{loginId}
+		AND PWD = #{pwd}
+	</select>
+	
+</mapper>
