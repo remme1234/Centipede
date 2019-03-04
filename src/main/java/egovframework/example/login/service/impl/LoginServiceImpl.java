@@ -19,6 +19,7 @@ public class LoginServiceImpl implements LoginService{
 		lvo = loginMapper.selectLoginInfo(lvo);
 		if(lvo != null) {
 			session.setAttribute("userId", lvo.getLoginId());
+			session.setAttribute("authYn", lvo.getAuthYn());
 		}
 		return lvo;
 	}

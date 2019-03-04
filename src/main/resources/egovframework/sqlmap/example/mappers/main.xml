@@ -30,14 +30,24 @@
 			MBR_NO
 		  , LOGIN_ID
 		  , PWD
+		  , PWD_CHG_DT
+		  , TMP_PWD_ISSU_DT
+		  , LOGIN_FAIL_CNT
 		  , CP_NO
-		  , EMAIL)
+		  , EMAIL
+		  , RSGSTR_ID
+		  , RSGST_DT)
 		VALUE (
 			(SELECT IFNULL(MAX(MBR_NO), 0) + 1 FROM T_MBR TM)
 		  , #{loginId}
 		  , #{pwd}
+		  , now()
+		  , now()
+		  , 0
 		  , #{cpNo}
 		  , #{email}
+		  , #{loginId}
+		  , now()
 		)
 	</insert>
 	

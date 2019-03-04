@@ -13,7 +13,11 @@ public class LoginVO {
 	private String joinDt;
 	private String rsgstrId;
 	private String rsgstDt;
+	private String authYn;
 	
+	
+	public String getAuthYn() {return authYn;}
+	public void setAuthYn(String authYn) {this.authYn = authYn;}
 	
 	public String getMbrNo() {return mbrNo;}
 	public void setMbrNo(String mbrNo) {this.mbrNo = mbrNo;}

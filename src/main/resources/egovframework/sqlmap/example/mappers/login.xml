@@ -6,6 +6,7 @@
 	<resultMap type="egovframework.example.login.service.LoginVO" id="loginList">
 		<result property="mbrNo"			column="MBR_NO"/>
 	 	<result property="loginId"			column="LOGIN_ID"/>
+	 	<result property="authYn"			column="AUTH_YN"/>
 	 	<result property="pwd"				column="PWD"/>
 	 	<result property="pwdChgDt"			column="PWD_CHG_DT"/>
 	 	<result property="tmpPwdIssuDt"		column="TMP_PWD_ISSU_DT"/>
@@ -19,7 +20,7 @@
 	
 	<!-- login 정보 불러오기 -->
 	<select id="selectLoginInfo" parameterType="egovframework.example.login.service.LoginVO" resultMap="loginList" >
-		SELECT MBR_NO, LOGIN_ID
+		SELECT MBR_NO, LOGIN_ID, AUTH_YN
 		FROM T_MBR
 		WHERE LOGIN_ID = #{loginId}
 		AND PWD = #{pwd}

@@ -15,6 +15,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!-- 이미지 슬라이드  slick css-->
+<link rel="stylesheet" type="text/css" href="css/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="css/slick/slick-theme.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="css/slick/slick.min.js"></script>
+
+
 <!-- jqGrid 설정 -->
 <link rel="stylesheet" type="text/css" href="<c:out value='/jqgrid/jqGrid-master/css/ui.jqgrid-bootstrap-ui.css'/>">
 <%-- <script type="text/javascript" src="<c:url value='/js/jquery.1.11.0.min.js'/>"></script> --%>
@@ -80,4 +87,5 @@
 	
 </script>
 
-<c:set value="${sessionScope.userId}" var="userId" />
+
+<title>Shoes Community Centipede</title>

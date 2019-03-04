@@ -4,6 +4,9 @@
 
 <script>
 
+
+
+// 상단 이모티콘을 누를 때 계정관리 메뉴가 출력되도록 하는 기능
 $(function() {
 	var settingTrigger = $('.setting__active'),
 		settingContainer = $('.setting__block');
@@ -51,16 +54,21 @@ $(function() {
 							</div>
 						</li>
 						<li class="drop with--one--item"><a href="noticeView.do">Notice</a></li>
-						<li class="drop with--one--item"><a href="#;">My page</a></li>
-						<li class="drop"><a href="#">Managing page</a>
-							<div class="megamenu dropdown">
-								<ul class="item item01">
-									<li><a href="mngRelInfoList.do">Release Information</a></li>
-									<li><a href="mngReviewList.do">Sneaker Review</a></li>
-									<li><a href="mngNoticeList.do">Notice</a></li>
-								</ul>
-							</div>
-						</li>
+						
+						<c:if test="${!empty sessionScope}">
+							<li class="drop with--one--item"><a href="#;">My page</a></li>
+						</c:if>
+						<c:if test='${sessionScope.authYn eq "Y"}'>
+							<li class="drop"><a href="#">Managing page</a>
+								<div class="megamenu dropdown">
+									<ul class="item item01">
+										<li><a href="mngRelInfoList.do">Release Information</a></li>
+										<li><a href="mngReviewList.do">Sneaker Review</a></li>
+										<li><a href="mngNoticeList.do">Notice</a></li>
+									</ul>
+								</div>
+							</li>
+						</c:if>
 					</ul>
 				</nav>
 			</div>
@@ -83,7 +91,7 @@ $(function() {
 									</c:when>
 									<c:otherwise>
 										<strong class="label switcher-label">
-											<span><a href="#">Mypage</a></span>
+											<span><a href="#">My page</a></span>
 										</strong>
 										<br/>
 										<strong class="label switcher-label">

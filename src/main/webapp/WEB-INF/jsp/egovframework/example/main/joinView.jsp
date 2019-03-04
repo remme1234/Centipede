@@ -16,7 +16,8 @@
 			$cpNo		= $("input[name=cpNo]");
 			
 		// email 정규식
-		var emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		var emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+			cpNoReg	 = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
 		
 		if($loginId.val() == null || $loginId.val() == "") {
 			alert("아이디를 입력해주세요.");
@@ -34,15 +35,22 @@
 			return
 		}
 		
-		 if( !emailReg.test( $email.val() ) ) {
-	            alert("이메일을 올바른 형식으로 입력해주세요.");
-	            $email.focus()
-	            return;
-	        }
+		if( !emailReg.test( $email.val() ) ) {
+			alert("이메일을 올바른 형식으로 입력해주세요.");
+			$email.focus()
+			return;
+		}
+		
 		if($cpNo.val() == null || $cpNo.val() == "") {
 			alert("연락처를 입력해주세요.");
 			$cpNo.focus();
 			return
+		}
+
+		if( !cpNoReg.test( $cpNo.val() ) ) {
+			alert("휴대폰번호 11자리를 '-' 를 빼고 입력해주세요.");
+			$email.focus()
+			return;
 		}
 		
 		if(confirm("회원가입하시겠습니까?")) {
@@ -131,7 +139,7 @@
 						<input type="text" name="cpNo">
 					</div>
 					<div class="form__btn">
-						<button onclick="join()">Register</button>
+						<button type="button" onclick="join()">Register</button>
 					</div>
 				</div>
 			</form>
