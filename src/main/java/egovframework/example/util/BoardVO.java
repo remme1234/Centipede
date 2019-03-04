@@ -16,15 +16,15 @@ public class BoardVO extends PagingVO {
 	private String catCd;
 	private String brndNm;
 	private String searchText;
-	private String rnum;
+	private String rownum;
 	private String originFileNm;
 	
 	
 	public String getOriginFileNm() {return originFileNm;}
 	public void setOriginFileNm(String originFileNm) {this.originFileNm = originFileNm;}
 	
-	public String getRnum() {return rnum;}
-	public void setRnum(String rnum) {this.rnum = rnum;}
+	public String getRownum() {return rownum;}
+	public void setRownum(String rownum) {this.rownum = rownum;}
 	
 	public String getSearchText() {return searchText;}
 	public void setSearchText(String searchText) {this.searchText = searchText;}

@@ -3,6 +3,7 @@ package egovframework.example.main.service.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import egovframework.example.cmmn.web.JsonUtil;
 import egovframework.example.login.service.LoginVO;
 import egovframework.example.main.service.MainService;
+import egovframework.example.util.BoardVO;
 
 @Service
 public class MainServiceImpl implements MainService { 
@@ -65,5 +67,24 @@ public class MainServiceImpl implements MainService {
 		String resultMapToJson = JsonUtil.HashMapToJson(resMap);
 		
 		out.write(resultMapToJson);
+	}
+
+	
+	// release info 데이터 호출
+	@Override
+	public List<BoardVO> selectReleaseInfoList() {
+		return mainMapper.selectReleaseInfoList();
+	}
+
+	// notice 데이터 호출	
+	@Override
+	public List<BoardVO> selectNoticeList() {
+		return mainMapper.selectNoticeList();
+	}
+
+	// review 데이터 호출	
+	@Override
+	public List<BoardVO> selectReviewList() {
+		return mainMapper.selectReviewList();
 	} 
 }

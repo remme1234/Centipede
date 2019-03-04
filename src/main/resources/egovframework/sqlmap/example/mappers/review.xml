@@ -71,13 +71,6 @@
 					 GROUP BY CAT_CD) GROUP_MAX
 		ON T_REVIEW.CAT_CD = GROUP_MAX.CAT_CD
 		WHERE T_REVIEW.USE_YN = 'Y'
-		<!-- <if test="searchText != null and !searchText.equals('')">
-			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
-			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
-		</if>
-		<if test="catCd != null and !catCd.equals('')">
-			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
-		</if> -->
 		AND FIND_IN_SET(NUMBER,GROUPED_NUMBER) BETWEEN 1 AND 3
 		ORDER BY T_REVIEW.CAT_CD, T_REVIEW.RSGST_DT DESC
 	</select>

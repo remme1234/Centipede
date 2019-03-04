@@ -3,7 +3,7 @@
 <mapper namespace="egovframework.example.main.service.impl.MainMapper">
 
 	<!-- main resultMap 설정  -->
-	<resultMap type="egovframework.example.login.service.LoginVO" id="MainList">
+	<resultMap type="egovframework.example.login.service.LoginVO" id="mainList">
 		<result property="mbrNo"			column="MBR_NO"/>
 	 	<result property="loginId"			column="LOGIN_ID"/>
 	 	<result property="pwd"				column="PWD"/>
@@ -17,12 +17,96 @@
 	 	<result property="rsgstDt"			column="RSGST_DT"/>
 	</resultMap>
 	
-	<!-- main 정보 불러오기 -->
+	<!-- main 화면에 뿌려줄 boardVO -->
+	<resultMap type="egovframework.example.util.BoardVO" id="boardList">
+		<result property="boardUid"		column="BOARD_UID"/>
+	 	<result property="number"		column="NUMBER"/>
+	 	<result property="relDt"		column="REL_DT"/>
+	 	<result property="catCd"		column="CAT_CD"/>
+	 	<result property="brndNm"		column="BRND_NM"/>
+	 	<result property="title"		column="TITLE"/>
+	 	<result property="contents"		column="CONTENTS"/>
+	 	<result property="visitCnt"		column="VISIT_CNT"/>
+	 	<result property="rsgstDt"		column="RSGST_DT"/>
+	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
+	 	<result property="useYn"		column="USE_YN"/>
+	 	<result property="fileNo"		column="FILE_NO"/>
+	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
+	 	<result property="rownum"		column="ROWNUM"/>
+	</resultMap>
+	
+	<!-- login 세션 정보 불러오기 -->
 	<select id="selectIdCheck" parameterType="egovframework.example.login.service.LoginVO" resultType="java.lang.Integer" >
 		SELECT count(1)
 		FROM T_MBR
 		WHERE LOGIN_ID = #{loginId}
 	</select>
+	
+	<!-- 메인화면 release Info 불러오기 -->
+	<select id="selectReleaseInfoList" resultMap = "boardList">
+		SELECT BOARD_UID
+			 , NUMBER
+		     , TITLE
+		     , CONTENTS
+		     , RSGSTR_ID
+		     , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+			 , USE_YN
+			 , REL_DT
+			 , (SELECT SAVED_FILE_NM
+				FROM   T_FILE
+				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		  FROM T_RELEASEINFO TR
+		 WHERE USE_YN='Y' 
+	  ORDER BY RSGST_DT DESC LIMIT 0,3
+	</select>
+	
+	<!-- 메인화면 notice 불러오기 -->
+	<select id="selectNoticeList" resultMap = "boardList">
+		SELECT A.*
+		FROM (
+			  SELECT NUMBER
+				   , TITLE
+				   , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+				   , CONTENTS
+				   , VISIT_CNT
+				   , RSGSTR_ID
+				   , USE_YN 
+				   , @ROWNUM := @ROWNUM+1 AS ROWNUM
+			   FROM  T_NOTICE
+				   ,(SELECT @ROWNUM := 0) ROWNUM
+			   WHERE USE_YN = 'Y'
+			ORDER BY RSGST_DT DESC
+			 ) A
+	ORDER BY ROWNUM DESC LIMIT 0,5
+ 	</select>
+	
+	
+	<!-- 메인화면 reivew 불러오기 -->
+	<select id="selectReviewList" resultMap = "boardList">
+		SELECT BOARD_UID
+			 , NUMBER
+		     , TITLE
+		     , CONTENTS
+		     ,CASE 
+				WHEN CAT_CD = 01 THEN '나이키'
+				WHEN CAT_CD = 02 THEN '아디다스'
+				WHEN CAT_CD = 03 THEN '컨버스'
+				ELSE '기타'  	
+				END CAT_CD
+		     , RSGSTR_ID
+		     , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+			 , USE_YN
+			 , (SELECT SAVED_FILE_NM
+				FROM   T_FILE
+				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		  FROM T_REVIEW TR
+		 WHERE USE_YN='Y' 
+	  ORDER BY RSGST_DT DESC LIMIT 0,3
+  </select>
+	
+	
 	
 	<!-- 회원가입 -->
 	<insert id="insertMbr" parameterType="egovframework.example.login.service.LoginVO">
@@ -50,5 +134,6 @@
 		  , now()
 		)
 	</insert>
+	
 	
 </mapper>
