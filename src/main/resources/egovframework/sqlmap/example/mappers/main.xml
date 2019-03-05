@@ -84,29 +84,32 @@
 	
 	<!-- 메인화면 reivew 불러오기 -->
 	<select id="selectReviewList" resultMap = "boardList">
-		SELECT BOARD_UID
-			 , NUMBER
-		     , TITLE
-		     , CONTENTS
-		     ,CASE 
-				WHEN CAT_CD = 01 THEN '나이키'
-				WHEN CAT_CD = 02 THEN '아디다스'
-				WHEN CAT_CD = 03 THEN '컨버스'
+		SELECT TR.BOARD_UID
+			 , TR.NUMBER
+		     , TR.TITLE
+		     , TR.CONTENTS
+		     , CASE 
+				WHEN TR.CAT_CD = 01 THEN '나이키'
+				WHEN TR.CAT_CD = 02 THEN '아디다스'
+				WHEN TR.CAT_CD = 03 THEN '컨버스'
 				ELSE '기타'  	
-				END CAT_CD
-		     , RSGSTR_ID
-		     , VISIT_CNT
-			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
-			 , USE_YN
+			   END CAT_CD
+		     , TR.RSGSTR_ID
+		     , TR.VISIT_CNT
+			 , DATE_FORMAT(TR.RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+			 , TR.USE_YN
 			 , (SELECT SAVED_FILE_NM
 				FROM   T_FILE
 				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+			 , T_REVIEW_RPL.NUMBER
+			 , MAX(T_REVIEW_RPL.RSGST_DT) AS RPL_DT
 		  FROM T_REVIEW TR
-		 WHERE USE_YN='Y' 
-	  ORDER BY RSGST_DT DESC LIMIT 0,3
-  </select>
-	
-	
+		  LEFT JOIN T_REVIEW_RPL
+		    ON TR.NUMBER = T_REVIEW_RPL.NUMBER
+		 WHERE TR.USE_YN = 'Y'
+	  GROUP BY TR.NUMBER
+      ORDER BY RPL_DT DESC LIMIT 0,3
+	</select>
 	
 	<!-- 회원가입 -->
 	<insert id="insertMbr" parameterType="egovframework.example.login.service.LoginVO">

@@ -1,36 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
- 
- 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
-<style>
-.releases-list .draw-title {
-	font-weight: 700;
-    margin-top: 20px;
-    font-size: 15px;
-}
-
-.releases-list li{
-	width: 33.3333%;
-	padding: 2%;
-	float: left;
-	text-align: center;
-	font-size: 15px;
-	font-weight: 700;
-}
-
-li { list-style: none }
-
-.title h3 {
-	font-size: 36px;
-    color: #1a1a1a;
-    font-weight: bold;
-    line-height: 36px;
-    text-transform: uppercase;
-}
-</style>
  
 <script>
 	var releaseInfoList = {
@@ -42,26 +14,62 @@ li { list-style: none }
 			$search.submit();
 		}
 	}
-</script>	
- 
-<div class="title" style="text-align:center ">
-<h3>RELEASE INFO</h3>
-</div>
-<ul class="releases-list">
-	
-	<c:forEach items="${releaseInfoList}" var="vo">
-	<li>
-		<a href="releaseInfoDetailView.do?number=${vo.number}">
-			<img src="centipede/../images/centipede/board/${vo.savedFileNm}" width="400px" height="200px">
-		</a>
-		<h3 class="draw-title">${vo.title}</h3>
-		<div>${vo.relDt}</div>	
-	</li>
-	</c:forEach>
-</ul>
+</script>
+<section class="wn__product__area brown--color pt--80  pb--30">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="section__title text-center">
+					<h2 class="title__be--2">New <span class="color--theme">Release Products</span></h2>
+					<p>This is the recently updated release information.</p>
+				</div>
+			</div>
+		</div>
+		<div class="furniture--4 border--round arrows_style owl-carousel owl-theme row mt--50 owl-loaded owl-drag">
+			<div class="main_sample">
+				<c:forEach items="${releaseInfoList}" var="vo">
+					<div class="owl-item active">
+						<div class="product product__style--3">
+							<div class="col-lg-3 col-md-4 col-sm-6 col-12">
+								<div class="product__thumb">
+									<a class="first__img" href="releaseInfoDetailView.do?number=${vo.number}"><img src="centipede/../images/centipede/board/${vo.savedFileNm}" style="width:300px; height:230px;"></a>
+									
+									<!-- 현재날짜와 비교하여 new 표시 -->
+									<fmt:parseDate var="rsgst_date" value="${vo.rsgstDt}" pattern="yyyy-MM-dd" />
+									<fmt:formatDate var="saved_date" value="${rsgst_date}" pattern="yyyy-MM-dd"/>
+									<c:set var="now" value="<%=new java.util.Date()%>" />
+									<fmt:formatDate var="now_date" value="${now}" pattern="yyyy-MM-dd" /> 	
+									
+									<c:if test="${saved_date == now_date }">
+										<div class="hot__box">
+											<span class="hot-label">NEW</span>
+										</div>
+									</c:if>									
+								</div>
+								<div class="product__content content--center">
+									<h4>${vo.title}</h4>
+									<ul class="prize d-flex">
+										<li>${vo.relDt}</li>
+									</ul>
+									<div class="action">
+										<div class="actions_inner">
+											<ul class="add_to_links">
+												<li><a data-toggle="modal" title="Quick View" class="quickview modal-vew detail-link" href="#"><i class="bi bi-search"></i></a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+</section>
 
 <!-- 페이징 시작 -->
-<div id="paging_div">
+<div id="paging_div" style="clear:both;">
    <ul class="paging_align wn__pagination">
       <c:if test='${paging.getFirstPageNoOnPageList() > 1}'>
          <li class="first-page"><a href="?pageIndex=1&view_iframe=1&mod=list">처음</a></li>

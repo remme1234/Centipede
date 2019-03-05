@@ -91,7 +91,7 @@
 									</div>
 								</div>
 								<div class="product__content content--center">
-									<h4><a href="#">${relInfo.title}</a></h4>
+									<h4>${relInfo.title}</a></h4>
 									<ul class="prize d-flex">
 										<li>${relInfo.relDt}</li>
 									</ul>
@@ -124,7 +124,7 @@
 			</div>
 		</div>
 	</div>
-	<table class="table table-hover">
+	<table class="table table-hover" style="width: 800px; margin-left:150px">
 		<colgroup>
 			<col width = "10%">
 			<col width = "35%">
@@ -158,13 +158,13 @@
 
 
 
-<!-- RECENTLY INPUTED REVIEW -->
+<!-- RECENTLY UPDATE REVIEW -->
 <section class="wn__product__area brown--color pt--80  pb--30" style="clear:both;">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="section__title text-center">
-					<h2 class="title__be--2">Recently <span class="color--theme">inputed Review</span></h2>
+					<h2 class="title__be--2">Recently <span class="color--theme">Updated Review</span></h2>
 					<p>These are the products with the most recently entered reviews.</p>
 				</div>
 			</div>
@@ -176,16 +176,14 @@
 						<div class="product product__style--3">
 							<div class="col-lg-3 col-md-4 col-sm-6 col-12">
 								<div class="product__thumb">
-									<a class="first__img" href="releaseInfoDetailView.do?number=${review.number}"><img src="centipede/../images/centipede/board/${review.savedFileNm}" style="width:300px; height:230px;"></a>		
+									<a class="first__img" href="reviewDetailView.do?number=${review.number}"><img src="centipede/../images/centipede/board/${review.savedFileNm}" style="width:300px; height:230px;"></a>		
 									<div class="hot__box">
 										<span class="hot-label">NEW</span>
 									</div>
 								</div>
 								<div class="product__content content--center">
-									<h4><a href="#">[${review.catCd}]  ${review.title}</a></h4>
-									<ul class="prize d-flex">
-										<li>${review.relDt}</li>
-									</ul>
+									<h4> [${review.catCd}] </h4>
+									<h4>${review.title}</h4>
 									<div class="action">
 										<div class="actions_inner">
 											<ul class="add_to_links">
@@ -202,6 +200,3 @@
 		</div>
 	</div>
 </section>
-
-	
-

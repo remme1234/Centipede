@@ -17,8 +17,11 @@ public class BoardVO extends PagingVO {
 	private String brndNm;
 	private String searchText;
 	private String rownum;
+	private String rnum;
 	private String originFileNm;
 	
+	public String getRnum() {return rnum;}
+	public void setRnum(String rnum) {this.rnum = rnum;}
 	
 	public String getOriginFileNm() {return originFileNm;}
 	public void setOriginFileNm(String originFileNm) {this.originFileNm = originFileNm;}
@@ -70,4 +73,5 @@ public class BoardVO extends PagingVO {
 	
 	public String getRsgstrId() {return rsgstrId;}
 	public void setRsgstrId(String rsgstrId) {this.rsgstrId = rsgstrId;}
+	
 }

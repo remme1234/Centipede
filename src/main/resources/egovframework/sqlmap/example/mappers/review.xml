@@ -50,16 +50,16 @@
 		SELECT 	 T_REVIEW.BOARD_UID
 				,T_REVIEW.NUMBER
 				,CASE 
-					WHEN T_REVIEW.CAT_CD = 01 THEN '나이키'
-					WHEN T_REVIEW.CAT_CD = 02 THEN '아디다스'
-					WHEN T_REVIEW.CAT_CD = 03 THEN '컨버스'
-					ELSE '기타'  	
+					WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
+					WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
+					WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
+					ELSE 'etc'  	
 					END CAT_CD
 				 ,T_REVIEW.TITLE
 				 ,T_REVIEW.CONTENTS
 				 ,T_REVIEW.RSGSTR_ID
 				 ,T_REVIEW.VISIT_CNT
-				 ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+				 ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y-%m-%d') AS RSGST_DT
 				 ,T_REVIEW.USE_YN
 				 ,(SELECT 	SAVED_FILE_NM
 						FROM	T_FILE
@@ -80,16 +80,16 @@
 		SELECT 	 BOARD_UID
 				,NUMBER
 				,CASE 
-					WHEN CAT_CD = 01 THEN '나이키'
-					WHEN CAT_CD = 02 THEN '아디다스'
-					WHEN CAT_CD = 03 THEN '컨버스'
-					ELSE '기타'  	
+					WHEN CAT_CD = 01 THEN 'Nike'
+					WHEN CAT_CD = 02 THEN 'Adidas'
+					WHEN CAT_CD = 03 THEN 'Converse'
+					ELSE 'etc'  	
 				END CAT_CD
 			 	,TITLE
 				,CONTENTS
 				,RSGSTR_ID
 				,VISIT_CNT
-				,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+				,DATE_FORMAT(RSGST_DT, '%Y-%m-%d') AS RSGST_DT
 				,USE_YN
 				,(SELECT 	SAVED_FILE_NM
 					FROM	T_FILE
@@ -110,10 +110,10 @@
 	<select id="selectCatCdList" resultMap="reviewList">
 		SELECT   CAT_CD
 			    ,CASE 
-				   WHEN CAT_CD = 01 THEN '나이키'
-				   WHEN CAT_CD = 02 THEN '아디다스'
-				   WHEN CAT_CD = 03 THEN '컨버스'
-				   ELSE '전체'
+				   WHEN CAT_CD = 01 THEN 'Nike'
+				   WHEN CAT_CD = 02 THEN 'Adidas'
+				   WHEN CAT_CD = 03 THEN 'Converse'
+				   ELSE 'All'
 			   	END AS BRND_NM
 		FROM     T_REVIEW
 		WHERE    USE_YN ='Y'

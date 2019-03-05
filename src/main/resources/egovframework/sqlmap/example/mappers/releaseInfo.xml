@@ -39,12 +39,12 @@
 				     , CONTENTS
 				     , RSGSTR_ID
 				     , VISIT_CNT
-					 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+					 , DATE_FORMAT(RSGST_DT, '%Y-%m-%d') AS RSGST_DT
 					 , USE_YN
 					 , REL_DT
 					 , (SELECT SAVED_FILE_NM
-						FROM   T_FILE
-						WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+						  FROM T_FILE
+						 WHERE FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
 				  FROM T_RELEASEINFO TR
 				 WHERE USE_YN='Y' 
 				) A 
