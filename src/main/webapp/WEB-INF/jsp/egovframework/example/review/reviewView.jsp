@@ -12,6 +12,7 @@
     font-size: 20px;
     margin-bottom: 10px; 
 }
+
 </style>
 	
 <section class="wn__product__area brown--color pt--80  pb--30">
@@ -87,7 +88,7 @@
 			</c:forEach>
 		</select>
 		<input type="text" name="searchText" value="">
-		<input type="button" onclick="reviewList.search()" value="검색">
+		<input class="btn__design" type="button" onclick="reviewList.search()" value="검색">
 	</form>
 </div>
 

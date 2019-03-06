@@ -78,6 +78,6 @@
 <div style="clear:both; text-align:center; margin-top: 15px;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">
 		<input type="text" name="searchText" value="">
-		<input type="button" onclick="noticeViewList.search()" value="검색">
+		<input class="btn__design" type="button" onclick="noticeViewList.search()" value="검색">
 	</form>
 </div>

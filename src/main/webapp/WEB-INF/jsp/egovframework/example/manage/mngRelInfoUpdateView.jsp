@@ -77,16 +77,21 @@
 			</tr>
 		</tbody>
 	</table>
-	<input type="file" name="file" />
+	<div class="filebox"> 
+		<label for="ex_file">Upload</label> 
+		<input type="file" name="file" id="ex_file"> 
+	</div>
 </form>
 	
 <form action="" name="delForm" method="POST">
 	<input type="hidden" name="number" value="${mngRelInfoUpdateView.number}" />
 </form>
 
-<button type="button" onclick="save()">저장</button>
-<c:if test="${mngRelInfoUpdateView ne null}">
-	<button type="button" onclick="manageCls.del('${mngRelInfoUpdateView.boardUid}')">삭제</button>
-</c:if>
-<a href="mngRelInfoList.do"><button type="button">취소</button></a>
+<div class="btn__Bundle">
+	<button class="btn__design" type="button" onclick="save()">저장</button>
+	<c:if test="${mngRelInfoUpdateView ne null}">
+		<button class="btn__design" type="button" onclick="manageCls.del('${mngRelInfoUpdateView.boardUid}')">삭제</button>
+	</c:if>
+	<a href="mngRelInfoList.do"><button class="btn__design" type="button">취소</button></a>
+</div>
 	

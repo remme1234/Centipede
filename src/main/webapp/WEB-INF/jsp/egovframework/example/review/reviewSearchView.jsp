@@ -3,7 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
- 
 
 <section class="wn__product__area brown--color pt--80  pb--30">
 	<div class="container">
@@ -67,6 +66,6 @@
 			</c:forEach>
 		</select>
 		<input type="text" name="searchText" value="">
-		<input type="button" onclick="reviewList.search()" value="검색">
+		<input class="btn__design" type="button" onclick="reviewList.search()" value="검색">
 	</form>
 </div>

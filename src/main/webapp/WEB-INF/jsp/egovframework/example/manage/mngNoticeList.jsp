@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <div class="title" style="text-align:center ">
 	<h3>Notice manage page</h3>
 </div>
@@ -41,8 +42,8 @@
 	</table>
 </div>
 
-<div style="clear:both">
-	<a href="mngNoticeUpdateView.do"><button type="button">글 작성</button></a>
+<div class="input" style="clear:both">
+	<a href="mngNoticeUpdateView.do"><button class="btn__design" type="button">글 작성</button></a>
 </div>
 
 <!-- 페이징 시작 -->
@@ -73,6 +74,6 @@
 <div style="clear:both; text-align:center; margin-top: 15px;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">
 		<input type="text" name="searchText" value="">
-		<input type="button" onclick="manageCls.search('B0003')" value="검색">
+		<input class="btn__design" type="button" onclick="manageCls.search('B0003')" value="검색">
 	</form>
 </div>

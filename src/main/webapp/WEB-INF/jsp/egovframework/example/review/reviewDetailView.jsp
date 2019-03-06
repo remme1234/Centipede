@@ -183,7 +183,7 @@
 			<td>
 				<button type="button" onclick="rplCls.goSearchFn(${reviewDetail.number})">검색</button>
 				<!-- jqGrid를 통해서 테이블 생성 -->
-				<table id="rplArea"></table>
+				<!-- <table id="rplArea"></table> -->
 			</td> 	
 		</tr>
 	</tbody>

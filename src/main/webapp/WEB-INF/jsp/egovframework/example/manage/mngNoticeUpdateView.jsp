@@ -30,7 +30,6 @@
 		$form.submit()
 		alert("입력한 글이 정상적으로 등록되었습니다.")	
 	}
-	alert("!!!" + '${mngNoticeUpdateView.fileNo}' )
 </script>
 
 <form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
@@ -51,17 +50,21 @@
 			</tr>
 		</tbody>
 	</table>
-	<input type="file" name="file"  />
+	<div class="filebox"> 
+		<label for="ex_file">Upload</label> 
+		<input type="file" name="file" id="ex_file"> 
+	</div>
 </form>
 	
 <form action="" name="delForm" method="POST">
 	<input type="hidden" name="number" value="${mngNoticeUpdateView.number}" />
 </form>
 
-<button type="button" onclick="save()">저장</button>
-<c:if test="${mngReviewUpdateView ne null}">
-	<button type="button" onclick="manageCls.del('${mngNoticeUpdateView.boardUid}')">삭제</button>
-</c:if>
-<a href="mngNoticeList.do"><button type="button">취소</button></a>
-	
+<div class="btn__Bundle">
+	<button class="btn__design" type="button" onclick="save()">저장</button>
+	<c:if test="${mngReviewUpdateView ne null}">
+		<button class="btn__design" type="button" onclick="manageCls.del('${mngNoticeUpdateView.boardUid}')">삭제</button>
+	</c:if>
+	<a href="mngNoticeList.do"><button class="btn__design" type="button">취소</button></a>
+</div>	
 

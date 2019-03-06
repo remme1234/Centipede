@@ -42,8 +42,8 @@
 	</table>
 </div>
 
-<div style="clear:both;">
-<a href="mngRelInfoUpdateView.do"><button type="button">글 작성</button></a></div>
+<div class="input" style="clear:both;">
+<a href="mngRelInfoUpdateView.do"><button class="btn__design" type="button">글 작성</button></a></div>
 
 <!-- 페이징 시작 -->
 <div id="paging_div">
@@ -73,6 +73,6 @@
 <div style="clear:both; text-align:center; margin-top: 15px;" class="search">
 	<form autocomplete="off"name="sendForm" method="get" action="">
 		<input type="text" name="searchText" value="">
-		<input type="button" onclick="manageCls.search('B0001')" value="검색">
+		<input class="btn__design" type="button" onclick="manageCls.search('B0001')" value="검색">
 	</form>
 </div>
