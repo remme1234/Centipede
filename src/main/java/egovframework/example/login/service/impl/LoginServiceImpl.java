@@ -23,6 +23,4 @@ public class LoginServiceImpl implements LoginService{
 		}
 		return lvo;
 	}
-	
-	
 }

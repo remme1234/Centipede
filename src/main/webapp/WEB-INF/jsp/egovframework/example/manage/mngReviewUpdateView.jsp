@@ -37,6 +37,7 @@
 <form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0002" />
 	<input type="hidden" name="number" value="${mngReviewUpdateView.number}" />
+	<input type="hidden" name="rsgstrId" value="${sessionScope.userId}" />
 	<table class="table">
 		<thead>
 			<tr>
@@ -47,9 +48,9 @@
 				<th>말머리</th>
 				<td>
 					<select name="catCd">
-						<option value="01">나이키</option>
-						<option value="02">아디다스</option>
-						<option value="03">컨버스</option>
+						<option value="01">Nike</option>
+						<option value="02">Adidas</option>
+						<option value="03">Converse</option>
 					</select>
 				</td>
 			</tr>

@@ -154,50 +154,76 @@
 
 <table class="table table-hover">
 	<colgroup>
-		<col width="50px" />
-		<col width="100px" />
-		
+		<col width="10%"/>
+		<col width="50%"/>
+		<col width="10%"/>
+		<col width="30%"/>
 	</colgroup>
 	<thead>
 		<tr>
+			<th>TITLE</th>
 			<td>${reviewDetail.title}</td>
+			<th>DATE</th>
 			<td>${reviewDetail.rsgstDt}</td>
+		</tr>
+		<tr>
+			<th>USER</th>
+			<td colspan="3">${reviewDetail.rsgstrId}</td>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="2">${reviewDetail.rsgstrId}</td>
-		</tr>
-		<tr>
-			<td>
-				<!-- 파일 경로 이상으로 추후 보완 예정 -->
+			<td colspan="4">
 				<div id="imageArea">
 					<c:forEach items="${fileInfo }" var="fileInfo" >
 						 <c:if test="${fileInfo.fileNo ne null}">
-							<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}"  width="200px" height="200px" >
+							<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}" >
 			              </c:if>
 		             </c:forEach>
 				</div>
-				<p>${reviewDetail.contents}</p>
+					<p>${reviewDetail.contents}</p>
 			</td>
-			<td>
-				<button type="button" onclick="rplCls.goSearchFn(${reviewDetail.number})">검색</button>
-				<!-- jqGrid를 통해서 테이블 생성 -->
-				<!-- <table id="rplArea"></table> -->
-			</td> 	
 		</tr>
 	</tbody>
 </table>
 
+<div style="width:100%; height:200px; overflow:auto">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<th>Brand</th>
+				<th>Product</th>
+				<th>Owned shoe size</th>
+				<th>New shoe size</th>
+				<th>Size</th>
+				<th>User Id</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${rplDataList}" var="rplDataList">
+				<tr>
+					<td>${rplDataList.brndNm}</td>
+					<td>${rplDataList.gdNm}</td>
+					<td>${rplDataList.pastLength}</td>
+					<td>${rplDataList.newLength}</td>
+					<td>${rplDataList.size}</td>
+					<td>${rplDataList.rsgstrId}</td>
+				</tr>
+			</c:forEach>			
+		</tbody>
+	</table>
+</div>
+
 <!-- 댓글로 사이즈 평가 -->
 <form autocomplete="off" name="rplSave" method="POST" action="" >
-	<input type="hidden" name="number" value="${reviewDetail.number}">
-	<div class="rpl">
+	<input type="hidden" name="number" value="${reviewDetail.number}" />
+	<input type="hidden" name="rsgstrId" value="${sessionScope.userId}" />
+	<div class="rpl input">
 		<select class="rpl_cat" name="catCd">
 		<option>Brand</option>
 			<c:forEach items="${rplCatList}" var="rplCatList">
-			<option value="<c:out value='${rplCatList.catCd }'/>">
-				<c:out value='${rplCatList.brndNm }'/>
+			<option value="${rplCatList.catCd}">
+				${rplCatList.brndNm }
 			</option>
 			</c:forEach>
 		</select>
@@ -208,11 +234,11 @@
 		<select class="rpl_new_length" name="newLength"> <option value="">New shoe size</option> </select>
 		<select class="rpl_size" name="size">
 			<option value="">Size</option>
-			<option value="s">작음</option>
-			<option value="m">적당함</option>
-			<option value="l">큼</option>
+			<option value="s">Small</option>
+			<option value="m">Fitness</option>
+			<option value="l">Large</option>
 		</select>
-		<input type="button" value="입력" onclick="review.rplSave()">
+		<input class="btn__design" type="button" value="input" onclick="review.rplSave()">
 	</div>
 </form>
 
@@ -221,9 +247,7 @@
 	<input type="hidden" name="number" value="${reviewDetail.number}" />
 </form>
 
-<td>&nbsp;</td>
 
-<div align="right">
-	<a href="reviewView.do"><button type="button" >목록으로</button></a>
-	<td>&nbsp;</td>
+<div align="right" class="return">
+	<a href="reviewView.do"><button class="btn__design" type="button" >목록으로</button></a>
 </div>

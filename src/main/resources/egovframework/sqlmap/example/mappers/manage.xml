@@ -19,6 +19,7 @@
 	 	<result property="searchText"		column="SEARCH_TEXT"/>
 	 	<result property="rnum"				column="RNUM"/>
 	 	<result property="originFileNm"		column="ORIGIN_FILE_NM"/>
+	 	<result property="originFileNm"		column="ORIGIN_FILE_NM"/>
 	</resultMap>
 	
 	<!-- 첨부파일정보VO resultMap 설정 -->
@@ -29,7 +30,8 @@
 	 	<result property="savedFileNm"		column="SAVED_FILE_NM"/>
 	 	<result property="savedFilePath"	column="SAVED_FILE_PATH"/>
 	 	<result property="fileSize"			column="FILE_SIZE"/>
-	 	<result property="rsgstrId"			column="RSGST_DT"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
 	 	<result property="useYn"			column="USE_YN"/>
 	 	<result property="number"			column="NUMBER"/>
 	</resultMap>
@@ -92,7 +94,7 @@
 		<if test='number != null and !"".equals(number)'>
 			,#{number}
 		</if>
-		, #{title}, #{contents},#{relDt}, "SAMPLE", "0", now()
+		, #{title}, #{contents},#{relDt}, #{rsgstrId}, "0", now()
 		<if test='fileNo == null or "".equals(fileNo)'>
 			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
 		</if>
@@ -127,9 +129,9 @@
 				SELECT BOARD_UID
 					  ,NUMBER
 					  ,CASE 
-						WHEN T_REVIEW.CAT_CD = 01 THEN '나이키'
-						WHEN T_REVIEW.CAT_CD = 02 THEN '아디다스'
-						WHEN T_REVIEW.CAT_CD = 03 THEN '컨버스'
+						WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
+						WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
+						WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
 					    ELSE '기타'  	
 					   END CAT_CD
 					  ,TITLE
@@ -171,7 +173,7 @@
 		<if test='number != null and !"".equals(number)'>
 			,#{number}
 		</if>
-		, #{catCd}, #{title}, #{contents}, "SAMPLE", "0", now(), 'Y'
+		, #{catCd}, #{title}, #{contents}, #{rsgstrId}, "0", now(), 'Y'
 		<if test='fileNo == null or "".equals(fileNo)'>
 			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
 		</if>
@@ -268,7 +270,7 @@
 		<if test='number != null and !"".equals(number)'>
 			,#{number}
 		</if>
-		, #{title}, #{contents}, "SAMPLE", "0", now(), 'Y'
+		, #{title}, #{contents}, #{rsgstrId}, "0", now(), 'Y'
 		<if test='fileNo == null or "".equals(fileNo)'>
 			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
 		</if>
@@ -322,7 +324,7 @@
             ,#{savedFilePath}
             ,#{fileSize}
             ,NOW()
-            ,'SAMPLE'
+            ,'sample'
         )
 	</insert>
 </mapper>

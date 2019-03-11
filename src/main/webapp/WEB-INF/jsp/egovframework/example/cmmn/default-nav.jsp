@@ -37,7 +37,7 @@ $(function() {
 			<div class="col-lg-8 d-none d-lg-block" style="margin-left: 50px;">
 				<nav class="mainmenu__nav">
 					<ul class="meninmenu d-flex justify-content-start">
-						<li class="drop with--one--item"><a href="#;">Introduce</a></li>
+						<li class="drop with--one--item"><a href="introduce.do">Introduce</a></li>
 						<li class="drop"><a href="#">Community</a>
 							<div class="megamenu mega03">
 								<ul class="item item03">
@@ -55,8 +55,8 @@ $(function() {
 						</li>
 						<li class="drop with--one--item"><a href="noticeView.do">Notice</a></li>
 						
-						<c:if test="${!empty sessionScope}">
-							<li class="drop with--one--item"><a href="#;">My page</a></li>
+						<c:if test="${sessionScope.authYn eq 'N' || sessionScope.authYn eq 'Y'}">
+							<li class="drop with--one--item"><a href="myPageVeiw.do">My page</a></li>
 						</c:if>
 						<c:if test='${sessionScope.authYn eq "Y"}'>
 							<li class="drop"><a href="#">Managing page</a>
@@ -80,7 +80,7 @@ $(function() {
 						<div class="searchbar__content setting__block">
 							<div class="content-inner">
 								<c:choose>
-									<c:when test='${empty sessionScope}'>
+									<c:when test='${empty sessionScope.authYn}'>
 										<strong class="label switcher-label">
 											<span><a href="loginView.do">Sign In</a></span>
 										</strong>

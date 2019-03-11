@@ -5,7 +5,6 @@
 
 
 <script>
-
 	$(function () {
 		
 		$('.banner').slick({
@@ -23,8 +22,8 @@
 			
 		});
 	});
-	
 </script>
+
 
 <!-- 배너 구성요소  -->
 <div class="banner slider--15">
@@ -35,10 +34,10 @@
             		<div class="col-lg-12">
             			<div class="slider__content">
 	            			<div class="contentbox" style="margin-left: 80px;">
-	            				<h2>Buy <span>your </span></h2>
-	            				<h2>favorite <span>Book </span></h2>
+	            				<h2>Check the<span> date </span></h2>
+	            				<h2>release <span> you want</span></h2>
 	            				<h2>from <span>Here </span></h2>
-			                   	<a class="shopbtn" href="#">shop now</a>
+			                   	<a class="shopbtn" href="releaseInfoView.do">show now</a>
 	            			</div>
             			</div>
             		</div>
@@ -53,10 +52,10 @@
             		<div class="col-lg-12">
             			<div class="slider__content">
 	            			<div class="contentbox" style="margin-left: 80px;">
-	            				<h2>Buy <span>your </span></h2>
-	            				<h2>favorite <span>Book </span></h2>
-	            				<h2>from <span>Here </span></h2>
-			                   	<a class="shopbtn" href="#">shop now</a>
+	            				<h2>Get</h2>
+	            				<h2>information <span> on shoes</span></h2>
+	            				<h2>to <span>buy </span></h2>
+			                   	<a class="shopbtn" href="reviewView.do">show now</a>
 	            			</div>
             			</div>
             		</div>
@@ -91,7 +90,14 @@
 									</div>
 								</div>
 								<div class="product__content content--center">
-									<h4>${relInfo.title}</a></h4>
+									<c:choose>
+										<c:when test="${fn:length(relInfo.title) > 26}">
+											<h4><c:out value="${fn:substring(relInfo.title,0,25)}"/>....</h4>
+										</c:when>
+										<c:otherwise>
+											<h4><c:out value="${relInfo.title}"/></h4>
+										</c:otherwise> 
+									</c:choose>
 									<ul class="prize d-flex">
 										<li>${relInfo.relDt}</li>
 									</ul>
@@ -183,7 +189,14 @@
 								</div>
 								<div class="product__content content--center">
 									<h4> [${review.catCd}] </h4>
-									<h4>${review.title}</h4>
+									<c:choose>
+										<c:when test="${fn:length(review.title) > 26}">
+											<h4><c:out value="${fn:substring(review.title,0,25)}"/>....</h4>
+										</c:when>
+										<c:otherwise>
+											<h4><c:out value="${review.title}"/></h4>
+										</c:otherwise> 
+									</c:choose>
 									<div class="action">
 										<div class="actions_inner">
 											<ul class="add_to_links">

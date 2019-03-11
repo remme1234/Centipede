@@ -42,7 +42,6 @@
 		<result property="pastLength"		column="PAST_LENGTH"/>
 		<result property="newLength"		column="NEW_LENGTH"/>
 		<result property="size"				column="SIZE"/>
-		
 	</resultMap>
 	
 	<!-- 리뷰게시판 목록 List -->
@@ -165,7 +164,7 @@
 					, #{pastLength}
 					, #{newLength}
 					, #{size}
-					, 'SAMPLE'
+					, #{rsgstrId}
 					, NOW())
 	</update>
 	
@@ -176,9 +175,9 @@
 				PAST_LENGTH,
 				NEW_LENGTH,
 				CASE 
-					WHEN SIZE = 's' THEN '작음'
-					WHEN SIZE = 'm' THEN '적당함'
-					WHEN SIZE = 'l' THEN '크다'
+					WHEN SIZE = 's' THEN 'Small'
+					WHEN SIZE = 'm' THEN 'Fitness'
+					WHEN SIZE = 'l' THEN 'Large'
 				END AS SIZE,
 				T_REVIEW_RPL.RSGSTR_ID
 		FROM	T_REVIEW_RPL

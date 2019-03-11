@@ -40,35 +40,22 @@
 		<tr>
 			<td colspan="4">
 			
-			<!-- 파일 경로 이상으로 추후 보완 예정 -->
 			<div id="imageArea">
 				<c:forEach items="${fileInfo }" var="fileInfo" >
 					 <c:if test="${fileInfo.fileNo ne null}">
-						<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}"  width="200px" height="200px" >
+						<img src="centipede/../images/centipede/board/${fileInfo.savedFileNm}" >
 		              </c:if>
 	             </c:forEach>
 			</div>
 				<p>${releaseInfoDetail.contents}</p>
 			</td>
 		</tr>
-		<%-- <tr>
-	        <c:forEach items="${fileInfo }" var="fileInfo" >
-	      	<th>첨부파일</th>
-            <td>
-              <c:if test="${fileInfo.fileNo ne null}">
-              	<input type="hidden" id="number" value="${fileInfo.fileNo }">
-              	<a href="downloadFile.do?fileNo=${fileInfo.fileNo }">${fileInfo.originFileNm}(${fileInfo.fileSize})kb</a>
-              </c:if>
-            </td>
-	        </c:forEach>
-        </tr> --%>
 	</tbody>
 </table>
 
 <form action="" name="sendForm" method="POST">
 	<input type="hidden" name="number" value="${releaseInfoDetail.number}" />
 </form>
-
-<td>&nbsp;</td>
-<a href="releaseInfoView.do"><button type="button" >목록으로</button></a>
-<td>&nbsp;</td>
+<div class="search">
+	<a href="releaseInfoView.do"><button class="btn__design" type="button" >목록으로</button></a>
+</div>

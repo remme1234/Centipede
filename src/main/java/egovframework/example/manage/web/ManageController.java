@@ -195,8 +195,6 @@ public class ManageController {
 	public String mngNoticeUpdate(BoardVO vo, HttpServletRequest request) throws Exception {
 		manageService.updateNotice(vo,request);
 		
-		System.out.println(vo.getFileNo());
-		
 		return "redirect:mngNoticeList.do";
 	}
 	

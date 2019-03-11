@@ -4,7 +4,6 @@
 	$(function() {
 		if('${msg}' != null && '${msg}' != "") alert('${msg}');
 	});
-
 	var loginFn = function() {
 		
 		var $form 		= $("form[name=accountForm]"),  
@@ -24,8 +23,7 @@
 		
 		$form.attr("action","login.do")
 		$form.submit()
-		//alert("안농 ~")
-	}
+ 		}
 	
 </script>
 

@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 
 <script type="text/javascript">
 
@@ -112,38 +107,34 @@
 
 </script>
 
-</head>
-<body>
-	<div class="col-lg-6 col-12">
-		<div class="my__account__wrapper">
-			<h3 class="account__title">Register</h3>
-			<form name="sendForm" method="post">
-				<div class="account__form">
-					<div class="input__box">
-						<label>ID <span>*</span>
-							<span class="ableId" style="margin-left:10px; display:none; color:green">사용 가능한 아이디입니다</span>						
-							<span class="disableId" style="margin-left:10px; display: none; color:red">사용할 수 없는 아이디입니다</span>						
-						</label>
-						<input type="text" name="loginId" onchange="idCheck()" style="ime-mode:disablex">
-					</div>
-					<div class="input__box">
-						<label>Password <span>*</span></label>
-						<input type="password" name="pwd">
-					</div>
-					<div class="input__box">
-						<label>Email address <span>*</span></label>
-						<input type="text" name="email">
-					</div>
-					<div class="input__box">
-						<label>TEL<span>*</span></label>
-						<input type="text" name="cpNo">
-					</div>
-					<div class="form__btn">
-						<button type="button" onclick="join()">Register</button>
-					</div>
+<div class="col-lg-6 col-12">
+	<div class="my__account__wrapper">
+		<h3 class="account__title">Register</h3>
+		<form name="sendForm" method="post">
+			<div class="account__form">
+				<div class="input__box">
+					<label>ID <span>*</span>
+						<span class="ableId" style="margin-left:10px; display:none; color:green">사용 가능한 아이디입니다</span>						
+						<span class="disableId" style="margin-left:10px; display: none; color:red">사용할 수 없는 아이디입니다</span>						
+					</label>
+					<input type="text" name="loginId" onchange="idCheck()" style="ime-mode:disablex">
 				</div>
-			</form>
-		</div>
+				<div class="input__box">
+					<label>Password <span>*</span></label>
+					<input type="password" name="pwd">
+				</div>
+				<div class="input__box">
+					<label>Email address <span>*</span></label>
+					<input type="text" name="email">
+				</div>
+				<div class="input__box">
+					<label>TEL<span>*</span></label>
+					<input type="text" name="cpNo">
+				</div>
+				<div class="form__btn">
+					<button type="button" onclick="join()">Register</button>
+				</div>
+			</div>
+		</form>
 	</div>
-</body>
-</html>
+</div>

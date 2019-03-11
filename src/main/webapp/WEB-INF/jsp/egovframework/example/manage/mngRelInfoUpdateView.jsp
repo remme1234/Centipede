@@ -58,6 +58,7 @@
 <form autocomplete="off" name="saveForm" method="POST" action="" enctype="multipart/form-data">
 	<input type="hidden" name="boardUid" value="B0001" />
 	<input type="hidden" name="number" value="${mngRelInfoUpdateView.number}" />
+	<input type="hidden" name="rsgstrId" value="${sessionScope.userId}" />
 	<table class="table">
 		<thead>
 			<tr>

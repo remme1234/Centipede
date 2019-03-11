@@ -56,4 +56,10 @@ public class MainController {
 		mainService.insertMbr(response, lvo);
 	}
 	
+	//introduce 페이지 출력
+	@RequestMapping (value="introduce.do")
+	public String introduce() {
+		
+		return "main/introduce.tiles";
+	}
 }

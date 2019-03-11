@@ -36,6 +36,8 @@
 	<input type="hidden" name="boardUid" value="B0003" />
 	<input type="hidden" name="fileNo" value="${mngNoticeUpdateView.fileNo}" />
 	<input type="hidden" name="number" value="${mngNoticeUpdateView.number}" />
+	<input type="hidden" name="rsgstrId" value="${sessionScope.userId}" />
+	
 	<table class="table">
 		<thead>
 			<tr>

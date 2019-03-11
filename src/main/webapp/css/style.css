@@ -3026,7 +3026,7 @@ h3.widget-title-modal {
   font-size: 60px;
 }
 .slide .slider__content h2 {
-  color: #3c3c3c;
+  color: black;
   font-size: 68px;
   font-family: poppins;
   font-weight: 700;
@@ -5204,6 +5204,26 @@ h3.widget-title-modal {
     padding: 2px 10px 0;
     text-transform: uppercase;
     transition: all 0.4s ease 0s; }
+    .search .btn__design:hover {
+      background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+      border-color: #e59285;
+      color: #e59285; }
+      
+.return .btn__design {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: 2px solid #333;
+    color: #333;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    padding: 2px 20px 0;
+    text-transform: uppercase;
+    transition: all 0.4s ease 0s; }
+     .return .btn__design:hover {
+      background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+      border-color: #e59285;
+      color: #e59285; }
       
 .input .btn__design {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -5213,9 +5233,13 @@ h3.widget-title-modal {
     font-size: 12px;
     font-weight: 700;
     line-height: 20px;
-    padding: 2px 10px 0;
+    padding: 2px 20px 0;
     text-transform: uppercase;
     transition: all 0.4s ease 0s;}
+    .input .btn__design:hover {
+      background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+      border-color: #e59285;
+      color: #e59285; }
     
 .btn__Bundle .btn__design {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -5228,6 +5252,10 @@ h3.widget-title-modal {
     padding: 2px 10px 0;
     text-transform: uppercase;
     transition: all 0.4s ease 0s;}
+    .btn__Bundle .btn__design:hover {
+      background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+      border-color: #e59285;
+      color: #e59285; }
     
 .filebox label { 
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -5250,6 +5278,32 @@ h3.widget-title-modal {
 	overflow: hidden; 
 	clip:rect(0,0,0,0); 
 	border: 0; }
+
+.introduce-main{
+    position: relative;
+    background-image: url(../images/centipede/main/introduce.jpg);                                                               
+    height: 100vh;
+    background-size: cover;
+}
+
+.introduce-main-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.4);                                                                 
+   z-index:1;
+}
+
+.introduce-main ..introduce-maincontent{
+     position: absolute;
+     top:50%;
+     left:50%;
+     transform: translate(-50%, -50%);                                                                   
+     font-size:5rem;
+     color: white;
+     z-index: 2;
+     text-align: center;
+}
 
 /*======= Cart Styles =======*/
 /*---------------------------------------

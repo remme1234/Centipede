@@ -89,9 +89,9 @@
 		     , TR.TITLE
 		     , TR.CONTENTS
 		     , CASE 
-				WHEN TR.CAT_CD = 01 THEN '나이키'
-				WHEN TR.CAT_CD = 02 THEN '아디다스'
-				WHEN TR.CAT_CD = 03 THEN '컨버스'
+				WHEN TR.CAT_CD = 01 THEN 'Nike'
+				WHEN TR.CAT_CD = 02 THEN 'Adidas'
+				WHEN TR.CAT_CD = 03 THEN 'Converse'
 				ELSE '기타'  	
 			   END CAT_CD
 		     , TR.RSGSTR_ID

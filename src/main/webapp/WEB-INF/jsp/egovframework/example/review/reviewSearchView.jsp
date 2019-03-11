@@ -38,7 +38,15 @@
 								</div>
 								<div class="product__content content--center">
 									<h4> [${vo.catCd}] </h4>
-									<h4>${vo.title}</h4>
+									
+									<c:choose>
+										<c:when test="${fn:length(vo.title) > 26}">
+											<h4><c:out value="${fn:substring(vo.title,0,25)}"/>....</h4>
+										</c:when>
+										<c:otherwise>
+											<h4><c:out value="${vo.title}"/></h4>
+										</c:otherwise> 
+									</c:choose>
 									<div class="action">
 										<div class="actions_inner">
 											<ul class="add_to_links">
