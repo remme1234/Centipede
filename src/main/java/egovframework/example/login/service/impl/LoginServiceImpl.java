@@ -18,8 +18,13 @@ public class LoginServiceImpl implements LoginService{
 	public LoginVO selectLoginInfo(HttpSession session, LoginVO lvo) {
 		lvo = loginMapper.selectLoginInfo(lvo);
 		if(lvo != null) {
+			
 			session.setAttribute("userId", lvo.getLoginId());
 			session.setAttribute("authYn", lvo.getAuthYn());
+			session.setAttribute("email", lvo.getEmail());
+			session.setAttribute("cpNo", lvo.getCpNo());
+			session.setAttribute("pwd", lvo.getPwd());
+
 		}
 		return lvo;
 	}

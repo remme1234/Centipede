@@ -19,4 +19,12 @@ public interface MainMapper {
 
 	List<BoardVO> selectReviewList();
 
+	int updateMbr(LoginVO lvo);
+
+	int selectPwdChk(LoginVO lvo);
+
+	int updatePwd(LoginVO lvo);
+
+	LoginVO selectInfo(LoginVO lvo);
+
 }

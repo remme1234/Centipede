@@ -30,7 +30,7 @@
 			return
 		}
 		
-		if( !emailReg.test( $email.val() ) ) {
+		if( !emailReg.test( $email.val())) {
 			alert("이메일을 올바른 형식으로 입력해주세요.");
 			$email.focus()
 			return;
@@ -42,9 +42,9 @@
 			return
 		}
 
-		if( !cpNoReg.test( $cpNo.val() ) ) {
+		if( !cpNoReg.test( $cpNo.val())) {
 			alert("휴대폰번호 11자리를 '-' 를 빼고 입력해주세요.");
-			$email.focus()
+			$cpNo.focus()
 			return;
 		}
 		

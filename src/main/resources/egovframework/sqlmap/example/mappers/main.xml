@@ -122,6 +122,7 @@
 		  , LOGIN_FAIL_CNT
 		  , CP_NO
 		  , EMAIL
+		  , JOIN_DT
 		  , RSGSTR_ID
 		  , RSGST_DT)
 		VALUE (
@@ -133,10 +134,44 @@
 		  , 0
 		  , #{cpNo}
 		  , #{email}
+		  , now()
 		  , #{loginId}
 		  , now()
 		)
 	</insert>
 	
+	<!-- 본인확인을 위한 비밀번호 체크 -->
+	<select id="selectPwdChk"  parameterType="egovframework.example.login.service.LoginVO" resultType="java.lang.Integer" >
+		SELECT COUNT(1)
+		  FROM T_MBR
+		 WHERE LOGIN_ID = #{loginId}
+		   AND PWD = #{pwd}
+	</select>
+	
+	<!-- myPage에 뿌려줄 정보 -->
+	<select id="selectInfo" parameterType="egovframework.example.login.service.LoginVO" resultMap="mainList" >
+		SELECT LOGIN_ID
+		     , PWD
+		     , CP_NO
+		     , EMAIL
+		  FROM T_MBR
+		 WHERE LOGIN_ID = #{loginId}
+	</select>
+	
+	<!-- 정보수정 -->
+	<update id="updateMbr" parameterType="egovframework.example.login.service.LoginVO">
+		UPDATE T_MBR
+		   SET EMAIL = #{emailChange}
+			 , CP_NO = #{cpNoChange}
+		 WHERE LOGIN_ID = #{loginId}
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd" parameterType="egovframework.example.login.service.LoginVO">
+		UPDATE T_MBR
+		   SET PWD	= #{pwdChange}
+		   	   PWD_CHG_DT = NOW()
+		 WHERE LOGIN_ID = #{loginId}
+	</update>
 	
 </mapper>

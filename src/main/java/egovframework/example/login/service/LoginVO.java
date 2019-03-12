@@ -8,13 +8,25 @@ public class LoginVO {
 	private String pwdChgDt;
 	private String tmpPwdIssuDt;
 	private int loginFailCnt;
-	private int cpNo;
+	private String cpNo;
 	private String email;
 	private String joinDt;
 	private String rsgstrId;
 	private String rsgstDt;
+	private String pwdChange;
+	private String emailChange;
+	private String cpNoChange;
 	private String authYn;
 	
+	
+	public String getPwdChange() {return pwdChange;}
+	public void setPwdChange(String pwdChange) {this.pwdChange = pwdChange;}
+	
+	public String getEmailChange() {return emailChange;}
+	public void setEmailChange(String emailChange) {this.emailChange = emailChange;}
+	
+	public String getCpNoChange() {return cpNoChange;}
+	public void setCpNoChange(String cpNoChange) {this.cpNoChange = cpNoChange;}
 	
 	public String getAuthYn() {return authYn;}
 	public void setAuthYn(String authYn) {this.authYn = authYn;}
@@ -37,8 +49,8 @@ public class LoginVO {
 	public int getLoginFailCnt() {return loginFailCnt;}
 	public void setLoginFailCnt(int loginFailCnt) {this.loginFailCnt = loginFailCnt;}
 	
-	public int getCpNo() {return cpNo;}
-	public void setCpNo(int cpNo) {this.cpNo = cpNo;}
+	public String getCpNo() {return cpNo;}
+	public void setCpNo(String cpNo) {this.cpNo = cpNo;}
 	
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}

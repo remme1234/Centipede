@@ -56,7 +56,7 @@ $(function() {
 						<li class="drop with--one--item"><a href="noticeView.do">Notice</a></li>
 						
 						<c:if test="${sessionScope.authYn eq 'N' || sessionScope.authYn eq 'Y'}">
-							<li class="drop with--one--item"><a href="myPageVeiw.do">My page</a></li>
+							<li class="drop with--one--item"><a href="myPageEnter.do">My page</a></li>
 						</c:if>
 						<c:if test='${sessionScope.authYn eq "Y"}'>
 							<li class="drop"><a href="#">Managing page</a>
@@ -91,7 +91,7 @@ $(function() {
 									</c:when>
 									<c:otherwise>
 										<strong class="label switcher-label">
-											<span><a href="#">My page</a></span>
+											<span><a href="myPageEnter.do">My page</a></span>
 										</strong>
 										<br/>
 										<strong class="label switcher-label">

@@ -37,7 +37,7 @@
 					<form name="accountForm" action="" method="post">
 						<div class="account__form">
 							<div class="input__box">
-								<label>Username or email address <span>*</span></label>
+								<label>User Id<span>*</span></label>
 								<input name="loginId" type="text">
 							</div>
 							<div class="input__box">

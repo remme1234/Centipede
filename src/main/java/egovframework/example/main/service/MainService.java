@@ -20,4 +20,13 @@ public interface MainService {
 
 	List<BoardVO> selectReviewList();
 
+	void updateMbr(HttpServletResponse response, LoginVO lvo) throws IOException;
+
+	void selectPwdChk(HttpServletResponse response, LoginVO lvo) throws IOException;
+
+	void updatePwd(HttpServletResponse response, LoginVO lvo) throws IOException;
+
+
+	LoginVO selectInfo(LoginVO lvo);
+
 }
