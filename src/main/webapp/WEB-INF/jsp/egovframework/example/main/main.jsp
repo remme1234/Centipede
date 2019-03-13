@@ -34,7 +34,7 @@
             		<div class="col-lg-12">
             			<div class="slider__content">
 	            			<div class="contentbox" style="margin-left: 80px;">
-	            				<h2>Check the<span> date </span></h2>
+	            				<h2>Check the<span> date</span></h2>
 	            				<h2>release <span> you want</span></h2>
 	            				<h2>from <span>Here </span></h2>
 			                   	<a class="shopbtn" href="releaseInfoView.do">show now</a>

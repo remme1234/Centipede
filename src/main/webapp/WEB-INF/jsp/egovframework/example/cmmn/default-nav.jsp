@@ -74,7 +74,6 @@ $(function() {
 			</div>
 			<div class="col-md-6 col-sm-6 col-6 col-lg-1" style="margin-left: 30px;">
 				<ul class="header__sidebar__right d-flex justify-content-end align-items-center">
-					<li class="shop_search"><a class="search__active" href="#"></a></li>
 					<li class="setting__bar__icon" style="margin-left: 16px;">
 						<a class="setting__active" href="#"></a>
 						<div class="searchbar__content setting__block">

@@ -4,17 +4,17 @@
 	
 	<!-- 발매정보VO resultMap 설정 -->
 	<resultMap id="releaseInfoList" type="egovframework.example.util.BoardVO">
-	 	<result property="boardUid"		column="BOARD_UID"/>
-	 	<result property="number"		column="NUMBER"/>
-	 	<result property="title"		column="TITLE"/>
-	 	<result property="contents"		column="CONTENTS"/>
-	 	<result property="visitCnt"		column="VISIT_CNT"/>
-	 	<result property="rsgstDt"		column="RSGST_DT"/>
-	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
-	 	<result property="useYn"		column="USE_YN"/>
-	 	<result property="fileNo"		column="FILE_NO"/>
-	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
-	 	<result property="relDt"		column="REL_DT"/>
+	 	<result property="boardUid"			column="BOARD_UID"/>
+	 	<result property="number"			column="NUMBER"/>
+	 	<result property="title"			column="TITLE"/>
+	 	<result property="contents"			column="CONTENTS"/>
+	 	<result property="visitCnt"			column="VISIT_CNT"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
+	 	<result property="useYn"			column="USE_YN"/>
+	 	<result property="fileNo"			column="FILE_NO"/>
+	 	<result property="savedFileNm"		column="SAVED_FILE_NM"/>
+	 	<result property="relDt"			column="REL_DT"/>
 	</resultMap>
 	
 	<!-- 첨부파일정보VO resultMap 설정 -->
@@ -52,14 +52,14 @@
 			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-		ORDER BY RSGST_DT DESC LIMIT #{firstIndex},12
+	   ORDER BY RSGST_DT DESC LIMIT #{firstIndex},12
 	</select>
 	
 	<!-- 페이징 처리를 위한 cnt  -->
 	<select id="selectRelInfoViewListCnt" resultType="java.lang.Integer">
-		SELECT  COUNT(1)
-		FROM 	T_RELEASEINFO
-		WHERE   USE_YN ='Y'  	  	 
+		SELECT COUNT(1)
+		  FROM T_RELEASEINFO
+		 WHERE USE_YN ='Y'  	  	 
 	</select>
 	
 	
@@ -73,7 +73,7 @@
 			 , VISIT_CNT
 			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 			 , FILE_NO
-		FROM   T_RELEASEINFO
+		 FROM  T_RELEASEINFO
 		WHERE  NUMBER = #{number}
 	</select>
 	
@@ -91,22 +91,38 @@
 	
 	<!-- 발매정보게시판 작성 및 수정시 DB에 추가 하는 쿼리 -->
 	<update id="updateReleaseInfo" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, REL_DT,RSGSTR_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
-		VALUES 		(#{boardUid}
+		INSERT INTO T_RELEASEINFO (
+			BOARD_UID
+		  , NUMBER
+		  , TITLE
+		  , CONTENTS
+		  , REL_DT
+		  , RSGSTR_ID
+		  , VISIT_CNT
+		  , RSGST_DT
+		  , FILE_NO
+		  , USE_YN)
+		VALUES (
+			#{boardUid}
 		<if test='number == null or "".equals(number)'>
-			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)
+		   , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)
 		</if>
 		<if test='number != null and !"".equals(number)'>
-			,#{number}
+		   , #{number}
 		</if>
-		, #{title}, #{contents},#{relDt}, "SAMPLE", "0", now()
+		   , #{title}
+		   , #{contents}
+		   , #{relDt}
+		   , "SAMPLE"
+		   , "0"
+		   , now()
 		<if test='fileNo == null or "".equals(fileNo)'>
-			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
+		   , (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
 		</if>
 		<if test='fileNo != null and !"".equals(fileNo)'>
-			,#{fileNo}
+		   , #{fileNo}
 		</if>
-		,"Y")
+		   , "Y")
 		ON DUPLICATE KEY 
 		UPDATE TITLE 	= #{title},
 			   CONTENTS = #{contents}
@@ -115,45 +131,41 @@
 	<!-- 발매정보게시판 삭제시 논리적 삭제 쿼리 -->  
 	<update id="deleteReleaseInfoDelete">
 		UPDATE T_RELEASEINFO
-		SET USE_YN = 'N'
-		WHERE NUMBER = #{number}
+		   SET USE_YN = 'N'
+		 WHERE NUMBER = #{number}
 	</update>
 	
 	<!-- 조회수 증가 쿼리 -->
 	<update id="addVisitCnt"> 
 		UPDATE T_RELEASEINFO
-		SET VISIT_CNT = VISIT_CNT +1
-		WHERE NUMBER = #{number}
+		   SET VISIT_CNT = VISIT_CNT +1
+		 WHERE NUMBER = #{number}
 	</update>
 	
 	<!-- 첨부파일저장 -->
 	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-        INSERT INTO T_FILE
-        (
-            FILE_NO,
-            BOARD_UID,
-            ORIGIN_FILE_NM,
-            SAVED_FILE_NM,
-            SAVED_FILE_PATH,
-            FILE_SIZE,
-            RSGST_DT,
-            RSGSTR_ID
-        )
-        VALUES
-        (	
-	        <if test='fileNo == null or "".equals(fileNo)'>
-				(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-			</if>
-			<if test='fileNo != null and !"".equals(fileNo)'>
-				,#{fileNo}
-			</if>
-            ,#{boardUid}
-            ,#{originFileNm}
-            ,#{savedFileNm}
-            ,#{savedFilePath}
-            ,#{fileSize}
-            ,NOW()
-            ,'SAMPLE'
-        )
+        INSERT INTO T_FILE (
+            FILE_NO
+          , BOARD_UID,
+          , ORIGIN_FILE_NM
+          , SAVED_FILE_NM
+          , SAVED_FILE_PATH
+          , FILE_SIZE
+          , RSGST_DT
+          , RSGSTR_ID)
+        VALUES (	
+        <if test='fileNo == null or "".equals(fileNo)'>
+			(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
+		</if>
+		<if test='fileNo != null and !"".equals(fileNo)'>
+		  , #{fileNo}
+		</if>
+          , #{boardUid}
+          , #{originFileNm}
+          , #{savedFileNm}
+          , #{savedFilePath}
+          , #{fileSize}
+          , NOW()
+          , 'SAMPLE')
 	</insert>
 </mapper>

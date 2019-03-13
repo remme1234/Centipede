@@ -2,19 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.example.review.service.impl.ReviewMapper">
 
+
+	<!-- review게시판 구성하는 boardVO resultMap 설정 -->
 	<resultMap type="egovframework.example.util.BoardVO" id="reviewList">
-		<result property="boardUid"		column="BOARD_UID"/>
-	 	<result property="number"		column="NUMBER"/>
-	 	<result property="catCd"		column="CAT_CD"/>
-	 	<result property="brndNm"		column="BRND_NM"/>
-	 	<result property="title"		column="TITLE"/>
-	 	<result property="contents"		column="CONTENTS"/>
-	 	<result property="visitCnt"		column="VISIT_CNT"/>
-	 	<result property="rsgstDt"		column="RSGST_DT"/>
-	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
-	 	<result property="useYn"		column="USE_YN"/>
-	 	<result property="fileNo"		column="FILE_NO"/>
-	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
+		<result property="boardUid"			column="BOARD_UID"/>
+	 	<result property="number"			column="NUMBER"/>
+	 	<result property="catCd"			column="CAT_CD"/>
+	 	<result property="brndNm"			column="BRND_NM"/>
+	 	<result property="title"			column="TITLE"/>
+	 	<result property="contents"			column="CONTENTS"/>
+	 	<result property="visitCnt"			column="VISIT_CNT"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
+	 	<result property="useYn"			column="USE_YN"/>
+	 	<result property="fileNo"			column="FILE_NO"/>
+	 	<result property="savedFileNm"		column="SAVED_FILE_NM"/>
 	</resultMap>
 	
 	<!-- 첨부파일정보VO resultMap 설정 -->
@@ -46,215 +48,238 @@
 	
 	<!-- 리뷰게시판 목록 List -->
 	<select id="selectReviewList" resultMap="reviewList">
-		SELECT 	 T_REVIEW.BOARD_UID
-				,T_REVIEW.NUMBER
-				,CASE 
-					WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
-					WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
-					WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
-					ELSE 'etc'  	
-					END CAT_CD
-				 ,T_REVIEW.TITLE
-				 ,T_REVIEW.CONTENTS
-				 ,T_REVIEW.RSGSTR_ID
-				 ,T_REVIEW.VISIT_CNT
-				 ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y-%m-%d') AS RSGST_DT
-				 ,T_REVIEW.USE_YN
-				 ,(SELECT 	SAVED_FILE_NM
-						FROM	T_FILE
-						WHERE   FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
-		FROM T_REVIEW 
-		INNER JOIN ( SELECT   CAT_CD
-		 					 ,GROUP_CONCAT(NUMBER ORDER BY RSGST_DT DESC) GROUPED_NUMBER
-					 FROM	  T_REVIEW 
-					 GROUP BY CAT_CD) GROUP_MAX
-		ON T_REVIEW.CAT_CD = GROUP_MAX.CAT_CD
-		WHERE T_REVIEW.USE_YN = 'Y'
-		AND FIND_IN_SET(NUMBER,GROUPED_NUMBER) BETWEEN 1 AND 3
-		ORDER BY T_REVIEW.CAT_CD, T_REVIEW.RSGST_DT DESC
+		SELECT T_REVIEW.BOARD_UID
+			 , T_REVIEW.NUMBER
+			 , CASE 
+				WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
+				WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
+				WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
+				ELSE 'etc'  	
+			   END CAT_CD
+			 , T_REVIEW.TITLE
+			 , T_REVIEW.CONTENTS
+			 , T_REVIEW.RSGSTR_ID
+			 , T_REVIEW.VISIT_CNT
+			 , DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y-%m-%d') AS RSGST_DT
+			 , T_REVIEW.USE_YN
+			 , (SELECT SAVED_FILE_NM
+				  FROM T_FILE
+				 WHERE FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
+		  FROM T_REVIEW 
+		  INNER JOIN (SELECT CAT_CD
+				 			 , GROUP_CONCAT(NUMBER ORDER BY RSGST_DT DESC) GROUPED_NUMBER
+						  FROM T_REVIEW 
+					  GROUP BY CAT_CD) GROUP_MAX
+			ON T_REVIEW.CAT_CD = GROUP_MAX.CAT_CD
+		 WHERE T_REVIEW.USE_YN = 'Y'
+		   AND FIND_IN_SET(NUMBER,GROUPED_NUMBER) BETWEEN 1 AND 3
+	  ORDER BY T_REVIEW.CAT_CD, T_REVIEW.RSGST_DT DESC
 	</select>
 	
 	<!-- 리뷰 검색 게시판 출력 쿼리 -->
 	<select id="selectReviewSearchList" resultMap="reviewList">
-		SELECT 	 BOARD_UID
-				,NUMBER
-				,CASE 
-					WHEN CAT_CD = 01 THEN 'Nike'
-					WHEN CAT_CD = 02 THEN 'Adidas'
-					WHEN CAT_CD = 03 THEN 'Converse'
-					ELSE 'etc'  	
-				END CAT_CD
-			 	,TITLE
-				,CONTENTS
-				,RSGSTR_ID
-				,VISIT_CNT
-				,DATE_FORMAT(RSGST_DT, '%Y-%m-%d') AS RSGST_DT
-				,USE_YN
-				,(SELECT 	SAVED_FILE_NM
-					FROM	T_FILE
-				   WHERE	FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
-		FROM T_REVIEW TR
-		WHERE USE_YN = 'Y'
+		SELECT BOARD_UID
+			 , NUMBER
+			 , CASE 
+				WHEN CAT_CD = 01 THEN 'Nike'
+				WHEN CAT_CD = 02 THEN 'Adidas'
+				WHEN CAT_CD = 03 THEN 'Converse'
+				ELSE 'etc'  	
+			   END CAT_CD
+			 , TITLE
+			 , CONTENTS
+			 , RSGSTR_ID
+			 , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y-%m-%d') AS RSGST_DT
+			 , USE_YN
+			 , (SELECT SAVED_FILE_NM
+				  FROM T_FILE
+				 WHERE FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+		  FROM T_REVIEW TR
+		 WHERE USE_YN = 'Y'
 		<if test="searchText != null and !searchText.equals('')">
-			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
-			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		   AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
 		<if test="catCd != null and !catCd.equals('')">
-			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
+		   AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if>
-		ORDER BY RSGST_DT DESC
+	  ORDER BY RSGST_DT DESC
 	</select>
 	
 	<!-- 리뷰게시판 말머리 select box생성위한 리스트 출력 sql -->
 	<select id="selectCatCdList" resultMap="reviewList">
-		SELECT   CAT_CD
-			    ,CASE 
-				   WHEN CAT_CD = 01 THEN 'Nike'
-				   WHEN CAT_CD = 02 THEN 'Adidas'
-				   WHEN CAT_CD = 03 THEN 'Converse'
-				   ELSE 'All'
-			   	END AS BRND_NM
-		FROM     T_REVIEW
-		WHERE    USE_YN ='Y'
-		GROUP BY CAT_CD
+		SELECT CAT_CD
+			 , CASE 
+				WHEN CAT_CD = 01 THEN 'Nike'
+				WHEN CAT_CD = 02 THEN 'Adidas'
+				WHEN CAT_CD = 03 THEN 'Converse'
+				ELSE 'All'
+			   END AS BRND_NM
+		  FROM T_REVIEW
+		 WHERE USE_YN ='Y'
+	  GROUP BY CAT_CD
 	</select>
 	
 	<!-- 리뷰게시판 목록개수 불러오기 -->
 	<select id="selectReviewListCnt" resultType="java.lang.Integer">
 		SELECT COUNT(1)
-		FROM T_REVIEW
-		WHERE USE_YN = 'Y'	
+		  FROM T_REVIEW
+		 WHERE USE_YN = 'Y'	
 	</select>
 	
 	<!-- 리뷰게시판 상세정보 불러오기 -->
 	<select id="selectReviewDetailList" parameterType="egovframework.example.util.BoardVO" resultMap="reviewList">
-		SELECT  BOARD_UID
-			   ,NUMBER
-			   ,CAT_CD
-			   ,TITLE
-			   ,CONTENTS
-			   ,RSGSTR_ID
-			   ,VISIT_CNT
-			   ,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
-			   ,FILE_NO
-			   ,USE_YN
-		FROM	T_REVIEW
-		WHERE   NUMBER=#{number}
+		SELECT BOARD_UID
+			 , NUMBER
+			 , CAT_CD
+			 , TITLE
+			 , CONTENTS
+			 , RSGSTR_ID
+			 , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+			 , FILE_NO
+			 , USE_YN
+		  FROM T_REVIEW
+		 WHERE NUMBER=#{number}
 	</select>
 	
 	<!-- 파일상세정보 가져오는 쿼리 -->
 	<select id="selectFileList" parameterType="egovframework.example.util.BoardVO" resultMap="fileInfoList">
-		SELECT 	FILE_NO
-			   ,ORIGIN_FILE_NM
-			   ,SAVED_FILE_NM
-			   ,SAVED_FILE_PATH
-			   ,ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
-		FROM   	T_FILE 
-		WHERE  	FILE_NO =  #{fileNo}
-		AND     USE_YN = 'Y'
+		SELECT FILE_NO
+			 , ORIGIN_FILE_NM
+			 , SAVED_FILE_NM
+			 , SAVED_FILE_PATH
+			 , ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+		  FROM T_FILE 
+		 WHERE FILE_NO =  #{fileNo}
+		   AND USE_YN = 'Y'
 	</select>
 	
 	<!-- 사이즈후기 업데이트 내용 -->
 	<update id="rplUpdate" parameterType="egovframework.example.review.service.ReviewVO">
-		INSERT INTO T_REVIEW_RPL ( RPL_NO, NUMBER, CAT_CD, GD_CD, PAST_LENGTH, NEW_LENGTH, SIZE, RSGSTR_ID, RSGST_DT)
-		VALUES 		((SELECT IFNULL(MAX(RPL_NO),0)+1 FROM T_REVIEW_RPL AS TV)
-					, #{number}
-					, #{catCd}
-					, #{gdCd}
-					, #{pastLength}
-					, #{newLength}
-					, #{size}
-					, #{rsgstrId}
-					, NOW())
+		INSERT INTO T_REVIEW_RPL (
+			RPL_NO
+		  , NUMBER
+		  , CAT_CD
+		  , GD_CD
+		  , PAST_LENGTH
+		  , NEW_LENGTH
+		  , SIZE
+		  , RSGSTR_ID
+		  , RSGST_DT)
+		VALUES (
+		    (SELECT IFNULL(MAX(RPL_NO),0)+1 FROM T_REVIEW_RPL AS TV)
+		  , #{number}
+		  , #{catCd}
+		  , #{gdCd}
+		  , #{pastLength}
+		  , #{newLength}
+		  , #{size}
+		  , #{rsgstrId}
+		  , NOW())
 	</update>
 	
 	<!-- 사이즈 후기 테이블 구성요소 호출하기 -->
 	<select id="selectRplDataList" parameterType="egovframework.example.util.BoardVO" resultMap="rplInfoList">
-		SELECT 	BRND_NM,
-				GD_NM,
-				PAST_LENGTH,
-				NEW_LENGTH,
-				CASE 
-					WHEN SIZE = 's' THEN 'Small'
-					WHEN SIZE = 'm' THEN 'Fitness'
-					WHEN SIZE = 'l' THEN 'Large'
-				END AS SIZE,
-				T_REVIEW_RPL.RSGSTR_ID
-		FROM	T_REVIEW_RPL
-				JOIN T_PRD ON
-					T_REVIEW_RPL.GD_CD=T_PRD.GD_CD
-				JOIN T_BRAND ON
-					T_REVIEW_RPL.CAT_CD=T_BRAND.CAT_CD
-		WHERE T_REVIEW_RPL.NUMBER = #{number}
-		ORDER BY BRND_NM ASC
+		SELECT BRND_NM
+		     , GD_NM
+			 , PAST_LENGTH
+			 , NEW_LENGTH
+			 , CASE 
+				WHEN SIZE = 's' THEN 'Small'
+				WHEN SIZE = 'm' THEN 'Fitness'
+				WHEN SIZE = 'l' THEN 'Large'
+			   END AS SIZE
+			 , T_REVIEW_RPL.RSGSTR_ID
+		  FROM T_REVIEW_RPL
+		  JOIN T_PRD 
+		    ON T_REVIEW_RPL.GD_CD=T_PRD.GD_CD
+		  JOIN T_BRAND 
+		    ON T_REVIEW_RPL.CAT_CD=T_BRAND.CAT_CD
+		 WHERE T_REVIEW_RPL.NUMBER = #{number}
+	  ORDER BY BRND_NM ASC
 	</select>
 	
 	<!-- 리뷰 게시판 삭제기능 -->
 	<update id="deleteReviewDelete" parameterType="egovframework.example.util.BoardVO">
 		UPDATE T_REVIEW
-		SET USE_YN = 'N'
-		WHERE NUMBER = #{number}
+		   SET USE_YN = 'N'
+		 WHERE NUMBER = #{number}
 	</update>
 	
 	<!-- 리뷰게시판 게시글 업데이트 쿼리 -->
 	<update id="updateReview" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_REVIEW (BOARD_UID, NUMBER, CAT_CD, TITLE, CONTENTS, RSGSTR_ID, VISIT_CNT, RSGST_DT, USE_YN,FILE_NO)
+		INSERT INTO T_REVIEW (
+			BOARD_UID
+		  , NUMBER
+		  , CAT_CD
+		  , TITLE
+		  , CONTENTS
+		  , RSGSTR_ID
+		  , VISIT_CNT
+		  , RSGST_DT
+		  , USE_YN,FILE_NO)
 		VALUES 		(#{boardUid}
 		<if test='number == null or "".equals(number)'>
-			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)
+		  , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)
 		</if>
 		<if test='number != null and !"".equals(number)'>
-			,#{number}
+		  , #{number}
 		</if>
-		, #{catCd}, #{title}, #{contents}, "SAMPLE", "0", now(), 'Y'
+		  , #{catCd}
+		  , #{title}
+		  , #{contents}
+		  , "SAMPLE"
+		  , "0"
+		  , now()
+		  , 'Y'
 		<if test='fileNo == null or "".equals(fileNo)'>
-			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
+		  , (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
 		</if>
 		<if test='fileNo != null and !"".equals(fileNo)'>
-			,#{fileNo})
+		  , #{fileNo})
 		</if>
-		ON DUPLICATE KEY 
-		UPDATE TITLE 	= #{title},
-			   CONTENTS = #{contents}
+		 ON DUPLICATE KEY 
+	 UPDATE TITLE = #{title},
+			CONTENTS = #{contents}
 	</update>	
 
 	<!-- 첨부파일저장 -->
 	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-	        INSERT INTO T_FILE
-	        (
-	            FILE_NO,
-	            BOARD_UID,
-	            ORIGIN_FILE_NM,
-	            SAVED_FILE_NM,
-	            SAVED_FILE_PATH,
-	            FILE_SIZE,
-	            RSGST_DT,
-	            RSGSTR_ID
-	        )
-	        VALUES
-	        (	
-		        <if test='fileNo == null or "".equals(fileNo)'>
-					(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-				</if>
-				<if test='fileNo != null and !"".equals(fileNo)'>
-					,#{fileNo}
-				</if>
-	            ,#{boardUid}
-	            ,#{originFileNm}
-	            ,#{savedFileNm}
-	            ,#{savedFilePath}
-	            ,#{fileSize}
-	            ,NOW()
-	            ,'SAMPLE'
-	        )
+        INSERT INTO T_FILE (
+            FILE_NO
+          , BOARD_UID
+          , ORIGIN_FILE_NM
+          , SAVED_FILE_NM
+          , SAVED_FILE_PATH
+          , FILE_SIZE
+          , RSGST_DT
+          , RSGSTR_ID)
+        VALUES (	
+        <if test='fileNo == null or "".equals(fileNo)'>
+			(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
+		</if>
+		<if test='fileNo != null and !"".equals(fileNo)'>
+		  , #{fileNo}
+		</if>
+          , #{boardUid}
+          , #{originFileNm}
+          , #{savedFileNm}
+          , #{savedFilePath}
+          , #{fileSize}
+          , NOW()
+          , 'SAMPLE')
 	</insert>
 	
+	<!-- 카테고리 불러오기 -->
 	<select id="selectRplCatList" resultMap="rplInfoList">
 		SELECT CAT_CD
-			  ,BRND_NM
-		FROM   T_BRAND
+			 , BRND_NM
+		  FROM T_BRAND
 	</select>
 	
+	<!-- 품목 불러오기 -->
 	<select id="selectRplPrdList" parameterType="java.lang.String" resultType="egovMap">
 		SELECT GD_CD, 
 			   GD_NM

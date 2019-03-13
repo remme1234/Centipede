@@ -19,27 +19,27 @@
 	
 	<!-- main 화면에 뿌려줄 boardVO -->
 	<resultMap type="egovframework.example.util.BoardVO" id="boardList">
-		<result property="boardUid"		column="BOARD_UID"/>
-	 	<result property="number"		column="NUMBER"/>
-	 	<result property="relDt"		column="REL_DT"/>
-	 	<result property="catCd"		column="CAT_CD"/>
-	 	<result property="brndNm"		column="BRND_NM"/>
-	 	<result property="title"		column="TITLE"/>
-	 	<result property="contents"		column="CONTENTS"/>
-	 	<result property="visitCnt"		column="VISIT_CNT"/>
-	 	<result property="rsgstDt"		column="RSGST_DT"/>
-	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
-	 	<result property="useYn"		column="USE_YN"/>
-	 	<result property="fileNo"		column="FILE_NO"/>
-	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
-	 	<result property="rownum"		column="ROWNUM"/>
+		<result property="boardUid"		    column="BOARD_UID"/>
+	 	<result property="number"			column="NUMBER"/>
+	 	<result property="relDt"			column="REL_DT"/>
+	 	<result property="catCd"			column="CAT_CD"/>
+	 	<result property="brndNm"			column="BRND_NM"/>
+	 	<result property="title"			column="TITLE"/>
+	 	<result property="contents"			column="CONTENTS"/>
+	 	<result property="visitCnt"			column="VISIT_CNT"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
+	 	<result property="useYn"			column="USE_YN"/>
+	 	<result property="fileNo"			column="FILE_NO"/>
+	 	<result property="savedFileNm"		column="SAVED_FILE_NM"/>
+	 	<result property="rownum"			column="ROWNUM"/>
 	</resultMap>
 	
 	<!-- login 세션 정보 불러오기 -->
 	<select id="selectIdCheck" parameterType="egovframework.example.login.service.LoginVO" resultType="java.lang.Integer" >
 		SELECT count(1)
-		FROM T_MBR
-		WHERE LOGIN_ID = #{loginId}
+		  FROM T_MBR
+		 WHERE LOGIN_ID = #{loginId}
 	</select>
 	
 	<!-- 메인화면 release Info 불러오기 -->
@@ -54,8 +54,8 @@
 			 , USE_YN
 			 , REL_DT
 			 , (SELECT SAVED_FILE_NM
-				FROM   T_FILE
-				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+				  FROM T_FILE
+				 WHERE FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
 		  FROM T_RELEASEINFO TR
 		 WHERE USE_YN='Y' 
 	  ORDER BY RSGST_DT DESC LIMIT 0,3
@@ -81,7 +81,6 @@
 	ORDER BY ROWNUM DESC LIMIT 0,5
  	</select>
 	
-	
 	<!-- 메인화면 reivew 불러오기 -->
 	<select id="selectReviewList" resultMap = "boardList">
 		SELECT TR.BOARD_UID
@@ -92,15 +91,15 @@
 				WHEN TR.CAT_CD = 01 THEN 'Nike'
 				WHEN TR.CAT_CD = 02 THEN 'Adidas'
 				WHEN TR.CAT_CD = 03 THEN 'Converse'
-				ELSE '기타'  	
+				ELSE 'etc'  	
 			   END CAT_CD
 		     , TR.RSGSTR_ID
 		     , TR.VISIT_CNT
 			 , DATE_FORMAT(TR.RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
 			 , TR.USE_YN
 			 , (SELECT SAVED_FILE_NM
-				FROM   T_FILE
-				WHERE  FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+				  FROM T_FILE
+				 WHERE FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
 			 , T_REVIEW_RPL.NUMBER
 			 , MAX(T_REVIEW_RPL.RSGST_DT) AS RPL_DT
 		  FROM T_REVIEW TR
@@ -136,8 +135,7 @@
 		  , #{email}
 		  , now()
 		  , #{loginId}
-		  , now()
-		)
+		  , now())
 	</insert>
 	
 	<!-- 본인확인을 위한 비밀번호 체크 -->
@@ -173,5 +171,4 @@
 		   	   PWD_CHG_DT = NOW()
 		 WHERE LOGIN_ID = #{loginId}
 	</update>
-	
 </mapper>

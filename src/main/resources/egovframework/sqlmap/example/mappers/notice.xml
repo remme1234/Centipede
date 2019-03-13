@@ -4,19 +4,19 @@
 
 	<!-- notice resultMap 설정  -->
 	<resultMap type="egovframework.example.util.BoardVO" id="noticeList">
-		<result property="boardUid"		column="BOARD_UID"/>
-	 	<result property="number"		column="NUMBER"/>
-	 	<result property="catCd"		column="CAT_CD"/>
-	 	<result property="brndNm"		column="BRND_NM"/>
-	 	<result property="title"		column="TITLE"/>
-	 	<result property="contents"		column="CONTENTS"/>
-	 	<result property="visitCnt"		column="VISIT_CNT"/>
-	 	<result property="rsgstDt"		column="RSGST_DT"/>
-	 	<result property="rsgstrId"		column="RSGSTR_ID"/>
-	 	<result property="useYn"		column="USE_YN"/>
-	 	<result property="fileNo"		column="FILE_NO"/>
-	 	<result property="savedFileNm"	column="SAVED_FILE_NM"/>
-	 	<result property="rownum"		column="ROWNUM"/>
+		<result property="boardUid"			column="BOARD_UID"/>
+	 	<result property="number"			column="NUMBER"/>
+	 	<result property="catCd"			column="CAT_CD"/>
+	 	<result property="brndNm"			column="BRND_NM"/>
+	 	<result property="title"			column="TITLE"/>
+	 	<result property="contents"			column="CONTENTS"/>
+	 	<result property="visitCnt"			column="VISIT_CNT"/>
+	 	<result property="rsgstDt"			column="RSGST_DT"/>
+	 	<result property="rsgstrId"			column="RSGSTR_ID"/>
+	 	<result property="useYn"			column="USE_YN"/>
+	 	<result property="fileNo"			column="FILE_NO"/>
+	 	<result property="savedFileNm"		column="SAVED_FILE_NM"/>
+	 	<result property="rownum"			column="ROWNUM"/>
 	</resultMap>
 	
 	<!-- 첨부파일정보VO resultMap 설정 -->
@@ -34,7 +34,7 @@
 	<!-- notice 게시판 출력 -->
 	<select id="selectNoticeViewList" parameterType="egovframework.example.util.BoardVO" resultMap="noticeList" >
 		SELECT A.*
-		FROM (
+		  FROM (
 				SELECT	NUMBER
 					  , TITLE
 					  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
@@ -43,21 +43,21 @@
 					  , RSGSTR_ID
 					  , USE_YN 
 					  , @ROWNUM := @ROWNUM+1 AS ROWNUM
-			 FROM  T_NOTICE
+				  FROM  T_NOTICE
 	 			,(SELECT @ROWNUM := 0) ROWNUM
-						WHERE USE_YN = 'Y' ) A
+				   WHERE USE_YN = 'Y' ) A
 		<if test="searchText != null and !searchText.equals('')">
-			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
-			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
+		   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-		ORDER BY ROWNUM DESC LIMIT #{firstIndex},10
+		 ORDER BY ROWNUM DESC LIMIT #{firstIndex},10
 	</select>
 	
 	<!-- 페이징 처리를 위한 cnt  -->
 	<select id="selectNoticeViewListCnt" resultType="java.lang.Integer">
 		SELECT  COUNT(1)
-		FROM 	T_NOTICE
-		WHERE   USE_YN ='Y'  	  	 
+		  FROM  T_NOTICE
+		 WHERE  USE_YN ='Y'  	  	 
 	</select>
 	
 	<!-- 상세내용 출력 -->
@@ -70,26 +70,26 @@
 			 , VISIT_CNT
 			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 			 , FILE_NO
-		FROM   T_NOTICE
+		 FROM  T_NOTICE
 		WHERE  NUMBER = #{number}
 	</select>
 	
 	<!-- 상세정보에 쓰일 파일정보 -->
 	<select id="selectFileList" parameterType="egovframework.example.util.BoardVO" resultMap="fileInfoList">
-		SELECT 	FILE_NO
-			   ,ORIGIN_FILE_NM
-			   ,SAVED_FILE_NM
-			   ,SAVED_FILE_PATH
-			   ,ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
-		FROM   	T_FILE 
-		WHERE  	FILE_NO =  #{fileNo}
-		AND     USE_YN = 'Y'
+		SELECT FILE_NO
+			 , ORIGIN_FILE_NM
+			 , SAVED_FILE_NM
+		  	 , SAVED_FILE_PATH
+			 , ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
+		  FROM T_FILE 
+		 WHERE FILE_NO =  #{fileNo}
+		   AND USE_YN = 'Y'
 	</select>
 	
 	<!-- 조회수 증가 쿼리 -->
 	<update id="addVisitCnt"> 
 		UPDATE T_NOTICE
-		SET VISIT_CNT = VISIT_CNT +1
-		WHERE NUMBER = #{number}
+		   SET VISIT_CNT = VISIT_CNT +1
+		 WHERE NUMBER = #{number}
 	</update>
 </mapper>
