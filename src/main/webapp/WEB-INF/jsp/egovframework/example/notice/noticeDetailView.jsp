@@ -60,5 +60,5 @@
 </form>
 
 <td>&nbsp;</td>
-<a href="noticeView.do"><button type="button" >목록으로</button></a>
+<a href="noticeView.do"><button type="button" >go back</button></a>
 <td>&nbsp;</td>

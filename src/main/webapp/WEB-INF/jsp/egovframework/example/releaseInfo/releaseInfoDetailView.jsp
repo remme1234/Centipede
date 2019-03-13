@@ -57,5 +57,5 @@
 	<input type="hidden" name="number" value="${releaseInfoDetail.number}" />
 </form>
 <div class="search">
-	<a href="releaseInfoView.do"><button class="btn__design" type="button" >목록으로</button></a>
+	<a href="releaseInfoView.do"><button class="btn__design" type="button" >go back</button></a>
 </div>
