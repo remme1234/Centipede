@@ -5,25 +5,25 @@
 
 
 <script>
+
+	// main banner slick을 이용해서 구현
 	$(function () {
 		
 		$('.banner').slick({
 	
 			autoplay : true,
 			dots: true,
-			speed : 300 /* 이미지가 슬라이딩시 걸리는 시간 */,
+			speed : 300,
 			infinite: true,
-			autoplaySpeed: 3000 /* 이미지가 다른 이미지로 넘어 갈때의 텀 */,
+			autoplaySpeed: 3000,
 			arrows: true,
 			slidesToShow: 1,
 			slidesToScroll: 1,
 			fade: false,
 			pauseOnHover : true
-			
 		});
 	});
 </script>
-
 
 <!-- 배너 구성요소  -->
 <div class="banner slider--15">
@@ -34,9 +34,9 @@
             		<div class="col-lg-12">
             			<div class="slider__content">
 	            			<div class="contentbox" style="margin-left: 80px;">
-	            				<h2>Check the<span> date</span></h2>
-	            				<h2>release <span> you want</span></h2>
-	            				<h2>from <span>Here </span></h2>
+	            				<h2>Check the<span> release date</span></h2>
+	            				<h2>of the<span> shoes</span></h2>
+	            				<h2>you <span>wanted </span></h2>
 			                   	<a class="shopbtn" href="releaseInfoView.do">show now</a>
 	            			</div>
             			</div>
@@ -52,9 +52,9 @@
             		<div class="col-lg-12">
             			<div class="slider__content">
 	            			<div class="contentbox" style="margin-left: 80px;">
-	            				<h2>Get</h2>
-	            				<h2>information <span> on shoes</span></h2>
-	            				<h2>to <span>buy </span></h2>
+	            				<h2>Get the <span> size</span></h2>
+	            				<h2>of the <span> shoes</span></h2>
+	            				<h2>you were <span>  buying</span></h2>
 			                   	<a class="shopbtn" href="reviewView.do">show now</a>
 	            			</div>
             			</div>
@@ -151,10 +151,10 @@
 			<c:forEach items="${notice}" var="notice">
 				<tr>
 					<td>${notice.rownum}</td>
-					<td><a href="noticeDetail.do?number=${notice.number}">${notice.title }</a></td>
-					<td>${notice.rsgstDt }</td>
-					<td>${notice.visitCnt }</td>
-					<td>${notice.rsgstrId }</td>
+					<td><a href="noticeDetail.do?number=${notice.number}">${notice.title}</a></td>
+					<td>${notice.rsgstDt}</td>
+					<td>${notice.visitCnt}</td>
+					<td>${notice.rsgstrId}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

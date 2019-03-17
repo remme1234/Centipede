@@ -7,7 +7,6 @@
 	<head>
   		<tiles:insertAttribute name="header"/>
 		<tiles:insertAttribute name="nav"/>
-		<%-- <tiles:insertAttribute name="left"/> --%>
   	</head>
 	<body>
 		<div style="margin-top: 120px;">

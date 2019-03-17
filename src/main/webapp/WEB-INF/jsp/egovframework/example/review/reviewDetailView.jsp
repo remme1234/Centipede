@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-<script type="text/javascript" src="<c:url value='/js/jquery.1.11.0.min.js'/>"></script>
-<script type="text/javascript" src="<c:url value='jqgrid/jqGrid-master/js/jquery.jqGrid.js'/>"></script>
 
 <style>
 .ui-jqgrid .ui-jqgrid-bdiv { overflow-y: scroll }
@@ -39,16 +37,37 @@
 		
 		// 리플 저장 메서드
 		rplSave : function() {
-			var $form = $("form[name=rplSave]"),
-				$pastLength = $("select[name=pastLength]"),
-				$newLength = $("select[name=newLength]");
 			
-			// 유효성검사 
-			if($pastLength.val() 	=== null || $pastLength.val() === ""
-				|| $newLength.val() === null || $newLength.val() === ""){
-				alert("빈칸을 채워주세요")
-				return
+			var $form 		= $("form[name=rplSave]"),
+				$catCd  	= $("select[name=catCd]"),
+				$gdCd  		= $("select[name=gdCd]"),
+				$pastLength = $("select[name=pastLength]"),
+				$newLength  = $("select[name=newLength]"),
+				$size  		= $("select[name=size]");
+				
+			var userId		= $("input[name=rsgstrId]").val();
+			
+			if (userId == "" || userId == null) {
+				
+				alert("로그인을 먼저 해주세요")
+				return;
+			} else {
+				
+				if( $catCd.val() 			=== null || $catCd.val() === ""
+					|| $gdCd.val() 			=== null || $gdCd.val() === ""
+					|| $pastLength.val() 	=== null || $pastLength.val() === ""
+					|| $newLength.val() 	=== null || $newLength.val() === ""
+					|| $size.val() 			=== null || $size.val() === ""){
+					
+					alert("빈칸을 채워주세요")
+					
+					return;
+				}
 			}
+		 
+				
+				
+			// 유효성검사 
 			
 			$form.attr("action","rplUpdate.do")
 			$form.submit();
@@ -80,6 +99,7 @@
 			})
 		})
 		
+		// 사이즈 붙이기
 		for(var i=0; i<21; i++) {
 			var length = 200+i*5;
 			
@@ -88,68 +108,6 @@
 		}
 	})
 	
-	var rplCls = {
-			
-		$jqGrid		: $,
-		
-		gridInit	: function() {
-			this.$jqGrid = $("#rplArea");
-		},
-		
-		gridInitFn	: function() {
-			
-			this.$jqGrid.jqGrid({
-				
-				datatype   : "local",
-				colModel   : [
-					{label : "Brand", 			name : "brndNm", 		width : 80, 	align : "center" },
-					{label : "Product", 		name : "gdNm", 			width : 100, 	align : "center" },
-					{label : "Owned shoe size", name : "pastLength",	width : 150, 	align : "center" },
-					{label : "New shoe size", 	name : "newLength", 	width : 150, 	align : "center" },
-					{label : "Size", 			name : "size", 			width : 50, 	align : "center" },
-					{label : "User Id", 		name : "rsgstrId", 		width : 80, 	align : "center" },
-				],
-				height	   : 150,
-				autowidth  : true,
-				caption    : "Shoe size review table"
-			})
-		},
-		
-		goSearchFn	:function(number) {
-			
-			this.$jqGrid.setGridParam({
-				
-				// 해당게시글의 rpl을 가져오기 위해서 number 매개변수를 이용
-				url		   	: "<c:url value='rplTableList.do?number=" + number + "'/>",
-				datatype	: "json",
-				mtype		: "GET",
-				
-				loadCompelete	: function(data) {
-					cosole.log("data : ", data);
-				}
-			}).trigger("reloadGrid");
-		}
-	}
-	
-	$(function() {
-		rplCls.gridInit();
-		rplCls.gridInitFn();
-	})
-	
-	var goSearch = function(number) {
-		
-		$("#rplArea").setGridParam({
-			
-			// 해당게시글의 rpl을 가져오기 위해서 number 매개변수를 이용
-			url		   	: "<c:url value='rplTableList.do?number=" + number + "'/>",
-			datatype	: "json",
-			mtype		: "GET",
-			
-			loadCompelete	: function(data) {
-				cosole.log("data : ", data);
-			}
-		}).trigger("reloadGrid");
-	}
 </script>
 
 <table class="table table-hover">
@@ -181,7 +139,7 @@
 			              </c:if>
 		             </c:forEach>
 				</div>
-					<p>${reviewDetail.contents}</p>
+				<p>${reviewDetail.contents}</p>
 			</td>
 		</tr>
 	</tbody>
@@ -223,7 +181,7 @@
 		<option>Brand</option>
 			<c:forEach items="${rplCatList}" var="rplCatList">
 			<option value="${rplCatList.catCd}">
-				${rplCatList.brndNm }
+				${rplCatList.brndNm}
 			</option>
 			</c:forEach>
 		</select>

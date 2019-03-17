@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 
 <script>
+	
+	// 본인확인을 위한  ajax
 	var pwdChk = function() {
 		
 		var form = $("form[name=pwdChkForm]").serialize();
@@ -23,7 +25,6 @@
 			}
 		});
 	}
-
 </script>
 
 

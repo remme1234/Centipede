@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
+
 	var save = function() {
 		var $form 	  = $("form[name=saveForm]"),  
 			$title	  = $("input[name=title]"),
@@ -71,16 +72,6 @@
 <form action="" name="delForm" method="POST">
 	<input type="hidden" name="number" value="${mngReviewUpdateView.number}" />
 </form>
-
-<!-- rpl 삭제 -->
-<table id="mngReviewRpl">
-	<thead>
-		<tr>
-			<td></td>
-		</tr>
-	</thead>
-	
-</table>
 
 <div class="btn__Bundle">
 	<button class="btn__design" type="button" onclick="save()">저장</button>

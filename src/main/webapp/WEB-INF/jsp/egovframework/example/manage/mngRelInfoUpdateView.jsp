@@ -43,15 +43,15 @@
 	}
 	
 	// 달력출력 메서드 
-		$(function() {
-			$( "#datepicker1" ).datepicker({
-				dateFormat: 'yy-mm-dd',
-			    changeMonth: true, 
-			    changeYear: true,
-			    nextText: '다음 달',
-			    prevText: '이전 달' 
-			});
+	$(function() {
+		$( "#datepicker1" ).datepicker({
+			dateFormat: 'yy-mm-dd',
+		    changeMonth: true, 
+		    changeYear: true,
+		    nextText: '다음 달',
+		    prevText: '이전 달' 
 		});
+	});
     
 </script>
 

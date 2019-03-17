@@ -121,13 +121,6 @@
 	  GROUP BY CAT_CD
 	</select>
 	
-	<!-- 리뷰게시판 목록개수 불러오기 -->
-	<select id="selectReviewListCnt" resultType="java.lang.Integer">
-		SELECT COUNT(1)
-		  FROM T_REVIEW
-		 WHERE USE_YN = 'Y'	
-	</select>
-	
 	<!-- 리뷰게시판 상세정보 불러오기 -->
 	<select id="selectReviewDetailList" parameterType="egovframework.example.util.BoardVO" resultMap="reviewList">
 		SELECT BOARD_UID
@@ -201,77 +194,6 @@
 	  ORDER BY BRND_NM ASC
 	</select>
 	
-	<!-- 리뷰 게시판 삭제기능 -->
-	<update id="deleteReviewDelete" parameterType="egovframework.example.util.BoardVO">
-		UPDATE T_REVIEW
-		   SET USE_YN = 'N'
-		 WHERE NUMBER = #{number}
-	</update>
-	
-	<!-- 리뷰게시판 게시글 업데이트 쿼리 -->
-	<update id="updateReview" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_REVIEW (
-			BOARD_UID
-		  , NUMBER
-		  , CAT_CD
-		  , TITLE
-		  , CONTENTS
-		  , RSGSTR_ID
-		  , VISIT_CNT
-		  , RSGST_DT
-		  , USE_YN,FILE_NO)
-		VALUES 		(#{boardUid}
-		<if test='number == null or "".equals(number)'>
-		  , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)
-		</if>
-		<if test='number != null and !"".equals(number)'>
-		  , #{number}
-		</if>
-		  , #{catCd}
-		  , #{title}
-		  , #{contents}
-		  , "SAMPLE"
-		  , "0"
-		  , now()
-		  , 'Y'
-		<if test='fileNo == null or "".equals(fileNo)'>
-		  , (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
-		</if>
-		<if test='fileNo != null and !"".equals(fileNo)'>
-		  , #{fileNo})
-		</if>
-		 ON DUPLICATE KEY 
-	 UPDATE TITLE = #{title},
-			CONTENTS = #{contents}
-	</update>	
-
-	<!-- 첨부파일저장 -->
-	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-        INSERT INTO T_FILE (
-            FILE_NO
-          , BOARD_UID
-          , ORIGIN_FILE_NM
-          , SAVED_FILE_NM
-          , SAVED_FILE_PATH
-          , FILE_SIZE
-          , RSGST_DT
-          , RSGSTR_ID)
-        VALUES (	
-        <if test='fileNo == null or "".equals(fileNo)'>
-			(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-		</if>
-		<if test='fileNo != null and !"".equals(fileNo)'>
-		  , #{fileNo}
-		</if>
-          , #{boardUid}
-          , #{originFileNm}
-          , #{savedFileNm}
-          , #{savedFilePath}
-          , #{fileSize}
-          , NOW()
-          , 'SAMPLE')
-	</insert>
-	
 	<!-- 카테고리 불러오기 -->
 	<select id="selectRplCatList" resultMap="rplInfoList">
 		SELECT CAT_CD
@@ -291,4 +213,11 @@
 		</where>
 		ORDER BY GD_CD ASC
 	</select>
+	
+	<!-- 조회수 증가 쿼리 -->
+	<update id="addVisitCnt"> 
+		UPDATE T_REVIEW
+		   SET VISIT_CNT = VISIT_CNT +1
+		 WHERE NUMBER = #{number}
+	</update>
 </mapper>

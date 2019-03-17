@@ -39,7 +39,7 @@
 				     , CONTENTS
 				     , RSGSTR_ID
 				     , VISIT_CNT
-					 , DATE_FORMAT(RSGST_DT, '%Y-%m-%d') AS RSGST_DT
+					 , DATE_FORMAT(RSGST_DT, '%Y-%m-%d %H:%i') AS RSGST_DT
 					 , USE_YN
 					 , REL_DT
 					 , (SELECT SAVED_FILE_NM
@@ -49,17 +49,21 @@
 				 WHERE USE_YN='Y' 
 				) A 
 		<if test="searchText != null and !searchText.equals('')">
-			AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+		  WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-	   ORDER BY RSGST_DT DESC LIMIT #{firstIndex},12
+	   ORDER BY NUMBER DESC LIMIT #{firstIndex},12
 	</select>
 	
 	<!-- 페이징 처리를 위한 cnt  -->
 	<select id="selectRelInfoViewListCnt" resultType="java.lang.Integer">
 		SELECT COUNT(1)
 		  FROM T_RELEASEINFO
-		 WHERE USE_YN ='Y'  	  	 
+		 WHERE USE_YN ='Y'  
+		 <if test="searchText != null and !searchText.equals('')">
+		  AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>	  	 
 	</select>
 	
 	
@@ -89,52 +93,6 @@
 		AND     USE_YN = 'Y'
 	</select>
 	
-	<!-- 발매정보게시판 작성 및 수정시 DB에 추가 하는 쿼리 -->
-	<update id="updateReleaseInfo" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_RELEASEINFO (
-			BOARD_UID
-		  , NUMBER
-		  , TITLE
-		  , CONTENTS
-		  , REL_DT
-		  , RSGSTR_ID
-		  , VISIT_CNT
-		  , RSGST_DT
-		  , FILE_NO
-		  , USE_YN)
-		VALUES (
-			#{boardUid}
-		<if test='number == null or "".equals(number)'>
-		   , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)
-		</if>
-		<if test='number != null and !"".equals(number)'>
-		   , #{number}
-		</if>
-		   , #{title}
-		   , #{contents}
-		   , #{relDt}
-		   , "SAMPLE"
-		   , "0"
-		   , now()
-		<if test='fileNo == null or "".equals(fileNo)'>
-		   , (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
-		</if>
-		<if test='fileNo != null and !"".equals(fileNo)'>
-		   , #{fileNo}
-		</if>
-		   , "Y")
-		ON DUPLICATE KEY 
-		UPDATE TITLE 	= #{title},
-			   CONTENTS = #{contents}
-	</update>	
-	
-	<!-- 발매정보게시판 삭제시 논리적 삭제 쿼리 -->  
-	<update id="deleteReleaseInfoDelete">
-		UPDATE T_RELEASEINFO
-		   SET USE_YN = 'N'
-		 WHERE NUMBER = #{number}
-	</update>
-	
 	<!-- 조회수 증가 쿼리 -->
 	<update id="addVisitCnt"> 
 		UPDATE T_RELEASEINFO
@@ -142,30 +100,4 @@
 		 WHERE NUMBER = #{number}
 	</update>
 	
-	<!-- 첨부파일저장 -->
-	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-        INSERT INTO T_FILE (
-            FILE_NO
-          , BOARD_UID,
-          , ORIGIN_FILE_NM
-          , SAVED_FILE_NM
-          , SAVED_FILE_PATH
-          , FILE_SIZE
-          , RSGST_DT
-          , RSGSTR_ID)
-        VALUES (	
-        <if test='fileNo == null or "".equals(fileNo)'>
-			(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-		</if>
-		<if test='fileNo != null and !"".equals(fileNo)'>
-		  , #{fileNo}
-		</if>
-          , #{boardUid}
-          , #{originFileNm}
-          , #{savedFileNm}
-          , #{savedFilePath}
-          , #{fileSize}
-          , NOW()
-          , 'SAMPLE')
-	</insert>
 </mapper>

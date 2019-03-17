@@ -21,6 +21,8 @@ public class MainServiceImpl implements MainService {
 	@Resource
 	private MainMapper mainMapper;
 
+	
+	// 아이디 check
 	@Override
 	public void selectIdCheck(HttpServletResponse response, LoginVO lvo) throws IOException {
 		int cnt = mainMapper.selectIdCheck(lvo);
@@ -46,6 +48,7 @@ public class MainServiceImpl implements MainService {
 		out.write(resultMapToJson);
 	}
 
+	// 회원가입 기능
 	@Override
 	public void insertMbr(HttpServletResponse response, LoginVO lvo) throws IOException {
 		int cnt = mainMapper.insertMbr(lvo);
@@ -69,7 +72,6 @@ public class MainServiceImpl implements MainService {
 		out.write(resultMapToJson);
 	}
 
-	
 	// release info 데이터 호출
 	@Override
 	public List<BoardVO> selectReleaseInfoList() {
@@ -87,9 +89,8 @@ public class MainServiceImpl implements MainService {
 	public List<BoardVO> selectReviewList() {
 		return mainMapper.selectReviewList();
 	}
-
 	
-	// 본인확인 위한 비밀번호 select ajax
+	// myPage 입장시 본인확인을 위한 비밀번호 체크
 	@Override
 	public void selectPwdChk(HttpServletResponse response, LoginVO lvo) throws IOException {
 		
@@ -114,7 +115,13 @@ public class MainServiceImpl implements MainService {
 		out.write(resultMapToJson);
 	}
 	
-	// 개인정보 수정 ajax
+	// myPage 페이지 출력
+	@Override
+	public LoginVO selectInfo(LoginVO lvo) {
+		return mainMapper.selectInfo(lvo);
+	}
+	
+	// myPage 수정 기능
 	@Override
 	public void updateMbr(HttpServletResponse response, LoginVO lvo) throws IOException {
 		int cnt = mainMapper.updateMbr(lvo);
@@ -138,6 +145,7 @@ public class MainServiceImpl implements MainService {
 		out.write(resultMapToJson);
 	}
 
+	// myPage 비밀번호 변경 기능
 	@Override
 	public void updatePwd(HttpServletResponse response, LoginVO lvo) throws IOException {
 		
@@ -162,9 +170,4 @@ public class MainServiceImpl implements MainService {
 		out.write(resultMapToJson);
 	}
 
-
-	@Override
-	public LoginVO selectInfo(LoginVO lvo) {
-		return mainMapper.selectInfo(lvo);
-	}
 }

@@ -38,35 +38,37 @@
 	
 	<!-- release info 게시판 목록 출력 쿼리 -->
 	<select id="selectMngRelInfoList" resultMap="manageList" >
-		SELECT  A.*
-		  FROM  (
-				 SELECT	BOARD_UID
-					  , NUMBER
-				      , TITLE
-					  , CONTENTS
-				      , RSGSTR_ID
-				      , VISIT_CNT
-					  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
-					  , USE_YN
-					  , REL_DT
-					  , (SELECT SAVED_FILE_NM
-						   FROM T_FILE
+		SELECT A.*
+		  FROM (SELECT BOARD_UID
+					 , NUMBER
+				     , TITLE
+					 , CONTENTS
+				     , RSGSTR_ID
+				     , VISIT_CNT
+					 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d   %H:%i') AS RSGST_DT
+					 , USE_YN
+					 , REL_DT
+					 , (SELECT SAVED_FILE_NM
+						  FROM T_FILE
 						  WHERE FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
-					  , @ROWNUM := @ROWNUM +1 AS RNUM
-				   FROM T_RELEASEINFO TR
-					   ,(SELECT @ROWNUM := 0) ROWNUM
-			    ) A
+					 , @ROWNUM := @ROWNUM +1 AS RNUM
+				  FROM T_RELEASEINFO TR
+					 , (SELECT @ROWNUM := 0) ROWNUM) A
 		<if test="searchText != null and !searchText.equals('')">
 			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
-			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+			   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-		ORDER BY RNUM DESC LIMIT #{firstIndex},10
+		 ORDER BY RNUM DESC LIMIT #{firstIndex},10
 	</select>
 	
 	<!-- release info 페이징 처리를 위한 cnt -->
 	<select id="selectRelInfoViewListCnt" resultType="java.lang.Integer">
-		SELECT  COUNT(1)
-		FROM 	T_RELEASEINFO
+		SELECT COUNT(1)
+		  FROM T_RELEASEINFO
+	  	<if test="searchText != null and !searchText.equals('')">
+	     WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
+		    OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
 	</select>
 	
 	<!-- release info 게시판 수정페이지 출력시 기존에 있던 내용 호출하는 쿼리 -->
@@ -80,139 +82,175 @@
 			 , REL_DT
 			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 			 , FILE_NO
-		FROM   T_RELEASEINFO
-		WHERE  NUMBER = #{number}
+		  FROM T_RELEASEINFO
+		 WHERE NUMBER = #{number}
 	</select>
 	
 	<!-- release info 게시판 작성 및 수정 기능  -->
 	<update id="updateReleaseInfo" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_RELEASEINFO (BOARD_UID, NUMBER, TITLE, CONTENTS, REL_DT, RSGSTR_ID, VISIT_CNT, RSGST_DT, FILE_NO, USE_YN)
-		VALUES 		(#{boardUid}
+		INSERT INTO T_RELEASEINFO (
+			BOARD_UID
+		  , NUMBER
+		  , TITLE
+		  , CONTENTS
+		  , REL_DT
+		  , RSGSTR_ID
+		  , VISIT_CNT
+		  , RSGST_DT
+		  , FILE_NO
+		  , USE_YN)
+		VALUES (#{boardUid}
 		<if test='number == null or "".equals(number)'>
-			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)
+		  , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_RELEASEINFO AS TC)
 		</if>
 		<if test='number != null and !"".equals(number)'>
-			,#{number}
+		  , #{number}
 		</if>
-		, #{title}, #{contents},#{relDt}, #{rsgstrId}, "0", now()
+		  , #{title}
+		  , #{contents}
+		  , #{relDt}
+		  , #{rsgstrId}
+		  , "0"
+		  , now()
 		<if test='fileNo == null or "".equals(fileNo)'>
-			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
+		  ,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
 		</if>
 		<if test='fileNo != null and !"".equals(fileNo)'>
-			,#{fileNo}
+		 , #{fileNo}
 		</if>
-		,"Y")
+		 , "Y")
 		ON DUPLICATE KEY 
-		UPDATE TITLE 	= #{title},
-			   CONTENTS = #{contents},
-			   FILE_NO  = (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
+	UPDATE TITLE 	= #{title},
+	       CONTENTS = #{contents},
+		   FILE_NO  = (SELECT IFNULL(MAX(FILE_NO),0)+1 
+		   				 FROM T_FILE AS TR)
 	</update>	
 	
 	<!-- release info 보이기와 숨기기  -->  
 	<update id="deleteReleaseInfoDisable">
 		UPDATE T_RELEASEINFO
-		SET USE_YN = IF(USE_YN = 'Y','N','Y')
-		WHERE NUMBER = #{number}
+		   SET USE_YN = IF(USE_YN = 'Y','N','Y')
+	 	 WHERE NUMBER = #{number}
 	</update>
 	
 	<!-- release info 데이터 삭제   -->
 	<delete id="deleteReleaseInfdelete">
 		DELETE FROM T_RELEASEINFO
-		WHERE NUMBER = #{number}
+		 WHERE NUMBER = #{number}
 	</delete>
 	
 	
 	<!-- 이하 review 게시판   -->
 	<select id="selectMngRevInfoList" resultMap="manageList" >
 		SELECT A.*
-		  FROM (
-				SELECT BOARD_UID
-					  ,NUMBER
-					  ,CASE 
+		  FROM (SELECT BOARD_UID
+					 , NUMBER
+					 , CASE 
 						WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
 						WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
 						WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
 					    ELSE '기타'  	
 					   END CAT_CD
-					  ,TITLE
-					  ,CONTENTS
-					  ,RSGSTR_ID
-					  ,VISIT_CNT
-					  ,DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y.%m.%d') AS RSGST_DT
-					  ,USE_YN
-					  ,(SELECT 	SAVED_FILE_NM
-					  	  FROM	T_FILE
-						 WHERE  FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
-					  ,@ROWNUM := @ROWNUM +1 AS RNUM
-				 FROM T_REVIEW
-				 	 ,(SELECT @ROWNUM := 0) ROWNUM
-		 		) A 
+					 , TITLE
+					 , CONTENTS
+					 , RSGSTR_ID
+					 , VISIT_CNT
+					 , DATE_FORMAT(T_REVIEW.RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+					 , USE_YN
+					 , (SELECT SAVED_FILE_NM
+					  	  FROM T_FILE
+						 WHERE FILE_NO = T_REVIEW.FILE_NO) AS SAVED_FILE_NM
+					 , @ROWNUM := @ROWNUM +1 AS RNUM
+				  FROM T_REVIEW
+				 	 , (SELECT @ROWNUM := 0) ROWNUM) A 
 		<if test="searchText != null and !searchText.equals('')">
 			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
-			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+			   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
 		<if test="catCd != null and !catCd.equals('')">
-			AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
+			  AND CAT_CD LIKE CONCAT('%',#{catCd},'%') 
 		</if>
 		ORDER BY RNUM DESC LIMIT #{firstIndex},10
 	</select>
 	
 	<!-- review 페이징 처리를 위한 cnt -->
 	<select id="selectReviewViewListCnt" resultType="java.lang.Integer">
-		SELECT  COUNT(1)
-		FROM 	T_REVIEW
+		SELECT COUNT(1)
+		  FROM T_REVIEW
+		  <if test="searchText != null and !searchText.equals('')">
+	     WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
+		    OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
 	</select>
 	
 	<!-- review 게시판 작성 및 수정 기능  -->
 	<update id="updateReview" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_REVIEW (BOARD_UID, NUMBER, CAT_CD, TITLE, CONTENTS, RSGSTR_ID, VISIT_CNT, RSGST_DT, USE_YN,FILE_NO)
-		VALUES 		(#{boardUid}
+		INSERT INTO T_REVIEW (
+			BOARD_UID
+		  , NUMBER
+		  , CAT_CD
+		  , TITLE
+		  , CONTENTS
+		  , RSGSTR_ID
+		  , VISIT_CNT
+		  , RSGST_DT
+		  , USE_YN
+		  , FILE_NO)
+		VALUES (
+			#{boardUid}
 		<if test='number == null or "".equals(number)'>
-			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)
+		  , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_REVIEW AS TV)
 		</if>
 		<if test='number != null and !"".equals(number)'>
-			,#{number}
+		 , #{number}
 		</if>
-		, #{catCd}, #{title}, #{contents}, #{rsgstrId}, "0", now(), 'Y'
+		 , #{catCd}
+		 , #{title}
+		 , #{contents}
+		 , #{rsgstrId}
+		 , "0"
+		 , now()
+		 , 'Y'
 		<if test='fileNo == null or "".equals(fileNo)'>
-			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
+		 ,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
 		</if>
 		<if test='fileNo != null and !"".equals(fileNo)'>
-			,#{fileNo})
+		 , #{fileNo})
 		</if>
 		ON DUPLICATE KEY 
-		UPDATE TITLE 	= #{title},
-			   CONTENTS = #{contents},
-			   FILE_NO  = (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
+	UPDATE TITLE 	= #{title},
+		   CONTENTS = #{contents},
+		   FILE_NO  = (SELECT IFNULL(MAX(FILE_NO),0)+1 
+		   			     FROM T_FILE AS TR)
 	</update>	
 	
 	<!-- review 게시판 수정페이지 출력시 기존에 있던 내용 호출하는 쿼리 -->
 	<select id="selectReviewDetail" parameterType="egovframework.example.util.BoardVO" resultMap="manageList">
-		SELECT  BOARD_UID
-			   ,NUMBER
-			   ,CAT_CD
-			   ,TITLE
-			   ,CONTENTS
-			   ,RSGSTR_ID
-			   ,VISIT_CNT
-			   ,DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
-			   ,FILE_NO
-			   ,USE_YN
-		FROM	T_REVIEW
-		WHERE   NUMBER=#{number}
+		SELECT BOARD_UID
+			 , NUMBER
+			 , CAT_CD
+			 , TITLE
+			 , CONTENTS
+			 , RSGSTR_ID
+			 , VISIT_CNT
+			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+			 , FILE_NO
+			 , USE_YN
+		  FROM T_REVIEW
+		 WHERE NUMBER=#{number}
 	</select>
 	
 	<!-- review 보이기와 숨기기  -->  
 	<update id="deleteReviewDisable">
 		UPDATE T_REVIEW
-		SET USE_YN = IF(USE_YN = 'Y','N','Y')
-		WHERE NUMBER = #{number}
+		   SET USE_YN = IF(USE_YN = 'Y','N','Y')
+	     WHERE NUMBER = #{number}
 	</update>
 	
 	<!-- review  데이터 삭제   -->
 	<delete id="mngReviewDelete">
 		DELETE FROM T_REVIEW
-		WHERE NUMBER = #{number}
+		 WHERE NUMBER = #{number}
 	</delete>
 	
 	
@@ -220,30 +258,32 @@
 	<!-- 이하 notice 게시판  -->
 	<select id="selectMngNoticeList" resultMap="manageList" >
 		SELECT  A.*
-		  FROM  (
-				 SELECT	  BOARD_UID
-						  ,NUMBER
-						  , TITLE
-						  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
-						  , CONTENTS
-						  , VISIT_CNT
-						  , RSGSTR_ID
-						  , USE_YN
-						  ,@ROWNUM := @ROWNUM +1 AS RNUM
-				  FROM	  T_NOTICE
-					      ,(SELECT @ROWNUM := 0) ROWNUM 
-			      ) A 
+		  FROM  (SELECT BOARD_UID
+					  , NUMBER
+					  , TITLE
+					  , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
+					  , CONTENTS
+					  , VISIT_CNT
+					  , RSGSTR_ID
+					  , USE_YN
+					  , @ROWNUM := @ROWNUM +1 AS RNUM
+				   FROM T_NOTICE
+					  , (SELECT @ROWNUM := 0) ROWNUM ) A 
 		<if test="searchText != null and !searchText.equals('')">
 			WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-		  ORDER BY RNUM DESC LIMIT #{firstIndex},10
+		 ORDER BY RNUM DESC LIMIT #{firstIndex},10
 	</select>
 	
 	<!-- notice 페이징 처리를 위한 cnt -->
 	<select id="selectNoticeViewListCnt" resultType="java.lang.Integer">
-		SELECT  COUNT(1)
-		FROM 	T_NOTICE
+		SELECT COUNT(1)
+		  FROM T_NOTICE
+		  <if test="searchText != null and !searchText.equals('')">
+	     WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
+		    OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>
 	</select>
 	
 	<!-- notice update화면 출력시 기존에 데이터 화면에 표시하기 위한 쿼리 -->
@@ -256,75 +296,87 @@
 			 , VISIT_CNT
 			 , DATE_FORMAT(RSGST_DT, '%Y.%m.%d') AS RSGST_DT
 			 , FILE_NO
-		FROM   T_NOTICE
-		WHERE  NUMBER = #{number}
+		  FROM T_NOTICE
+		 WHERE NUMBER = #{number}
 	</select>
 	
 	<!-- notice 게시판 작성 및 수정 기능  -->
 	<update id="updateNotice" parameterType="egovframework.example.util.BoardVO">
-		INSERT INTO T_NOTICE (BOARD_UID, NUMBER,  TITLE, CONTENTS, RSGSTR_ID, VISIT_CNT, RSGST_DT, USE_YN, FILE_NO)
-		VALUES 		(#{boardUid}
+		INSERT INTO T_NOTICE (
+			BOARD_UID
+		  , NUMBER
+		  , TITLE
+		  , CONTENTS
+		  , RSGSTR_ID
+		  , VISIT_CNT
+		  , RSGST_DT
+		  , USE_YN
+		  , FILE_NO)
+		VALUES (
+			#{boardUid}
 		<if test='number == null or "".equals(number)'>
-			, (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_NOTICE AS TV)
+		  , (SELECT IFNULL(MAX(NUMBER),0)+1 FROM T_NOTICE AS TV)
 		</if>
 		<if test='number != null and !"".equals(number)'>
-			,#{number}
+		  , #{number}
 		</if>
-		, #{title}, #{contents}, #{rsgstrId}, "0", now(), 'Y'
+		  , #{title}
+		  , #{contents}
+		  , #{rsgstrId}
+		  , "0"
+		  , now()
+		  , 'Y'
 		<if test='fileNo == null or "".equals(fileNo)'>
-			,(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
+		  , (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR))
 		</if>
 		<if test='fileNo != null and !"".equals(fileNo)'>
-			,#{fileNo})
+		  , #{fileNo})
 		</if>
-		ON DUPLICATE KEY 
-		UPDATE TITLE 	= #{title},
-			   CONTENTS = #{contents},
-			   FILE_NO  = (SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TR)
+		 ON DUPLICATE KEY 
+	 UPDATE TITLE 	 = #{title},
+			CONTENTS = #{contents},
+			FILE_NO  = (SELECT IFNULL(MAX(FILE_NO),0)+1 
+						  FROM T_FILE AS TR)
 	</update>
 	
 	<!-- notice 보이기와 숨기기  -->
 	<update id="deleteNoticeDisable">
 		UPDATE T_NOTICE
-		SET USE_YN = IF(USE_YN = 'Y','N','Y')
-		WHERE NUMBER = #{number}
+		   SET USE_YN = IF(USE_YN = 'Y','N','Y')
+		 WHERE NUMBER = #{number}
 	</update>
 	
 	<!-- notice 데이터 삭제   -->
 	<delete id="mngNoticeDelete">
 		DELETE FROM T_Notice
-		WHERE NUMBER = #{number}
+		 WHERE NUMBER = #{number}
 	</delete>
 	
 	
 	<!-- 공통 첨부파일 저장  -->
 	<insert id="insertFile" parameterType="egovframework.example.util.FileVO">
-        INSERT INTO T_FILE
-        (
-            FILE_NO,
-            BOARD_UID,
-            ORIGIN_FILE_NM,
-            SAVED_FILE_NM,
-            SAVED_FILE_PATH,
-            FILE_SIZE,
-            RSGST_DT,
-            RSGSTR_ID
-        )
-        VALUES
-        (	
-	        <if test='fileNo == null or "".equals(fileNo)'>
-				(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
-			</if>
-			<if test='fileNo != null and !"".equals(fileNo)'>
-				,#{fileNo}
-			</if>
-            ,#{boardUid}
-            ,#{originFileNm}
-            ,#{savedFileNm}
-            ,#{savedFilePath}
-            ,#{fileSize}
-            ,NOW()
-            ,'sample'
-        )
+        INSERT INTO T_FILE (
+            FILE_NO
+          , BOARD_UID
+          , ORIGIN_FILE_NM
+          , SAVED_FILE_NM
+          , SAVED_FILE_PATH
+          , FILE_SIZE
+          , RSGST_DT
+          , RSGSTR_ID)
+        VALUE (	
+        <if test='fileNo == null or "".equals(fileNo)'>
+			(SELECT IFNULL(MAX(FILE_NO),0)+1 FROM T_FILE AS TF)
+		</if>
+		<if test='fileNo != null and !"".equals(fileNo)'>
+		  , #{fileNo}
+		</if>
+          , #{boardUid}
+          , #{originFileNm}
+          , #{savedFileNm}
+          , #{savedFilePath}
+          , #{fileSize}
+          , NOW()
+          , 'sample')
 	</insert>
 </mapper>

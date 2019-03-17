@@ -1,20 +1,15 @@
 
 package egovframework.example.review.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.example.review.service.ReviewService;
 import egovframework.example.review.service.ReviewVO;
 import egovframework.example.util.BoardVO;
-import egovframework.example.util.FileUtils;
 import egovframework.example.util.FileVO;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 
@@ -24,21 +19,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Resource
 	private ReviewMapper reviewMapper;
 	
-	@Resource(name="fileUtils")
-	private FileUtils fileUtils;
-	
 	// 리뷰 게시판 내용출력
 	@Override
 	public List<BoardVO> selectReviewList(BoardVO vo) {
-		List<BoardVO> list = reviewMapper.selectReviewList(vo);
-		// int cnt = reviewMapper.selectReviewListCnt();
-		
-		/*for(BoardVO vo : list) {
-			vo.setCount(cnt);
-			cnt -= 1;
-		}*/
-		
-		return list;
+		return reviewMapper.selectReviewList(vo);
 	}
 	
 	// 리뷰 검색 게시판 내용출력
@@ -47,6 +31,7 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewMapper.selectReviewSearchList(vo);
 	}
 	
+	// 카테고리 목록 호출
 	@Override
 	public List<BoardVO> selectCatCdList() {
 		return reviewMapper.selectCatCdList();
@@ -64,61 +49,34 @@ public class ReviewServiceImpl implements ReviewService{
 		List<FileVO> fileInfo = reviewMapper.selectFileList(vo);
 		return fileInfo;
 	}
-
-	@Override
-	public void deleteReviewDelete(BoardVO vo) {
-		reviewMapper.deleteReviewDelete(vo);
-	}
 	
-	
-	// 리뷰게시판 게시글 및 첨부파일 등록기능
-	@Override
-	public void updateReview(BoardVO vo, HttpServletRequest request) throws Exception  {
-		
-		// 리뷰게시판 입력한 값
-		reviewMapper.updateReview(vo);
-		
-		// 이하 파일 저장
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		
-		while(iterator.hasNext()){
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if(multipartFile.isEmpty() == false){
-	            System.out.println("------------- file start -------------");
-	            System.out.println("name : "+multipartFile.getName());
-	            System.out.println("filename : "+multipartFile.getOriginalFilename());
-	            System.out.println("size : "+multipartFile.getSize());
-	            System.out.println("-------------- file end --------------\n");
-	       }
-		}
-		
-		 List<FileVO> list = fileUtils.parseInsertFileInfo(vo, request);
-	     for(int i=0, size=list.size(); i<size; i++){
-	    	 reviewMapper.insertFile(list.get(i));
-	     }
-    }
-
+	// 사이즈 후기에 쓰일 select 박스 호출
 	@Override
 	public List<ReviewVO> selectRplCatList() {
 		return reviewMapper.selectRplCatList();
 	}
-
+	
+	// 사이즈 후기 select Box에 쓰일 ajax 호출
 	@Override
 	public List<EgovMap> selectRplPrdList(String param) {
 		return reviewMapper.selectRplPrdList(param);
 	}
 
+	// 리뷰게시판 사이즈 후기 리플 작성시 업데이트 기능
 	@Override
 	public void rplUpdate(ReviewVO vo) {
 		reviewMapper.rplUpdate(vo);
 	}
 
+	// 사이즈 후기에 쓰일 select 박스 호출
 	@Override
 	public List<ReviewVO> selectRplDataList(ReviewVO vo) {
 		return reviewMapper.selectRplDataList(vo);
 	}
-
-
+	
+	// 조회수 증가 쿼리
+	@Override
+	public void addVisitCnt(BoardVO vo) {
+		reviewMapper.addVisitCnt(vo);
+	}
 }

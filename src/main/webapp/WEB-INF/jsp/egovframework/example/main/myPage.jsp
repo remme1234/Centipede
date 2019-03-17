@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
+	// 개인정보 수정
 	var modify = function() {
 		
 		var	$emailChange	= $("input[name=emailChange]"),
@@ -61,6 +62,7 @@
 		}
 	}
 	
+	//  비밀번호 변경
 	var changePwd = function() {
 		
 		var $pwdChange 		= $("input[name=pwdChange]"),
@@ -71,7 +73,9 @@
 			alert("변경할 비밀번호가 일치하지 않습니다.")
 			$pwdChange.focus();
 			return;
+			
 		} else if ($pwdChange.val() == "${info.pwd}") {
+			
 			alert("기존 비밀번호와 동일하게 변경할 수 없습니다.")
 			$pwdChange.focus();
 			return;

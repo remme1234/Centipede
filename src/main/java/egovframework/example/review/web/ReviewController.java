@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -53,9 +52,11 @@ public class ReviewController {
 	// 리뷰게시판 상세정보 조회
 	@RequestMapping(value="reviewDetailView.do")
 	public String reviewDetailView (BoardVO vo, ReviewVO rvo, ModelMap model) {
+		
 		// 상세정보 조회
 		vo = reviewService.selectReviewDetailList(vo);
 		List<FileVO> fileInfo = reviewService.selectFileList(vo);
+		reviewService.addVisitCnt(vo);
 
 		// 사이즈 후기에 쓰일 select 박스 호출
 		List<ReviewVO> rplCatList = reviewService.selectRplCatList();
@@ -101,33 +102,4 @@ public class ReviewController {
 		
 		return "redirect:reviewView.do";
 	}
-	
-	// 리뷰게시판 업데이트 페이지 호출 메서드
-	@RequestMapping(value="reviewUpdateView.do")
-	public String reviewUpdateViewView () {
-		
-		return "review/reviewUpdateView.tiles";
-	}
-	
-	// 리뷰게시판 업데이트 기능 
-	@RequestMapping(value="reviewUpdate.do")
-	public String reviewUpdate(BoardVO vo, HttpServletRequest request) throws Exception  {
-		reviewService.updateReview(vo,request);
-		
-		return "redirect:reviewView.do";
-	}
-	
-	@RequestMapping(value="lookupReview.do")
-	public String lookupReview () {
-		return "review/reviewBoard.tiles";
-	}
-	
-	// 리뷰게시판 삭제 기능
-	@RequestMapping(value="reviewDelete.do") 
-	public String reviewDelete(BoardVO vo) {
-		reviewService.deleteReviewDelete(vo);
-		
-		return "redirect:reviewView.do";
-	}
-	
 }

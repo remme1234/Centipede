@@ -5,6 +5,8 @@
 
 
 <script>
+
+	// 검색기능
 	var releaseInfoList = {
 			
 		search : function() {

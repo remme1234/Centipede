@@ -91,4 +91,5 @@
   <term name="과거" description="과거" physicalName="PAST" physicalDescription="past"/>
   <term name="길이" description="길이" physicalName="LENGTH" physicalDescription="length"/>
   <term name="댓글" description="댓글" physicalName="RPL" physicalDescription="reply"/>
+  <term name="권한" description="권한" physicalName="AUTH" physicalDescription="authorization"/>
 </tm:TermDictionary>

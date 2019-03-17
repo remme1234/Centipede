@@ -33,12 +33,14 @@ public class NoticeServiceImpl implements NoticeService {
 	public BoardVO selectNoticeDetail(BoardVO vo) {
 		return noticeMapper.selectNoticeDetail(vo);
 	}
+	
 	// 상세정보에 쓰일 파일정보 
 	@Override
 	public List<FileVO> selectFileList(BoardVO vo) {
 		return noticeMapper.selectFileList(vo);
 	}
-
+	
+	// 조회수 증가
 	@Override
 	public void addVisitCnt(BoardVO vo) {
 		noticeMapper.addVisitCnt(vo);

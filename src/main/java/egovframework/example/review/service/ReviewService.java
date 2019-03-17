@@ -2,30 +2,32 @@ package egovframework.example.review.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import egovframework.example.util.BoardVO;
 import egovframework.example.util.FileVO;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 public interface ReviewService {
-
+	
+	// 리뷰게시판 리스트
 	List<BoardVO> selectReviewList(BoardVO vo);
+	List<BoardVO> selectCatCdList();
+	
+	// 리뷰게시판 검색 리스트
 	List<BoardVO> selectReviewSearchList(BoardVO vo);
 
+	// 리뷰게시판 상세정보 조회
 	BoardVO selectReviewDetailList(BoardVO vo);
 	List<FileVO> selectFileList(BoardVO vo);
-	void deleteReviewDelete(BoardVO vo);
-
-	void updateReview(BoardVO vo, HttpServletRequest request) throws Exception;
-
-	List<BoardVO> selectCatCdList();
-
+	List<ReviewVO> selectRplDataList(ReviewVO vo);
+	
+	// 조회수 증가
+	void addVisitCnt(BoardVO vo);
+	
+	// 사이즈 후기에 쓰일 select박스 내용 호출
 	List<ReviewVO> selectRplCatList();
-
 	List<EgovMap> selectRplPrdList(String param);
 
+	// 리뷰게시판 사이즈 후기 리플 작성시 업데이트 기능
 	void rplUpdate(ReviewVO vo);
-
-	List<ReviewVO> selectRplDataList(ReviewVO vo);
+	
 }

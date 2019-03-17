@@ -22,7 +22,7 @@
 						<div class="product product__style--3">
 							<div class="col-lg-3 col-md-4 col-sm-6 col-12">
 								<div class="product__thumb">
-									<a class="first__img" href="releaseInfoDetailView.do?number=${vo.number}"><img src="centipede/../images/centipede/board/${vo.savedFileNm}" style="width:300px; height:230px;"></a>
+									<a class="first__img" href="reviewDetailView.do?number=${vo.number}"><img src="centipede/../images/centipede/board/${vo.savedFileNm}" style="width:300px; height:230px;"></a>
 									
 									<!-- 현재날짜와 비교하여 new 표시 -->
 									<fmt:parseDate var="rsgst_date" value="${vo.rsgstDt}" pattern="yyyy-MM-dd" />

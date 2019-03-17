@@ -1,18 +1,13 @@
 package egovframework.example.releaseInfo.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.example.releaseInfo.service.ReleaseInfoService;
 import egovframework.example.util.BoardVO;
-import egovframework.example.util.FileUtils;
 import egovframework.example.util.FileVO;
 
 @Service("ReleaseInfoService")
@@ -21,15 +16,14 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 	@Resource
 	private ReleaseInfoMapper releaseInfoMapper;
 	
-	@Resource(name="fileUtils")
-    private FileUtils fileUtils;
 
-	
+	// 발매정보게시판 리스트 
 	@Override
 	public List<BoardVO> selectReleaseInfoList(BoardVO vo){
 		return releaseInfoMapper.selectReleaseInfoList(vo);
 	}
 	
+	// 발매정보게시판 상세정보 조회
 	@Override
 	public BoardVO selectReleaseInfoDetail(BoardVO vo) {
 		return releaseInfoMapper.selectReleaseInfoDetail(vo);
@@ -41,46 +35,14 @@ public class ReleaseInfoServiceImpl implements ReleaseInfoService {
 		List<FileVO> fileInfo = releaseInfoMapper.selectFileList(vo);
 		return fileInfo;
 	}
-	
-	// 발매정보 게시판 게시글 및 첨부파일 등록기능
-	@Override
-	public void updateReleaseInfo(BoardVO vo, HttpServletRequest request) throws Exception {
-		
-		// 발매정보 입력한 값
-		releaseInfoMapper.updateReleaseInfo(vo);
-		
-		// 이하 파일 저장
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		MultipartFile multipartFile = null;
-		 
-		while(iterator.hasNext()){
-		       multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-		       if(multipartFile.isEmpty() == false){
-		            System.out.println("------------- file start -------------");
-		            System.out.println("name : "+multipartFile.getName());
-		            System.out.println("filename : "+multipartFile.getOriginalFilename());
-		            System.out.println("size : "+multipartFile.getSize());
-		            System.out.println("-------------- file end --------------\n");
-		       }
-		}
-		 
-		 List<FileVO> list = fileUtils.parseInsertFileInfo(vo, request);
-	     for(int i=0, size=list.size(); i<size; i++){
-	    	 releaseInfoMapper.insertFile(list.get(i));
-         }
-	}
 
-	@Override
-	public void deleteReleaseInfoDelete(BoardVO vo) {
-		releaseInfoMapper.deleteReleaseInfoDelete(vo);
-	}
-
+	// 조회수 증가
 	@Override
 	public void addVisitCnt(BoardVO vo) {
 		releaseInfoMapper.addVisitCnt(vo);
 	}
-
+	
+	// 페이징 처리
 	@Override
 	public int selectRelInfoViewListCnt(BoardVO vo) {
 		return releaseInfoMapper.selectRelInfoViewListCnt(vo);

@@ -57,7 +57,11 @@
 	<select id="selectNoticeViewListCnt" resultType="java.lang.Integer">
 		SELECT  COUNT(1)
 		  FROM  T_NOTICE
-		 WHERE  USE_YN ='Y'  	  	 
+		 WHERE  USE_YN ='Y'
+		  <if test="searchText != null and !searchText.equals('')">
+		  AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
+			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		</if>  	  	 
 	</select>
 	
 	<!-- 상세내용 출력 -->

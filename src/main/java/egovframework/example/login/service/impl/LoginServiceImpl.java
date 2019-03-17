@@ -14,11 +14,13 @@ public class LoginServiceImpl implements LoginService{
 	@Resource
 	private LoginMapper loginMapper;
 
+	// 로그인 정보 확인
 	@Override
 	public LoginVO selectLoginInfo(HttpSession session, LoginVO lvo) {
 		lvo = loginMapper.selectLoginInfo(lvo);
 		if(lvo != null) {
 			
+			// 세션정보 세팅
 			session.setAttribute("userId", lvo.getLoginId());
 			session.setAttribute("authYn", lvo.getAuthYn());
 			session.setAttribute("email", lvo.getEmail());

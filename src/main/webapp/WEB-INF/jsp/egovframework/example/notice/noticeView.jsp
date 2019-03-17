@@ -9,7 +9,7 @@
 		search : function() {
 			var $search = $("form[name=sendForm]");
 			
-			$search.attr("action","mngNoticeList.do");
+			$search.attr("action","noticeView.do");
 			$search.submit();
 		}
 	}

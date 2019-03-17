@@ -5,7 +5,8 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper
 public interface LoginMapper {
-
+	
+	// 로그인 정보 확인
 	LoginVO selectLoginInfo(LoginVO lvo);
 
 }

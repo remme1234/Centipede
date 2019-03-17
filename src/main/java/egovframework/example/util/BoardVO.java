@@ -1,6 +1,7 @@
 package egovframework.example.util;
 
 public class BoardVO extends PagingVO {
+	
 	private int count;
 	private String boardUid;
 	private String number;

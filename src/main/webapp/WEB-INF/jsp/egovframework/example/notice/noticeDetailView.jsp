@@ -41,7 +41,6 @@
 		<tr>
 			<td colspan="4">
 			
-			<!-- 파일 경로 이상으로 추후 보완 예정 -->
 			<div id="imageArea">
 				<c:forEach items="${fileInfo }" var="fileInfo" >
 					 <c:if test="${fileInfo.fileNo ne null}">
@@ -59,6 +58,6 @@
 	<input type="hidden" name="number" value="${noticeDetail.number}" />
 </form>
 
-<td>&nbsp;</td>
-<a href="noticeView.do"><button type="button" >go back</button></a>
-<td>&nbsp;</td>
+<div class="search">
+	<a href="noticeView.do"><button class="btn__design" type="button">go back</button></a>
+</div>
