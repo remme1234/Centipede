@@ -43,9 +43,9 @@
 					  , RSGSTR_ID
 					  , USE_YN 
 					  , @ROWNUM := @ROWNUM+1 AS ROWNUM
-				  FROM  T_NOTICE
-	 			,(SELECT @ROWNUM := 0) ROWNUM
-				   WHERE USE_YN = 'Y' ) A
+				   FROM T_NOTICE
+		 			  ,(SELECT @ROWNUM := 0) ROWNUM
+				  WHERE USE_YN = 'Y' ) A
 		<if test="searchText != null and !searchText.equals('')">
 		WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
 		   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))

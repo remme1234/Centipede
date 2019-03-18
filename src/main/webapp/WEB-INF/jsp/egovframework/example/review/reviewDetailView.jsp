@@ -38,6 +38,7 @@
 		// 리플 저장 메서드
 		rplSave : function() {
 			
+			// 유효성검사 
 			var $form 		= $("form[name=rplSave]"),
 				$catCd  	= $("select[name=catCd]"),
 				$gdCd  		= $("select[name=gdCd]"),
@@ -64,15 +65,14 @@
 					return;
 				}
 			}
-		 
 				
-				
-			// 유효성검사 
-			
 			$form.attr("action","rplUpdate.do")
 			$form.submit();
 			alert("입력한 사이즈 후기가 정상적으로 등록되었습니다.")
-		}
+		},
+		
+		
+		
 		
 	}
 	

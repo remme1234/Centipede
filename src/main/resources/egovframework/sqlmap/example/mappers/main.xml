@@ -91,6 +91,8 @@
 				WHEN TR.CAT_CD = 01 THEN 'Nike'
 				WHEN TR.CAT_CD = 02 THEN 'Adidas'
 				WHEN TR.CAT_CD = 03 THEN 'Converse'
+				WHEN TR.CAT_CD = 04 THEN 'Vans'
+				WHEN TR.CAT_CD = 05 THEN 'Asics'
 				ELSE 'etc'  	
 			   END CAT_CD
 		     , TR.RSGSTR_ID

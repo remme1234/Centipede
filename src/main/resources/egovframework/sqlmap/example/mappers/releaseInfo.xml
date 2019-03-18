@@ -45,14 +45,16 @@
 					 , (SELECT SAVED_FILE_NM
 						  FROM T_FILE
 						 WHERE FILE_NO = TR.FILE_NO) AS SAVED_FILE_NM
+					 , @ROWNUM := @ROWNUM+1 AS ROWNUM
 				  FROM T_RELEASEINFO TR
+				  	 ,(SELECT @ROWNUM := 0) ROWNUM
 				 WHERE USE_YN='Y' 
 				) A 
 		<if test="searchText != null and !searchText.equals('')">
 		  WHERE (TITLE LIKE CONCAT('%',#{searchText},'%') 
 			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>
-	   ORDER BY NUMBER DESC LIMIT #{firstIndex},12
+	   ORDER BY ROWNUM DESC LIMIT #{firstIndex},9
 	</select>
 	
 	<!-- 페이징 처리를 위한 cnt  -->
@@ -62,7 +64,7 @@
 		 WHERE USE_YN ='Y'  
 		 <if test="searchText != null and !searchText.equals('')">
 		  AND (TITLE LIKE CONCAT('%',#{searchText},'%') 
-			 OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
+		   OR CONTENTS LIKE CONCAT('%',#{searchText},'%'))
 		</if>	  	 
 	</select>
 	

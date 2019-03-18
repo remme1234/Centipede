@@ -23,17 +23,12 @@ public class ReleaseInfoController {
 	@RequestMapping(value="releaseInfoView.do")
 	public String releaseInfoView (ModelMap model, BoardVO vo) {
 		
-		// 목록 조회
-		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
-		model.addAttribute("releaseInfoList", releaseInfoList);
-		
-		System.out.println(vo.getSearchText());
 		
 		// 페이징 처리
 		int pageIndex = vo.getPageIndex();
 		if(pageIndex == 0) vo.setPageIndex(1);
 
-		vo.setPageUnit(12);   // rec count per page
+		vo.setPageUnit(9);   // rec count per page
 		vo.setRecordCountPerPage(vo.getPageUnit());
 		vo.setPageSize(5);   // page navi count
 		vo.setFirstIndex(vo.getPageUnit() * (vo.getPageIndex()-1));
@@ -46,6 +41,13 @@ public class ReleaseInfoController {
 		int totCnt = releaseInfoService.selectRelInfoViewListCnt(vo);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paging", paginationInfo);
+		
+		System.out.println(totCnt);
+		System.out.println(vo.getFirstIndex());
+		
+		// 목록 조회
+		List<BoardVO> releaseInfoList = releaseInfoService.selectReleaseInfoList(vo);
+		model.addAttribute("releaseInfoList", releaseInfoList);
 		
 		return "releaseInfo/releaseInfoView.tiles";
 	}

@@ -54,6 +54,8 @@
 				WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
 				WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
 				WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
+				WHEN T_REVIEW.CAT_CD = 04 THEN 'Vans'
+				WHEN T_REVIEW.CAT_CD = 05 THEN 'Asics'
 				ELSE 'etc'  	
 			   END CAT_CD
 			 , T_REVIEW.TITLE
@@ -84,6 +86,8 @@
 				WHEN CAT_CD = 01 THEN 'Nike'
 				WHEN CAT_CD = 02 THEN 'Adidas'
 				WHEN CAT_CD = 03 THEN 'Converse'
+				WHEN CAT_CD = 04 THEN 'Vans'
+				WHEN CAT_CD = 05 THEN 'Asics'
 				ELSE 'etc'  	
 			   END CAT_CD
 			 , TITLE
@@ -114,6 +118,8 @@
 				WHEN CAT_CD = 01 THEN 'Nike'
 				WHEN CAT_CD = 02 THEN 'Adidas'
 				WHEN CAT_CD = 03 THEN 'Converse'
+				WHEN CAT_CD = 04 THEN 'Vans'
+				WHEN CAT_CD = 05 THEN 'Asics'
 				ELSE 'All'
 			   END AS BRND_NM
 		  FROM T_REVIEW

@@ -52,6 +52,8 @@
 						<option value="01">Nike</option>
 						<option value="02">Adidas</option>
 						<option value="03">Converse</option>
+						<option value="04">Vans</option>
+						<option value="05">Asics</option>
 					</select>
 				</td>
 			</tr>

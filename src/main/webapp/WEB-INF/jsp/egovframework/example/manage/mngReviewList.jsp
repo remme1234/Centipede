@@ -33,7 +33,20 @@
 				<tr>
 					<td>${mngRevInfoList.rnum }</td>
 					<td>[${mngRevInfoList.catCd }]</td>
-					<td><a href="mngReviewUpdateView.do?number=${mngRevInfoList.number}">${mngRevInfoList.title }</a></td>
+					
+					<td>
+						<a href="mngReviewUpdateView.do?number=${mngRevInfoList.number}">
+							<c:choose>
+								<c:when test="${fn:length(mngRevInfoList.title) > 45}">
+									<c:out value="${fn:substring(mngRevInfoList.title,0,44)}"/>....
+								</c:when>
+								<c:otherwise>
+									<c:out value="${mngRevInfoList.title}"/>
+								</c:otherwise> 
+							</c:choose>
+						</a>
+					</td>
+					
 					<td>${mngRevInfoList.rsgstDt }</td>
 					<td>${mngRevInfoList.rsgstrId }</td>
 					<td>${mngRevInfoList.visitCnt }</td>

@@ -31,7 +31,20 @@
 			<c:forEach items="${mngNoticeList}" var="mngNoticeList">
 				<tr>
 					<td>${mngNoticeList.number }</td>
-					<td><a href="mngNoticeUpdateView.do?number=${mngNoticeList.number}">${mngNoticeList.title }</a></td>
+					
+					<td>
+						<a href="mngReviewUpdateView.do?number=${mngNoticeList.number}">
+							<c:choose>
+								<c:when test="${fn:length(mngNoticeList.title) > 45}">
+									<c:out value="${fn:substring(mngNoticeList.title,0,44)}"/>....
+								</c:when>
+								<c:otherwise>
+									<c:out value="${mngNoticeList.title}"/>
+								</c:otherwise> 
+							</c:choose>
+						</a>
+					</td>
+					
 					<td>${mngNoticeList.rsgstDt }</td>
 					<td>${mngNoticeList.rsgstrId }</td>
 					<td>${mngNoticeList.visitCnt }</td>
