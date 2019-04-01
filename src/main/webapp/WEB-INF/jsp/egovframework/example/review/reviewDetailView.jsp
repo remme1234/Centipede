@@ -10,16 +10,6 @@
 <script>
 	var review = {
 			
-		// 리뷰게시글 삭제 버튼 
-		del : function() {
-			if(confirm("리뷰 게시글을 삭제하시겠습니까?")) {
-				var doc = document.sendForm;
-				
-				doc.action = "reviewDelete.do";
-				doc.submit();
-			}
-		},
-		
 		// 하위 셀렉트박스 option value를 붙여주는 기능 
 		displayRplPrdSelectBox : function(rplPrdList) {
 			if(rplPrdList.length > 0) {
@@ -70,10 +60,6 @@
 			$form.submit();
 			alert("입력한 사이즈 후기가 정상적으로 등록되었습니다.")
 		},
-		
-		
-		
-		
 	}
 	
 	// 하위 셀랙트박스를 호출하는 ajax  

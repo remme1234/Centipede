@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <script>
+
 	$(function() {
 		if('${msg}' != null && '${msg}' != "") alert('${msg}');
 	});
+	
 	var loginFn = function() {
 		
 		var $form 		= $("form[name=accountForm]"),  
@@ -23,7 +25,7 @@
 		
 		$form.attr("action","login.do")
 		$form.submit()
- 		}
+	}
 	
 </script>
 

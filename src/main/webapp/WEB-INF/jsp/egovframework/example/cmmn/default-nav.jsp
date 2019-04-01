@@ -48,9 +48,6 @@ $(function() {
 									<li class="title">Review</li>
 									<li><a href="reviewView.do">Sneaker Review</a></li>
 								</ul>
-								<ul class="item item03">
-									<li class="title">Sample</li>
-								</ul>
 							</div>
 						</li>
 						<li class="drop with--one--item"><a href="noticeView.do">Notice</a></li>

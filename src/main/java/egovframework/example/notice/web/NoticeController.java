@@ -23,6 +23,7 @@ public class NoticeController {
 	@RequestMapping(value="noticeView.do")
 	public String noticeView(BoardVO vo, ModelMap model) {
 		
+		// paging 처리
 		int pageIndex = vo.getPageIndex();
 		if(pageIndex == 0)   vo.setPageIndex(1);
 
