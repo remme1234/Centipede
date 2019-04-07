@@ -6,7 +6,7 @@
 
 ## 제작 동기
 
-> 지네가 되어서 많은 신발을 신고싶다는 유머에서 착안했습니다.  
+> 발 많은 지네가 되서 많은 신발을 신고 싶다는 유머에서 착안했습니다.  
 > Someone said, I want to be a centipede and wear more shoes.  
 
 주된 기능은 다음과 같습니다.
@@ -25,6 +25,5 @@
 
 ## 정보
 
-Email - vlwys1234@naver.com
-
- 
+Email - vlwys1234@naver.com  
+DB데이터는 Centipede/centipede_Data.sql 에 저장되어 있습니다.
