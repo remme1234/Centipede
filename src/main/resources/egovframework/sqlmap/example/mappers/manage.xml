@@ -147,7 +147,7 @@
 					 , NUMBER
 					 , CASE 
 						WHEN T_REVIEW.CAT_CD = 01 THEN 'Nike'
-						WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'
+						WHEN T_REVIEW.CAT_CD = 02 THEN 'Adidas'	
 						WHEN T_REVIEW.CAT_CD = 03 THEN 'Converse'
 						WHEN T_REVIEW.CAT_CD = 04 THEN 'Vans'
 						WHEN T_REVIEW.CAT_CD = 05 THEN 'Asics'
