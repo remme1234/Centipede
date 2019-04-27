@@ -20,7 +20,7 @@
  
 ```sh
  Front-end : HTML, CSS, Java Script, jQuery 3, BootStrap 3   
- Back-end : EgovFrameWork, Java, Jdk 1.8, MariaDB 2 , Mybatis 3, Maven, Tomcat 7
+ Back-end : EgovFrameWork, Java, Jdk 1.8, MariaDB 10.2.17 , Mybatis 3, Maven, Tomcat 7
 ```  
 
 ## 정보
